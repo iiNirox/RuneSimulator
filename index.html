@@ -79,13 +79,13 @@
       box-shadow: 0 0 22px rgba(192, 132, 252, 0.55);
     }
     .noobinial-neon-row {
-      background: linear-gradient(90deg, rgba(168, 85, 247, 0.22), rgba(217, 70, 239, 0.10));
-      border-left: 3px solid #d946ef;
-      box-shadow: inset 0 0 14px rgba(168, 85, 247, 0.22);
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.14), rgba(168, 85, 247, 0.05));
+      border-left: 3px solid #a78bfa;
+      box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.10);
     }
     .noobinial-neon-text {
-      color: #e879f9;
-      text-shadow: 0 0 10px rgba(217, 70, 239, 0.65);
+      color: #d8b4fe;
+      text-shadow: 0 0 6px rgba(167, 139, 250, 0.28);
     }
     @keyframes pulsePop {
       0% { transform: scale(0.95); opacity: 0.5; }
@@ -115,7 +115,7 @@
 
   <!-- Top Header -->
   <header class="sticky top-0 z-30 border-b border-[#3f4147] bg-[#2b2d31]/95 backdrop-blur-md">
-    <div class="max-w-[1440px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <div class="max-w-[1720px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-fuchsia-500 p-0.5 shadow-lg shadow-purple-500/30">
           <div class="w-full h-full bg-[#1e1f22] rounded-[10px] flex items-center justify-center">
@@ -134,27 +134,16 @@
         </div>
       </div>
 
-      <button id="soundToggleBtn" type="button" title="Toggle Sound Effects" class="p-2 rounded-xl bg-[#313338] text-[#b5bac1] hover:text-white border border-[#3f4147] hover:border-purple-500/60 transition">
-        <svg id="soundOnIcon" class="w-4 h-4 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-        </svg>
-        <svg id="soundOffIcon" class="w-4 h-4 hidden text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <line x1="23" y1="9" x2="17" y2="15"></line>
-          <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-      </button>
+
     </div>
   </header>
 
   <!-- Main 3-Column Layout: Left (Selection + Player Stats) | Middle (Simulator) | Right (Rune Chances List) -->
-  <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 py-5">
+  <main class="flex-1 max-w-[1720px] w-full mx-auto px-4 py-5">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
       <!-- LEFT COLUMN: Selection & Player Stats Stacked Vertically -->
-      <aside class="lg:col-span-3 flex flex-col gap-4">
+      <aside class="lg:col-span-2 flex flex-col gap-4">
         <!-- 1. Selection -->
         <div class="discord-card rounded-2xl p-4 space-y-3.5">
           <div class="flex items-center justify-between">
@@ -288,7 +277,7 @@
           </div>
           <div class="discord-panel rounded-xl p-3">
             <div class="text-[11px] text-[#949ba4]">Noobinials Pulled</div>
-            <div id="simNoobinialsPulled" class="text-sm font-mono font-bold text-fuchsia-400 mt-0.5">0</div>
+            <div id="simNoobinialsPulled" class="text-sm font-mono font-bold text-violet-300 mt-0.5">0</div>
           </div>
           <div class="discord-panel rounded-xl p-3 border-purple-500/40">
             <div class="text-[11px] text-purple-300">Rarest Drop Rolled</div>
@@ -338,7 +327,7 @@
       </div>
 
       <!-- RIGHT COLUMN: Combined Rune Chances List -->
-      <section class="lg:col-start-8 lg:col-span-5 lg:row-start-1 discord-card rounded-2xl p-5 sm:p-6 flex flex-col">
+      <section class="lg:col-start-7 lg:col-span-6 lg:row-start-1 discord-card rounded-2xl p-5 sm:p-6 flex flex-col">
         <div class="flex items-center justify-between border-b border-[#3f4147] pb-3 mb-3">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
@@ -348,11 +337,16 @@
         </div>
 
         <!-- Column Headers -->
-        <div class="grid px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#949ba4] gap-2" style="grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 1fr)">
+        <div id="runeTableHeaders" class="grid px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#949ba4] gap-2 items-center" style="grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 1fr)">
           <div>Rune</div>
           <div class="text-right">Base Chance</div>
           <div class="text-right">Current Chance</div>
-          <div class="text-right pl-3">ETA</div>
+          <div class="flex items-center justify-end gap-1.5 pl-2 flex-wrap">
+            <span>ETA</span>
+            <button id="etaModeToggleBtn" type="button" title="Switch between Pure Math ETA and Lucky / Avg / Unlucky ETAs" class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#1e1f22] hover:bg-purple-600/30 text-purple-300 border border-purple-500/50 transition active:scale-95 flex items-center gap-1 cursor-pointer select-none">
+              <span id="etaModeBtnText">Math</span>
+            </button>
+          </div>
         </div>
 
         <!-- Single Combined Rune List -->
@@ -1035,12 +1029,13 @@
     };
 
     // =========================================================================
-    // 3. STATE & AUDIO
+    // 3. STATE
     // =========================================================================
     const state = {
       realm: 'Realm 1',
       pack: 'Basic',
-      soundEnabled: true,
+      etaMode: 'math',
+      etaRandomSeeds: {},
       autoOpenTimer: null,
       isAutoOpening: false,
       sim: {
@@ -1064,7 +1059,6 @@
         const settings = {
           realm: state.realm,
           pack: state.pack,
-          soundEnabled: state.soundEnabled,
           luck: document.getElementById('runeLuckInput').value,
           bulk: document.getElementById('runeBulkInput').value,
           speed: document.getElementById('runeSpeedInput').value
@@ -1084,51 +1078,11 @@
           if (settings.pack && RUNE_DATABASE[state.realm].packs[settings.pack]) {
             state.pack = settings.pack;
           }
-          if (typeof settings.soundEnabled === 'boolean') {
-            state.soundEnabled = settings.soundEnabled;
-            document.getElementById('soundOnIcon').classList.toggle('hidden', !state.soundEnabled);
-            document.getElementById('soundOffIcon').classList.toggle('hidden', state.soundEnabled);
-          }
           if (settings.luck !== undefined) document.getElementById('runeLuckInput').value = settings.luck;
           if (settings.bulk !== undefined) document.getElementById('runeBulkInput').value = settings.bulk;
           if (settings.speed !== undefined) document.getElementById('runeSpeedInput').value = settings.speed;
         }
       } catch (e) {}
-    }
-
-    let audioCtx = null;
-    function playTone(freq = 520, duration = 0.07, type = 'sine', gainVal = 0.05) {
-      if (!state.soundEnabled) return;
-      try {
-        if (!audioCtx) {
-          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-          if (AudioContextClass) audioCtx = new AudioContextClass();
-        }
-        if (!audioCtx) return;
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
-    }
-
-    function playRareFanfare(isNoobinial) {
-      if (!state.soundEnabled) return;
-      if (isNoobinial) {
-        playTone(587.33, 0.12, 'triangle', 0.08);
-        setTimeout(() => playTone(880, 0.18, 'triangle', 0.09), 90);
-        setTimeout(() => playTone(1174.66, 0.28, 'triangle', 0.1), 180);
-      } else {
-        playTone(660, 0.1, 'sine', 0.06);
-        setTimeout(() => playTone(880, 0.14, 'sine', 0.06), 70);
-      }
     }
 
     // =========================================================================
@@ -1244,14 +1198,6 @@
 
       state.sim.latestBatchDrops = batchDrops;
 
-      if (triggeredNoobinial) {
-        playRareFanfare(true);
-      } else if (triggeredRare) {
-        playRareFanfare(false);
-      } else {
-        playTone(460, 0.04, 'sine', 0.025);
-      }
-
       renderAll();
     }
 
@@ -1288,6 +1234,12 @@
       });
     }
 
+    // Probability percentiles: P(1) Lucky, P(50) Median, P(99) Unlucky
+    // Using k = -ln(1 - p) * chance (with 2x chance pity cap for Noobinials)
+    const P1_FACTOR = -Math.log(1 - 0.01);   // ~0.01005x
+    const P50_FACTOR = -Math.log(1 - 0.50);  // ~0.69315x
+    const P99_FACTOR = -Math.log(1 - 0.99);  // ~4.60517x
+
     function renderRuneRow(drop, luck, runesPerSec) {
       const info = computeRuneChance(drop, luck);
       const obtained = state.sim.inventory[drop.name] || 0;
@@ -1309,23 +1261,65 @@
         etaColorClass = 'text-emerald-400';
       }
 
+      const isLuckMode = state.etaMode === 'luck';
+      const gridTemplate = isLuckMode
+        ? 'minmax(0, 1.25fr) minmax(0, 0.8fr) minmax(0, 0.95fr) minmax(0, 2.5fr)'
+        : 'minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 1fr)';
+
+      let etaCellHtml = '';
+      if (!isLuckMode) {
+        etaCellHtml = `
+          <div class="text-right pl-3 font-mono text-xs sm:text-sm font-semibold ${etaColorClass} truncate" title="${etaText}">
+            ${etaText}
+          </div>
+        `;
+      } else {
+        // Noobinials ONLY have a pity of double the chance (2.0x cap)
+        const p1Mult = isNoob ? Math.min(2.0, P1_FACTOR) : P1_FACTOR;
+        const p50Mult = isNoob ? Math.min(2.0, P50_FACTOR) : P50_FACTOR;
+        const p99Mult = isNoob ? Math.min(2.0, P99_FACTOR) : P99_FACTOR;
+
+        const p1Sec = etaSeconds * p1Mult;
+        const p50Sec = etaSeconds * p50Mult;
+        const p99Sec = etaSeconds * p99Mult;
+
+        const p1Text = p1Sec < 0.5 ? 'Instant' : formatEta(p1Sec);
+        const p50Text = p50Sec < 0.5 ? 'Instant' : formatEta(p50Sec);
+        const p99Text = p99Sec < 0.5 ? 'Instant' : formatEta(p99Sec);
+
+        etaCellHtml = `
+          <div class="pl-2 grid grid-cols-3 gap-1.5 text-center font-mono">
+            <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Lucky: ${p1Text}">
+              <div class="text-[9px] uppercase tracking-tight text-emerald-300/90 font-sans font-bold leading-tight whitespace-nowrap">Lucky</div>
+              <div class="text-[11px] sm:text-xs font-bold text-emerald-400 whitespace-nowrap mt-0.5">${p1Text}</div>
+            </div>
+            <div class="rounded-lg bg-amber-500/10 border border-amber-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Avg: ${p50Text}">
+              <div class="text-[9px] uppercase tracking-tight text-amber-300/90 font-sans font-bold leading-tight whitespace-nowrap">Avg</div>
+              <div class="text-[11px] sm:text-xs font-bold text-amber-300 whitespace-nowrap mt-0.5">${p50Text}</div>
+            </div>
+            <div class="rounded-lg bg-rose-500/10 border border-rose-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Unlucky: ${p99Text}${isNoob ? ' (2× Pity Cap)' : ''}">
+              <div class="text-[9px] uppercase tracking-tight text-rose-300/90 font-sans font-bold leading-tight whitespace-nowrap">Unlucky</div>
+              <div class="text-[11px] sm:text-xs font-bold text-rose-400 whitespace-nowrap mt-0.5">${p99Text}</div>
+            </div>
+          </div>
+        `;
+      }
+
       return `
-        <div class="grid items-center px-3 py-2.5 gap-2 ${isNoob ? 'noobinial-neon-row' : 'hover:bg-[#383a40]/60'} transition" style="grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 1fr)">
+        <div class="grid items-center px-3 py-2.5 gap-2 ${isNoob ? 'noobinial-neon-row' : 'hover:bg-[#383a40]/60'} transition" style="grid-template-columns: ${gridTemplate}">
           <div class="flex items-center gap-2 min-w-0">
-            <span class="w-2 h-2 rounded-full shrink-0 ${isNoob ? 'bg-fuchsia-400 shadow-[0_0_10px_#e879f9]' : 'bg-[#949ba4]'}"></span>
+            <span class="w-2 h-2 rounded-full shrink-0 ${isNoob ? 'bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.5)]' : 'bg-[#949ba4]'}"></span>
             <span class="text-xs sm:text-sm font-semibold ${isNoob ? 'noobinial-neon-text font-bold' : 'text-[#f2f3f5]'} shrink-0 whitespace-nowrap" title="${drop.name}">${drop.name}</span>
             ${obtained > 0 ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/25 text-purple-200 border border-purple-500/40 shrink-0">+${formatGameNumber(obtained, 0)}</span>` : ''}
           </div>
-          <div class="text-right font-mono text-xs ${isNoob ? 'text-fuchsia-300/80' : 'text-[#949ba4]'} truncate" title="1/${formatGameNumber(info.baseOdds)}">
+          <div class="text-right font-mono text-xs ${isNoob ? 'text-violet-300/75' : 'text-[#949ba4]'} truncate" title="1/${formatGameNumber(info.baseOdds)}">
             1/${formatGameNumber(info.baseOdds)}
           </div>
           <div class="flex items-center justify-end gap-1 font-mono text-xs sm:text-sm min-w-0" title="1/${formatGameNumber(info.chance)}${info.capped ? ' [CAP]' : ''}">
             <span class="truncate ${isNoob ? 'noobinial-neon-text font-bold' : 'text-purple-300 font-semibold'}">1/${formatGameNumber(info.chance)}</span>
             ${info.capped ? '<span class="text-[9px] font-bold px-1 rounded bg-purple-500/25 text-purple-300 border border-purple-500/40 shrink-0">CAP</span>' : ''}
           </div>
-          <div class="text-right pl-3 font-mono text-xs sm:text-sm font-semibold ${etaColorClass} truncate" title="${etaText}">
-            ${etaText}
-          </div>
+          ${etaCellHtml}
         </div>
       `;
     }
@@ -1377,7 +1371,7 @@
           return `
             <div class="p-2.5 rounded-xl border animate-pop flex flex-col justify-between ${
               isNoob
-                ? 'bg-purple-950/40 border-fuchsia-500/70 shadow-[0_0_14px_rgba(217,70,239,0.28)]'
+                ? 'bg-violet-950/35 border-violet-400/50 shadow-[0_0_10px_rgba(139,92,246,0.18)]'
                 : 'bg-[#313338] border-[#3f4147]'
             }">
               <div class="flex items-center justify-between gap-1">
@@ -1396,6 +1390,18 @@
       const basicDrops = packObj.drops.filter(d => d.type !== 'NOOBINIAL');
       const noobinialDrops = packObj.drops.filter(d => d.type === 'NOOBINIAL');
       const orderedDrops = [...basicDrops, ...noobinialDrops];
+
+      const isLuckMode = state.etaMode === 'luck';
+      const headerEl = document.getElementById('runeTableHeaders');
+      if (headerEl) {
+        headerEl.style.gridTemplateColumns = isLuckMode
+          ? 'minmax(0, 1.25fr) minmax(0, 0.8fr) minmax(0, 0.95fr) minmax(0, 2.5fr)'
+          : 'minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(0, 1fr)';
+      }
+      const modeTextEl = document.getElementById('etaModeBtnText');
+      if (modeTextEl) {
+        modeTextEl.textContent = isLuckMode ? 'Luck' : 'Math';
+      }
 
       const combinedListEl = document.getElementById('combinedRunesList');
       combinedListEl.innerHTML = orderedDrops.map(d => renderRuneRow(d, luck, runesPerSec)).join('');
@@ -1477,12 +1483,7 @@
       });
       updateChanceCalculator();
 
-      document.getElementById('soundToggleBtn').addEventListener('click', () => {
-        state.soundEnabled = !state.soundEnabled;
-        document.getElementById('soundOnIcon').classList.toggle('hidden', !state.soundEnabled);
-        document.getElementById('soundOffIcon').classList.toggle('hidden', state.soundEnabled);
-        saveSettings();
-      });
+
 
       document.getElementById('realmSelect').addEventListener('change', (e) => {
         state.realm = e.target.value;
@@ -1519,6 +1520,11 @@
       });
 
       document.getElementById('btnResetSim').addEventListener('click', resetSession);
+
+      document.getElementById('etaModeToggleBtn').addEventListener('click', () => {
+        state.etaMode = state.etaMode === 'math' ? 'luck' : 'math';
+        renderAll();
+      });
     });
   </script>
 </body>
