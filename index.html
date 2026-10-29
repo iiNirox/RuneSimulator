@@ -58,6 +58,8 @@
       background-color: #1e1f22;
       border: 1px solid #3f4147;
       color: #f2f3f5;
+      text-align: center;
+      text-align-last: center;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .discord-input:focus {
@@ -134,7 +136,15 @@
         </div>
       </div>
 
-
+      <!-- Mode Switcher (Far Right) -->
+      <div class="flex items-center gap-1.5 bg-[#1e1f22] p-1.5 rounded-xl border border-[#3f4147]">
+        <button id="btnModeRune" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn">
+          Rune Mode
+        </button>
+        <button id="btnModePrism" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent">
+          Prism Mode
+        </button>
+      </div>
     </div>
   </header>
 
@@ -156,12 +166,12 @@
           <div class="space-y-3">
             <div>
               <label for="realmSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Realm</label>
-              <select id="realmSelect" class="w-full rounded-xl discord-input px-3 py-2 text-sm">
+              <select id="realmSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm">
               </select>
             </div>
             <div>
               <label for="runePackSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Opening Rune</label>
-              <select id="runePackSelect" class="w-full rounded-xl discord-input px-3 py-2 text-sm">
+              <select id="runePackSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm">
               </select>
             </div>
           </div>
@@ -184,7 +194,7 @@
                 <span id="parsedBulkLabel" class="text-[11px] font-mono text-purple-300">1</span>
               </div>
               <input id="runeBulkInput" type="text" value="1" placeholder="e.g. 1, 100, 5K"
-                class="w-full rounded-xl discord-input px-3 py-2 text-sm font-mono" />
+                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
             </div>
 
             <!-- Rune Luck -->
@@ -194,7 +204,7 @@
                 <span id="parsedLuckLabel" class="text-[11px] font-mono text-purple-300">1×</span>
               </div>
               <input id="runeLuckInput" type="text" value="1" placeholder="e.g. 1, 50K, 10Qd"
-                class="w-full rounded-xl discord-input px-3 py-2 text-sm font-mono" />
+                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
             </div>
 
             <!-- Rune Speed -->
@@ -204,7 +214,7 @@
                 <span id="parsedSpeedLabel" class="text-[11px] font-mono text-purple-300">0.05s</span>
               </div>
               <input id="runeSpeedInput" type="number" step="0.005" min="0.001" value="0.05"
-                class="w-full rounded-xl discord-input px-3 py-2 text-sm font-mono" />
+                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
             </div>
           </div>
 
@@ -267,19 +277,19 @@
 
         <!-- Session Stats Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-2 gap-2.5">
-          <div class="discord-panel rounded-xl p-3">
+          <div class="discord-panel rounded-xl p-3 text-center">
             <div class="text-[11px] text-[#949ba4]">Runes Opened</div>
             <div id="simRunesOpened" class="text-sm font-mono font-bold text-purple-300 mt-0.5">0</div>
           </div>
-          <div class="discord-panel rounded-xl p-3">
+          <div class="discord-panel rounded-xl p-3 text-center">
             <div class="text-[11px] text-[#949ba4]">Simulated Time</div>
             <div id="simTimeElapsed" class="text-sm font-mono font-bold text-white mt-0.5">0s</div>
           </div>
-          <div class="discord-panel rounded-xl p-3">
+          <div class="discord-panel rounded-xl p-3 text-center">
             <div class="text-[11px] text-[#949ba4]">Noobinials Pulled</div>
             <div id="simNoobinialsPulled" class="text-sm font-mono font-bold text-violet-300 mt-0.5">0</div>
           </div>
-          <div class="discord-panel rounded-xl p-3 border-purple-500/40">
+          <div class="discord-panel rounded-xl p-3 border-purple-500/40 text-center">
             <div class="text-[11px] text-purple-300">Rarest Drop Rolled</div>
             <div id="simRarestDrop" class="text-xs font-mono font-bold text-purple-300 mt-0.5 truncate">None yet</div>
           </div>
@@ -310,15 +320,15 @@
           <div>
             <label for="chanceCalcRps" class="block text-xs font-medium text-[#b5bac1] mb-1">Runes per second (RPS)</label>
             <input id="chanceCalcRps" type="text" placeholder="e.g. 1Qd"
-              class="w-full rounded-xl discord-input px-3 py-2 text-sm font-mono" />
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
           </div>
           <div>
             <label for="chanceCalcOdds" class="block text-xs font-medium text-[#b5bac1] mb-1">Rune chance (1 in ...)</label>
             <input id="chanceCalcOdds" type="text" placeholder="e.g. 1Qn"
-              class="w-full rounded-xl discord-input px-3 py-2 text-sm font-mono" />
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
           </div>
         </div>
-        <div class="discord-panel neon-border rounded-xl p-4">
+        <div class="discord-panel neon-border rounded-xl p-4 text-center">
           <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Estimated average time</div>
           <div id="chanceCalcResult" class="text-lg sm:text-xl font-mono font-bold text-purple-300 mt-1 break-words">1000s</div>
           <div id="chanceCalcDetails" class="text-xs text-[#949ba4] mt-1">1Qn chance ÷ 1Qd RPS</div>
@@ -351,6 +361,223 @@
 
         <!-- Single Combined Rune List -->
         <div id="combinedRunesList" class="divide-y divide-[#3f4147]/70 rounded-xl overflow-hidden border border-[#3f4147] bg-[#313338]">
+        </div>
+      </section>
+
+    </div>
+
+    <!-- PRISM MODE 3-COLUMN LAYOUT -->
+    <div id="prismModeGrid" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- BOX 1 (LEFT): Small Player Stats Box -->
+      <aside class="lg:col-span-2 flex flex-col gap-4">
+        <div class="discord-card rounded-2xl p-4 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
+              Player Stats
+            </span>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Prism Per Cycle -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="prismPerCycleInput" class="text-xs font-medium text-[#b5bac1]">Prism Per Cycle</label>
+                <span id="parsedPrismPerCycleLabel" class="text-[11px] font-mono text-purple-300">10</span>
+              </div>
+              <input id="prismPerCycleInput" type="text" value="10" placeholder="e.g. 10, 5K, 1M"
+                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+            </div>
+
+            <!-- Cycle Length (s) -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="prismCycleLengthInput" class="text-xs font-medium text-[#b5bac1]">Cycle Length (s)</label>
+                <span id="parsedCycleLengthLabel" class="text-[11px] font-mono text-purple-300">1s</span>
+              </div>
+              <input id="prismCycleLengthInput" type="number" step="0.1" min="0.001" value="1" placeholder="Seconds (e.g. 1, 5)"
+                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+            </div>
+          </div>
+
+          <!-- Combined Stat Box for Prism/s & Cycle -->
+          <div class="discord-panel neon-border rounded-xl p-3 flex items-center justify-center gap-3">
+            <div class="flex-1 text-center">
+              <div class="text-[10px] uppercase tracking-wider text-[#949ba4]">Prism / Sec</div>
+              <div id="statPrismPerSec" class="text-sm font-mono font-bold text-purple-400 mt-0.5">10 /s</div>
+            </div>
+            <div class="h-7 w-px bg-[#3f4147]"></div>
+            <div class="flex-1 text-center">
+              <div class="text-[10px] uppercase tracking-wider text-[#949ba4]">Cycle</div>
+              <div id="statPrismCycle" class="text-sm font-mono font-bold text-purple-300 mt-0.5">1s</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- BOX 2 (MIDDLE): Capsule Opening Calculator -->
+      <section class="lg:col-span-5 discord-card neon-border rounded-2xl p-4 sm:p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-[#3f4147] pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
+            <h2 class="text-base sm:text-lg font-bold text-white">Capsule opening calculator</h2>
+          </div>
+          <span id="capsuleOpenSpeedPill" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#1e1f22] text-purple-300 border border-purple-500/40">
+            1.0s / open
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Capsule Cost -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="capsuleCostInput" class="text-xs font-medium text-[#b5bac1]">Capsule cost</label>
+              <span id="parsedCapsuleCostLabel" class="text-[11px] font-mono text-purple-300">10</span>
+            </div>
+            <input id="capsuleCostInput" type="text" value="10" placeholder="e.g. 10, 1K"
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          </div>
+
+          <!-- Capsule Bulk -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="capsuleBulkInput" class="text-xs font-medium text-[#b5bac1]">Capsule bulk</label>
+              <span id="parsedCapsuleBulkLabel" class="text-[11px] font-mono text-purple-300">15</span>
+            </div>
+            <input id="capsuleBulkInput" type="text" value="15" placeholder="e.g. 1, 15, 100"
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          </div>
+
+          <!-- Reserve Prism -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="reservePrismInput" class="text-xs font-medium text-[#b5bac1]">Reserve Prism</label>
+              <span id="parsedReservePrismLabel" class="text-[11px] font-mono text-purple-300">1K</span>
+            </div>
+            <input id="reservePrismInput" type="text" value="1000" placeholder="e.g. 0, 10K, 1M"
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          </div>
+        </div>
+
+        <!-- Minion Master Gamepass Checkbox -->
+        <label for="minionMasterCheckbox" class="flex items-center justify-between bg-[#1e1f22] hover:bg-[#313338]/70 border border-[#3f4147] rounded-xl p-3 cursor-pointer transition select-none">
+          <div class="flex items-center gap-3">
+            <input id="minionMasterCheckbox" type="checkbox" class="w-4 h-4 rounded accent-purple-500 cursor-pointer" />
+            <div>
+              <div class="text-xs sm:text-sm font-semibold text-white">Minion Master Gamepass</div>
+              <div class="text-[11px] text-[#949ba4]">Reduces capsule open time from 1.0s to 0.9s</div>
+            </div>
+          </div>
+          <span id="gamepassBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#313338] text-[#949ba4] border border-[#3f4147]">
+            OFF (1.0s)
+          </span>
+        </label>
+
+        <!-- Result Banner -->
+        <div class="discord-panel neon-border rounded-xl p-4 text-center">
+          <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Opening Duration</div>
+          <div id="capsuleCalcResult" class="text-xl sm:text-2xl font-mono font-extrabold text-purple-300 mt-1 break-words">
+            7.14s
+          </div>
+          <div id="capsuleCalcSubtext" class="text-xs text-[#949ba4] mt-1">
+            Net drain: 140 Prism/s from 1K Reserve Prism
+          </div>
+        </div>
+
+        <!-- Breakdown Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          <div class="discord-panel rounded-xl p-3 text-center">
+            <div class="text-[11px] text-[#949ba4]">Consumption / Sec</div>
+            <div id="capsuleCostPerSecStat" class="text-sm font-mono font-bold text-rose-300 mt-0.5">150 /s</div>
+          </div>
+          <div class="discord-panel rounded-xl p-3 text-center">
+            <div class="text-[11px] text-[#949ba4]">Passive Gain / Sec</div>
+            <div id="capsuleGainPerSecStat" class="text-sm font-mono font-bold text-emerald-300 mt-0.5">10 /s</div>
+          </div>
+          <div class="discord-panel rounded-xl p-3 col-span-2 sm:col-span-1 text-center">
+            <div class="text-[11px] text-[#949ba4]">Capsules Opened</div>
+            <div id="capsuleTotalOpenedStat" class="text-sm font-mono font-bold text-purple-300 mt-0.5">107</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOX 3 (RIGHT): Prism Calculator -->
+      <section class="lg:col-span-5 discord-card rounded-2xl p-4 sm:p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-[#3f4147] pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
+            <h2 class="text-base sm:text-lg font-bold text-white">Prism Calculator</h2>
+          </div>
+          <span class="text-xs font-mono text-purple-300">Passive Generation</span>
+        </div>
+
+        <p class="text-xs text-[#949ba4]">Calculate how much Prism will be generated over a set amount of time based on your Player Stats.</p>
+
+        <!-- Time Input + Unit Selector -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2">
+            <div class="flex items-center justify-between mb-1">
+              <label for="prismCalcTimeInput" class="text-xs font-medium text-[#b5bac1]">Time Duration</label>
+              <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-purple-300">60 min</span>
+            </div>
+            <input id="prismCalcTimeInput" type="number" step="any" min="0" value="60" placeholder="Enter time amount..."
+              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          </div>
+          <div>
+            <label for="prismCalcUnitSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Time Unit</label>
+            <select id="prismCalcUnitSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-medium">
+              <option value="1">Seconds</option>
+              <option value="60" selected>Minutes</option>
+              <option value="3600">Hours</option>
+              <option value="86400">Days</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Time Presets -->
+        <div class="flex flex-wrap items-center justify-between bg-[#1e1f22] rounded-xl p-2 border border-[#3f4147] gap-2">
+          <span class="text-xs text-[#949ba4] pl-1 font-medium">Quick Set:</span>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button type="button" data-prism-time="1" data-prism-unit="60" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+              1m
+            </button>
+            <button type="button" data-prism-time="10" data-prism-unit="60" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+              10m
+            </button>
+            <button type="button" data-prism-time="1" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+              1h
+            </button>
+            <button type="button" data-prism-time="6" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+              6h
+            </button>
+            <button type="button" data-prism-time="24" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+              24h
+            </button>
+          </div>
+        </div>
+
+        <!-- Generated Prism Output -->
+        <div class="discord-panel neon-border rounded-xl p-4 text-center">
+          <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Prism Generated</div>
+          <div id="prismCalcGeneratedResult" class="text-xl sm:text-2xl font-mono font-extrabold text-purple-300 mt-1 break-words">
+            36K Prism
+          </div>
+          <div id="prismCalcDetails" class="text-xs text-[#949ba4] mt-1">
+            3,600 cycles over 1h (10 Prism / 1s cycle)
+          </div>
+        </div>
+
+        <!-- Secondary Stats -->
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="discord-panel rounded-xl p-3 text-center">
+            <div class="text-[11px] text-[#949ba4]">Total Cycles</div>
+            <div id="prismCalcCyclesStat" class="text-sm font-mono font-bold text-white mt-0.5">3.6K</div>
+          </div>
+          <div class="discord-panel rounded-xl p-3 text-center">
+            <div class="text-[11px] text-[#949ba4]">Total w/ Reserve Prism</div>
+            <div id="prismCalcTotalWithReserveStat" class="text-sm font-mono font-bold text-purple-300 mt-0.5">37K</div>
+          </div>
         </div>
       </section>
 
@@ -1525,6 +1752,200 @@
         state.etaMode = state.etaMode === 'math' ? 'luck' : 'math';
         renderAll();
       });
+
+      // =====================================================================
+      // 8. PRISM MODE LOGIC & EVENT LISTENERS
+      // =====================================================================
+      const runeModeGrid = document.querySelector('main > div:first-child');
+      const prismModeGrid = document.getElementById('prismModeGrid');
+      const btnModeRune = document.getElementById('btnModeRune');
+      const btnModePrism = document.getElementById('btnModePrism');
+
+      function parsePrismNumberAllowZero(str, fallback = 0) {
+        if (typeof str === 'number') return isFinite(str) && str >= 0 ? str : fallback;
+        if (str === null || str === undefined) return fallback;
+        const clean = String(str).trim().replace(/,/g, '');
+        if (!clean) return fallback;
+        if (Number(clean) === 0) return 0;
+        return parseGameNumber(clean, fallback);
+      }
+
+      function formatPrismDuration(seconds) {
+        if (!isFinite(seconds) || seconds < 0) return '∞';
+        if (seconds === 0) return '0s';
+        if (seconds < 60) {
+          return `${seconds < 10 ? seconds.toFixed(2).replace(/\.?0+$/, '') : seconds.toFixed(1).replace(/\.?0+$/, '')}s`;
+        }
+        const days = Math.floor(seconds / 86400);
+        let rem = seconds % 86400;
+        const hours = Math.floor(rem / 3600);
+        rem %= 3600;
+        const minutes = Math.floor(rem / 60);
+        const secs = Math.floor(rem % 60);
+
+        const parts = [];
+        if (days > 0) parts.push(`${formatGameNumber(days, 0)}d`);
+        if (hours > 0) parts.push(`${hours}h`);
+        if (minutes > 0) parts.push(`${minutes}m`);
+        if (secs > 0 && days === 0) parts.push(`${secs}s`);
+        return parts.slice(0, 3).join(' ');
+      }
+
+      function switchAppMode(mode) {
+        if (mode === 'prism') {
+          runeModeGrid.classList.add('hidden');
+          prismModeGrid.classList.remove('hidden');
+          btnModePrism.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn';
+          btnModeRune.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent';
+        } else {
+          prismModeGrid.classList.add('hidden');
+          runeModeGrid.classList.remove('hidden');
+          btnModeRune.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn';
+          btnModePrism.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent';
+        }
+        try {
+          localStorage.setItem('noob_rune_sim_active_mode', mode);
+        } catch (e) {}
+      }
+
+      function updatePrismModeCalculators() {
+        const prismPerCycle = parsePrismNumberAllowZero(document.getElementById('prismPerCycleInput').value, 0);
+        const rawCycleLen = parseFloat(document.getElementById('prismCycleLengthInput').value);
+        const cycleLength = isFinite(rawCycleLen) && rawCycleLen > 0 ? rawCycleLen : 1;
+
+        const prismPerSec = prismPerCycle / cycleLength;
+
+        // Update Box 1: Player Stats labels
+        document.getElementById('parsedPrismPerCycleLabel').textContent = formatGameNumber(prismPerCycle);
+        document.getElementById('parsedCycleLengthLabel').textContent = `${cycleLength}s`;
+        document.getElementById('statPrismPerSec').textContent = `${formatGameNumber(prismPerSec)} /s`;
+        document.getElementById('statPrismCycle').textContent = `${cycleLength}s`;
+
+        // Update Box 2: Capsule Opening Calculator
+        const capsuleCost = parsePrismNumberAllowZero(document.getElementById('capsuleCostInput').value, 0);
+        const capsuleBulk = Math.max(1, Math.floor(parseGameNumber(document.getElementById('capsuleBulkInput').value, 1)));
+        const reservePrism = parsePrismNumberAllowZero(document.getElementById('reservePrismInput').value, 0);
+        const hasGamepass = document.getElementById('minionMasterCheckbox').checked;
+
+        const openInterval = hasGamepass ? 0.9 : 1.0;
+        const costPerOpenBatch = capsuleCost * capsuleBulk;
+        const costPerSec = costPerOpenBatch / openInterval;
+        const netDrainPerSec = costPerSec - prismPerSec;
+
+        document.getElementById('parsedCapsuleCostLabel').textContent = formatGameNumber(capsuleCost);
+        document.getElementById('parsedCapsuleBulkLabel').textContent = formatGameNumber(capsuleBulk, 0);
+        document.getElementById('parsedReservePrismLabel').textContent = formatGameNumber(reservePrism);
+
+        document.getElementById('capsuleOpenSpeedPill').textContent = `${openInterval.toFixed(1)}s / open`;
+        const badgeEl = document.getElementById('gamepassBadge');
+        if (hasGamepass) {
+          badgeEl.textContent = 'ON (0.9s)';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40';
+        } else {
+          badgeEl.textContent = 'OFF (1.0s)';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-[#313338] text-[#949ba4] border border-[#3f4147]';
+        }
+
+        document.getElementById('capsuleCostPerSecStat').textContent = `${formatGameNumber(costPerSec)} /s`;
+        document.getElementById('capsuleGainPerSecStat').textContent = `${formatGameNumber(prismPerSec)} /s`;
+
+        const resultEl = document.getElementById('capsuleCalcResult');
+        const subtextEl = document.getElementById('capsuleCalcSubtext');
+        const totalOpenedEl = document.getElementById('capsuleTotalOpenedStat');
+
+        if (costPerSec <= 0 || prismPerSec >= costPerSec) {
+          resultEl.textContent = 'You can open for ∞';
+          const netSurplus = prismPerSec - costPerSec;
+          subtextEl.textContent = `Passive gain (${formatGameNumber(prismPerSec)}/s) ≥ capsule cost (${formatGameNumber(costPerSec)}/s) • +${formatGameNumber(netSurplus)}/s net gain`;
+          totalOpenedEl.textContent = '∞';
+        } else {
+          const secondsLasted = reservePrism / netDrainPerSec;
+          const totalCapsules = Math.floor((secondsLasted / openInterval) * capsuleBulk);
+          resultEl.textContent = formatPrismDuration(secondsLasted);
+          subtextEl.textContent = `Net drain: ${formatGameNumber(netDrainPerSec)} Prism/s • Lasts ${formatGameNumber(secondsLasted)}s from ${formatGameNumber(reservePrism)} Reserve Prism`;
+          totalOpenedEl.textContent = formatGameNumber(totalCapsules, 0);
+        }
+
+        // Update Box 3: Prism Calculator
+        const rawTimeVal = parseFloat(document.getElementById('prismCalcTimeInput').value);
+        const timeVal = isFinite(rawTimeVal) && rawTimeVal >= 0 ? rawTimeVal : 0;
+        const unitSeconds = parseFloat(document.getElementById('prismCalcUnitSelect').value) || 60;
+        const totalSeconds = timeVal * unitSeconds;
+
+        const unitNames = { '1': 'sec', '60': 'min', '3600': 'hr', '86400': 'd' };
+        const unitLabel = unitNames[String(unitSeconds)] || 'sec';
+        document.getElementById('parsedPrismTimeLabel').textContent = `${formatGameNumber(timeVal)} ${unitLabel}`;
+
+        const totalCycles = totalSeconds / cycleLength;
+        const totalPrismGenerated = prismPerSec * totalSeconds;
+        const totalWithReserve = totalPrismGenerated + reservePrism;
+
+        document.getElementById('prismCalcGeneratedResult').textContent = `${formatGameNumber(totalPrismGenerated)} Prism`;
+        document.getElementById('prismCalcDetails').textContent =
+          `${formatGameNumber(totalCycles)} cycles over ${formatPrismDuration(totalSeconds)} (${formatGameNumber(prismPerCycle)} Prism / ${cycleLength}s cycle)`;
+        document.getElementById('prismCalcCyclesStat').textContent = formatGameNumber(totalCycles);
+        document.getElementById('prismCalcTotalWithReserveStat').textContent = formatGameNumber(totalWithReserve);
+
+        try {
+          localStorage.setItem('noob_prism_sim_settings', JSON.stringify({
+            prismPerCycle: document.getElementById('prismPerCycleInput').value,
+            cycleLength: document.getElementById('prismCycleLengthInput').value,
+            capsuleCost: document.getElementById('capsuleCostInput').value,
+            capsuleBulk: document.getElementById('capsuleBulkInput').value,
+            reservePrism: document.getElementById('reservePrismInput').value,
+            hasGamepass: hasGamepass,
+            calcTime: document.getElementById('prismCalcTimeInput').value,
+            calcUnit: document.getElementById('prismCalcUnitSelect').value
+          }));
+        } catch (e) {}
+      }
+
+      // Restore saved Prism settings if available
+      try {
+        const savedPrism = localStorage.getItem('noob_prism_sim_settings');
+        if (savedPrism) {
+          const ps = JSON.parse(savedPrism);
+          if (ps.prismPerCycle !== undefined) document.getElementById('prismPerCycleInput').value = ps.prismPerCycle;
+          if (ps.cycleLength !== undefined) document.getElementById('prismCycleLengthInput').value = ps.cycleLength;
+          if (ps.capsuleCost !== undefined) document.getElementById('capsuleCostInput').value = ps.capsuleCost;
+          if (ps.capsuleBulk !== undefined) document.getElementById('capsuleBulkInput').value = ps.capsuleBulk;
+          if (ps.reservePrism !== undefined) document.getElementById('reservePrismInput').value = ps.reservePrism;
+          if (ps.hasGamepass !== undefined) document.getElementById('minionMasterCheckbox').checked = Boolean(ps.hasGamepass);
+          if (ps.calcTime !== undefined) document.getElementById('prismCalcTimeInput').value = ps.calcTime;
+          if (ps.calcUnit !== undefined) document.getElementById('prismCalcUnitSelect').value = ps.calcUnit;
+        }
+        const savedMode = localStorage.getItem('noob_rune_sim_active_mode');
+        if (savedMode === 'prism') {
+          switchAppMode('prism');
+        }
+      } catch (e) {}
+
+      btnModeRune.addEventListener('click', () => switchAppMode('rune'));
+      btnModePrism.addEventListener('click', () => switchAppMode('prism'));
+
+      [
+        'prismPerCycleInput',
+        'prismCycleLengthInput',
+        'capsuleCostInput',
+        'capsuleBulkInput',
+        'reservePrismInput',
+        'prismCalcTimeInput'
+      ].forEach(id => {
+        document.getElementById(id).addEventListener('input', updatePrismModeCalculators);
+      });
+
+      document.getElementById('minionMasterCheckbox').addEventListener('change', updatePrismModeCalculators);
+      document.getElementById('prismCalcUnitSelect').addEventListener('change', updatePrismModeCalculators);
+
+      document.querySelectorAll('.prism-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById('prismCalcTimeInput').value = btn.getAttribute('data-prism-time') || '1';
+          document.getElementById('prismCalcUnitSelect').value = btn.getAttribute('data-prism-unit') || '60';
+          updatePrismModeCalculators();
+        });
+      });
+
+      updatePrismModeCalculators();
     });
   </script>
 </body>
