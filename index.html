@@ -518,9 +518,9 @@
         <!-- Chest Counter Controls -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="t1ChestAmountInput" class="text-xs font-medium text-[#b5bac1]">T1 Trial Chest</label>
-              <span id="parsedT1ChestLabel" class="text-[11px] font-mono text-purple-300">10</span>
+            <div class="relative flex items-center justify-center mb-1">
+              <label for="t1ChestAmountInput" class="text-xs font-medium text-[#b5bac1] text-center">T1 Trial Chest</label>
+              <span id="parsedT1ChestLabel" class="absolute right-0 text-[11px] font-mono text-purple-300">0</span>
             </div>
             <div class="flex items-center gap-2">
               <img src="https://i.imgur.com/kU8AKzO.png" alt="T1 Trial Chest" style="width:40px; height:40px; object-fit:contain;" class="shrink-0">
@@ -530,9 +530,9 @@
           </div>
 
           <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="t2ChestAmountInput" class="text-xs font-medium text-[#b5bac1]">T2 Trial Chest</label>
-              <span id="parsedT2ChestLabel" class="text-[11px] font-mono text-purple-300">10</span>
+            <div class="relative flex items-center justify-center mb-1">
+              <label for="t2ChestAmountInput" class="text-xs font-medium text-[#b5bac1] text-center">T2 Trial Chest</label>
+              <span id="parsedT2ChestLabel" class="absolute right-0 text-[11px] font-mono text-purple-300">0</span>
             </div>
             <div class="flex items-center gap-2">
               <img src="https://i.imgur.com/kn9tEpd.png" alt="T2 Trial Chest" style="width:40px; height:40px; object-fit:contain;" class="shrink-0">
@@ -545,7 +545,7 @@
         <!-- Open Button -->
         <div class="flex flex-wrap items-center gap-2">
           <button id="btnOpenChests" type="button" class="w-full px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold neon-btn transition active:scale-95">
-            Open (<span id="btnOpenChestsLabel">10 T1 + 10 T2</span>)
+            Open (<span id="btnOpenChestsLabel">0 T1 + 0 T2</span>)
           </button>
         </div>
 
@@ -553,7 +553,7 @@
         <div class="bg-[#1e1f22] border border-[#3f4147] rounded-xl p-3.5 space-y-2.5">
           <div class="flex items-center justify-between border-b border-[#3f4147] pb-2">
             <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Combined Roll Results (T1 + T2)</span>
-            <span id="chestRollsSummaryLabel" class="text-[11px] font-mono text-[#949ba4]">10 T1 + 10 T2 Chests</span>
+            <span id="chestRollsSummaryLabel" class="text-[11px] font-mono text-[#949ba4]">0 T1 + 0 T2 Chests</span>
           </div>
           <div id="chestCombinedResultsList" class="divide-y divide-[#3f4147]/70 rounded-xl overflow-hidden border border-[#3f4147] bg-[#313338]">
           </div>
@@ -572,45 +572,35 @@
         </div>
 
         <p class="text-xs text-[#949ba4]">Calculate how much Prism will be generated over a set amount of time based on your Player Stats.</p>
+        <p class="text-xs text-[#949ba4]">You can use combined time format for ex.: 3h 15m</p>
 
-        <!-- Time Input + Unit Selector -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div class="sm:col-span-2">
-            <div class="flex items-center justify-between mb-1">
-              <label for="prismCalcTimeInput" class="text-xs font-medium text-[#b5bac1]">Time Duration</label>
-              <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-purple-300">60 min</span>
-            </div>
-            <input id="prismCalcTimeInput" type="number" step="any" min="0" value="60" placeholder="Enter time amount..."
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+        <!-- Time Input (supports s, m, h, d, w and combined formats like "2d 4h") -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label for="prismCalcTimeInput" class="text-xs font-medium text-[#b5bac1]">Time Duration</label>
+            <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-purple-300">1hrs</span>
           </div>
-          <div>
-            <label for="prismCalcUnitSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Time Unit</label>
-            <select id="prismCalcUnitSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-medium">
-              <option value="1">Seconds</option>
-              <option value="60" selected>Minutes</option>
-              <option value="3600">Hours</option>
-              <option value="86400">Days</option>
-            </select>
-          </div>
+          <input id="prismCalcTimeInput" type="text" value="1h" placeholder="e.g. 30s, 10m, 2h, 2d 4h, 1w"
+            class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
         </div>
 
         <!-- Quick Time Presets -->
         <div class="flex flex-wrap items-center justify-between bg-[#1e1f22] rounded-xl p-2 border border-[#3f4147] gap-2">
           <span class="text-xs text-[#949ba4] pl-1 font-medium">Quick Set:</span>
           <div class="flex flex-wrap items-center gap-1.5">
-            <button type="button" data-prism-time="1" data-prism-unit="60" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
               1m
             </button>
-            <button type="button" data-prism-time="10" data-prism-unit="60" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
               10m
             </button>
-            <button type="button" data-prism-time="1" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
               1h
             </button>
-            <button type="button" data-prism-time="6" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
               6h
             </button>
-            <button type="button" data-prism-time="24" data-prism-unit="3600" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
               24h
             </button>
           </div>
@@ -748,6 +738,10 @@
       return isFinite(parsed) && parsed >= 0 ? parsed : fallback;
     }
 
+    function stripDecimalZeros(numStr) {
+      return numStr.replace(/(\.\d*?[1-9])0+$|\.0+$/, '$1');
+    }
+
     function formatGameNumber(num, decimals = 2) {
       if (!isFinite(num) || isNaN(num)) return 'Ce+';
       if (num === 0) return '0';
@@ -756,14 +750,14 @@
         if (abs >= 100 || Number.isInteger(num)) {
           return num.toLocaleString(undefined, { maximumFractionDigits: decimals });
         }
-        return num.toFixed(decimals).replace(/\.?0+$/, '');
+        return stripDecimalZeros(num.toFixed(decimals));
       }
       const exp = Math.floor(Math.log10(abs));
       const tierIndex = Math.min(SUFFIX_TABLE.length - 1, Math.floor(exp / 3) - 1);
       if (tierIndex >= 0 && tierIndex < SUFFIX_TABLE.length) {
         const item = SUFFIX_TABLE[tierIndex];
         const scaled = num / Math.pow(10, item.exp);
-        return `${scaled.toFixed(decimals).replace(/\.?0+$/, '')}${item.suf}`;
+        return `${stripDecimalZeros(scaled.toFixed(decimals))}${item.suf}`;
       }
       return num.toFixed(decimals);
     }
@@ -797,10 +791,10 @@
       if (hours > 0) parts.push(`${hours}h`);
       if (minutes > 0) parts.push(`${minutes}m`);
       if (secs > 0 && months === 0 && weeks === 0 && days === 0 && hours === 0) {
-        parts.push(`${secs < 10 && secs > 0 ? secs.toFixed(1).replace(/\.?0+$/, '') : Math.floor(secs)}s`);
+        parts.push(`${secs < 10 && secs > 0 ? stripDecimalZeros(secs.toFixed(1)) : Math.floor(secs)}s`);
       }
       if (parts.length === 0) {
-        if (seconds < 1) return `${seconds.toFixed(2).replace(/\.?0+$/, '')}s`;
+        if (seconds < 1) return `${stripDecimalZeros(seconds.toFixed(2))}s`;
         return `${Math.floor(seconds)}s`;
       }
       return parts.slice(0, 2).join(' ');
@@ -1835,24 +1829,77 @@
         return parseGameNumber(clean, fallback);
       }
 
+      // Supports s, m, h, d, w and combined strings like "2d 4h" (= 52hrs), "1w 2d", "1h 30m 15s"
+      function parsePrismTimeInput(str) {
+        if (typeof str === 'number') return isFinite(str) && str >= 0 ? str : 0;
+        if (!str) return 0;
+        const clean = String(str).trim();
+        if (!clean) return 0;
+
+        if (/^[+-]?(\d+(\.\d*)?|\.\d+)$/.test(clean)) {
+          const val = parseFloat(clean);
+          return isFinite(val) && val >= 0 ? val : 0;
+        }
+
+        const unitMultipliers = {
+          s: 1, sec: 1, secs: 1, second: 1, seconds: 1,
+          m: 60, min: 60, mins: 60, minute: 60, minutes: 60,
+          h: 3600, hr: 3600, hrs: 3600, hour: 3600, hours: 3600,
+          d: 86400, day: 86400, days: 86400,
+          w: 604800, wk: 604800, wks: 604800, week: 604800, weeks: 604800
+        };
+
+        const regex = /([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*([a-zA-Z]+)?/g;
+        let match;
+        let totalSeconds = 0;
+        let matchedAny = false;
+
+        while ((match = regex.exec(clean)) !== null) {
+          const val = parseFloat(match[1]);
+          if (!isFinite(val) || val < 0) continue;
+          const unitRaw = (match[2] || 's').toLowerCase();
+          const mult = unitMultipliers[unitRaw];
+          if (mult !== undefined) {
+            totalSeconds += val * mult;
+            matchedAny = true;
+          }
+        }
+
+        return matchedAny ? totalSeconds : 0;
+      }
+
+      function formatParsedTimeLabel(seconds) {
+        if (!isFinite(seconds) || seconds <= 0) return '0s';
+        if (seconds >= 3600) {
+          return `${formatGameNumber(seconds / 3600, 2)}hrs`;
+        }
+        if (seconds >= 60) {
+          return `${formatGameNumber(seconds / 60, 2)}m`;
+        }
+        return `${formatGameNumber(seconds, 2)}s`;
+      }
+
       function formatPrismDuration(seconds) {
         if (!isFinite(seconds) || seconds < 0) return '∞';
         if (seconds === 0) return '0s';
         if (seconds < 60) {
-          return `${seconds < 10 ? seconds.toFixed(2).replace(/\.?0+$/, '') : seconds.toFixed(1).replace(/\.?0+$/, '')}s`;
+          return `${seconds < 10 ? stripDecimalZeros(seconds.toFixed(2)) : stripDecimalZeros(seconds.toFixed(1))}s`;
         }
-        const days = Math.floor(seconds / 86400);
-        let rem = seconds % 86400;
+        const weeks = Math.floor(seconds / 604800);
+        let rem = seconds % 604800;
+        const days = Math.floor(rem / 86400);
+        rem %= 86400;
         const hours = Math.floor(rem / 3600);
         rem %= 3600;
         const minutes = Math.floor(rem / 60);
         const secs = Math.floor(rem % 60);
 
         const parts = [];
+        if (weeks > 0) parts.push(`${formatGameNumber(weeks, 0)}w`);
         if (days > 0) parts.push(`${formatGameNumber(days, 0)}d`);
         if (hours > 0) parts.push(`${hours}h`);
         if (minutes > 0) parts.push(`${minutes}m`);
-        if (secs > 0 && days === 0) parts.push(`${secs}s`);
+        if (secs > 0 && weeks === 0 && days === 0) parts.push(`${secs}s`);
         return parts.slice(0, 3).join(' ');
       }
 
@@ -1932,14 +1979,10 @@
         }
 
         // Update Box 3: Prism Calculator
-        const rawTimeVal = parseFloat(document.getElementById('prismCalcTimeInput').value);
-        const timeVal = isFinite(rawTimeVal) && rawTimeVal >= 0 ? rawTimeVal : 0;
-        const unitSeconds = parseFloat(document.getElementById('prismCalcUnitSelect').value) || 60;
-        const totalSeconds = timeVal * unitSeconds;
+        const rawTimeStr = document.getElementById('prismCalcTimeInput').value;
+        const totalSeconds = parsePrismTimeInput(rawTimeStr);
 
-        const unitNames = { '1': 'sec', '60': 'min', '3600': 'hr', '86400': 'd' };
-        const unitLabel = unitNames[String(unitSeconds)] || 'sec';
-        document.getElementById('parsedPrismTimeLabel').textContent = `${formatGameNumber(timeVal)} ${unitLabel}`;
+        document.getElementById('parsedPrismTimeLabel').textContent = formatParsedTimeLabel(totalSeconds);
 
         const totalCycles = totalSeconds / cycleLength;
         const totalPrismGenerated = prismPerSec * totalSeconds;
@@ -1959,8 +2002,7 @@
             capsuleBulk: document.getElementById('capsuleBulkInput').value,
             reservePrism: document.getElementById('reservePrismInput').value,
             hasGamepass: hasGamepass,
-            calcTime: document.getElementById('prismCalcTimeInput').value,
-            calcUnit: document.getElementById('prismCalcUnitSelect').value
+            calcTime: document.getElementById('prismCalcTimeInput').value
           }));
         } catch (e) {}
       }
@@ -1976,8 +2018,14 @@
           if (ps.capsuleBulk !== undefined) document.getElementById('capsuleBulkInput').value = ps.capsuleBulk;
           if (ps.reservePrism !== undefined) document.getElementById('reservePrismInput').value = ps.reservePrism;
           if (ps.hasGamepass !== undefined) document.getElementById('minionMasterCheckbox').checked = Boolean(ps.hasGamepass);
-          if (ps.calcTime !== undefined) document.getElementById('prismCalcTimeInput').value = ps.calcTime;
-          if (ps.calcUnit !== undefined) document.getElementById('prismCalcUnitSelect').value = ps.calcUnit;
+          if (ps.calcTime !== undefined) {
+            let loadedTime = String(ps.calcTime).trim();
+            if (/^\d+(\.\d+)?$/.test(loadedTime) && ps.calcUnit) {
+              const unitMap = { '1': 's', '60': 'm', '3600': 'h', '86400': 'd' };
+              loadedTime += (unitMap[String(ps.calcUnit)] || 's');
+            }
+            document.getElementById('prismCalcTimeInput').value = loadedTime;
+          }
         }
         const savedMode = localStorage.getItem('noob_rune_sim_active_mode');
         if (savedMode === 'prism') {
@@ -2000,12 +2048,10 @@
       });
 
       document.getElementById('minionMasterCheckbox').addEventListener('change', updatePrismModeCalculators);
-      document.getElementById('prismCalcUnitSelect').addEventListener('change', updatePrismModeCalculators);
 
       document.querySelectorAll('.prism-preset-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.getElementById('prismCalcTimeInput').value = btn.getAttribute('data-prism-time') || '1';
-          document.getElementById('prismCalcUnitSelect').value = btn.getAttribute('data-prism-unit') || '60';
+          document.getElementById('prismCalcTimeInput').value = btn.getAttribute('data-prism-time') || '1h';
           updatePrismModeCalculators();
         });
       });
@@ -2155,10 +2201,10 @@
         const { t1, t2 } = getChestCounts();
         const prismReward = getCurrentPrismGainForChests();
 
-        document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1, 0);
-        document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2, 0);
-        document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1, 0)} T1 + ${formatGameNumber(t2, 0)} T2`;
-        document.getElementById('chestRollsSummaryLabel').textContent = `${formatGameNumber(t1, 0)} T1 + ${formatGameNumber(t2, 0)} T2 Chests`;
+        document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1);
+        document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2);
+        document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2`;
+        document.getElementById('chestRollsSummaryLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2 Chests`;
 
         const results = CHEST_ITEMS.map(item => {
           let combinedExpectedAmt = 0;
@@ -2199,19 +2245,18 @@
         const listEl = document.getElementById('chestCombinedResultsList');
         listEl.innerHTML = results.map(entry => {
           const { item, combinedExpectedAmt, detailsText } = entry;
-          const isWeapon = item.category.includes('Weapon');
 
           return `
-            <div class="flex items-center justify-between px-3 py-2.5 gap-2 hover:bg-[#383a40]/60 transition animate-pop">
-              <div class="flex items-center gap-3 min-w-0">
-                <img src="${item.icon}" alt="${item.name}" style="width:40px; height:40px; object-fit:contain;" class="shrink-0 rounded-lg bg-[#1e1f22] p-0.5 border border-[#3f4147]">
-                <div class="min-w-0">
-                  <div class="text-xs sm:text-sm font-semibold text-[#f2f3f5] truncate">${item.name}</div>
+            <div class="flex items-center justify-center px-3 py-3 gap-4 hover:bg-[#383a40]/60 transition animate-pop text-center">
+              <div class="flex items-center justify-center gap-3 min-w-0">
+                <img src="${item.icon}" alt="${item.name}" style="width:48px; height:48px; object-fit:contain;" class="shrink-0 rounded-lg bg-[#1e1f22] p-0.5 border border-[#3f4147]">
+                <div class="min-w-0 text-center">
+                  <div class="text-sm sm:text-base font-semibold text-[#f2f3f5] truncate">${item.name}</div>
                 </div>
               </div>
-              <div class="text-right font-mono">
-                <div class="text-xs sm:text-sm font-bold text-purple-300">${formatGameNumber(combinedExpectedAmt, 2)}</div>
-                <div class="text-[10px] text-[#949ba4]">${detailsText}</div>
+              <div class="text-center font-mono">
+                <div class="text-sm sm:text-base font-bold text-purple-300">${formatGameNumber(combinedExpectedAmt, 2)}</div>
+                <div class="text-xs text-[#949ba4]">${detailsText}</div>
               </div>
             </div>
           `;
@@ -2224,9 +2269,9 @@
       [t1ChestInput, t2ChestInput].forEach(inp => {
         inp.addEventListener('input', () => {
           const { t1, t2 } = getChestCounts();
-          document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1, 0);
-          document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2, 0);
-          document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1, 0)} T1 + ${formatGameNumber(t2, 0)} T2`;
+          document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1);
+          document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2);
+          document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2`;
         });
       });
 
