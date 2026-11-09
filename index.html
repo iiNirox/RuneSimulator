@@ -203,8 +203,14 @@
                 <label for="runeLuckInput" class="text-xs font-medium text-[#b5bac1]">Rune Luck (×)</label>
                 <span id="parsedLuckLabel" class="text-[11px] font-mono text-purple-300">1×</span>
               </div>
-              <input id="runeLuckInput" type="text" value="1" placeholder="e.g. 1, 50K, 10Qd"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+              <div id="runeLuckRow" class="grid grid-cols-2 gap-2">
+                <input id="runeLuckInput" type="text" value="1" placeholder="e.g. 1, 50K, 10Qd"
+                  class="w-full rounded-xl discord-input text-center px-2 py-2 text-sm font-mono" />
+                <button id="btnForceLuckOne" type="button" title="Set active Rune Luck to 1 without changing the value in the Rune Luck box"
+                  class="w-full rounded-xl px-2 py-2 text-xs font-mono font-bold border border-[#3f4147] bg-[#1e1f22] text-[#b5bac1] hover:border-purple-500/50 hover:text-white transition active:scale-95">
+                  Luck = 1
+                </button>
+              </div>
             </div>
 
             <!-- Rune Speed -->
@@ -1365,6 +1371,7 @@
       etaRandomSeeds: {},
       autoOpenTimer: null,
       isAutoOpening: false,
+      forceLuckOne: false,
       rpsProfiles: {
         'Normal RPS': { bulk: '1', speed: '0.05' },
         'Football RPS': { bulk: '1', speed: '0.05' },
@@ -1416,6 +1423,7 @@
           realm: state.realm,
           pack: state.pack,
           luck: document.getElementById('runeLuckInput').value,
+          forceLuckOne: state.forceLuckOne,
           bulk: document.getElementById('runeBulkInput').value,
           speed: document.getElementById('runeSpeedInput').value,
           rpsProfiles: state.rpsProfiles
@@ -1436,6 +1444,7 @@
             state.pack = settings.pack;
           }
           if (settings.luck !== undefined) document.getElementById('runeLuckInput').value = settings.luck;
+          if (settings.forceLuckOne !== undefined) state.forceLuckOne = Boolean(settings.forceLuckOne);
           if (settings.rpsProfiles && typeof settings.rpsProfiles === 'object') {
             ['Normal RPS', 'Football RPS', 'Halloween RPS', 'Prism RPS'].forEach(cat => {
               if (settings.rpsProfiles[cat]) {
@@ -1461,7 +1470,9 @@
     // 4. RUNE CHANCE CALCULATION (Noobinials ignore luck, 1.5x when Luck == 1)
     // =========================================================================
     function getPlayerStats() {
-      const luck = Math.max(0.0001, parseGameNumber(document.getElementById('runeLuckInput').value, 1));
+      const isNormalRps = getRpsCategory(state.pack) === 'Normal RPS';
+      const rawLuck = Math.max(0.0001, parseGameNumber(document.getElementById('runeLuckInput').value, 1));
+      const luck = (isNormalRps && state.forceLuckOne) ? 1 : rawLuck;
       const bulk = Math.max(1, Math.floor(parseGameNumber(document.getElementById('runeBulkInput').value, 1)));
       const speed = Math.max(0.001, parseFloat(document.getElementById('runeSpeedInput').value) || 0.05);
       return { luck, bulk, speed };
@@ -1735,9 +1746,28 @@
       document.getElementById('btnBulkLabel').textContent = formatGameNumber(bulk, 0);
 
       const rpsCategory = getRpsCategory(state.pack);
+      const isNormalRps = rpsCategory === 'Normal RPS';
       const rpsCatLabelEl = document.getElementById('statRpsCategoryLabel');
       if (rpsCatLabelEl) {
         rpsCatLabelEl.textContent = rpsCategory;
+      }
+      const runeLuckRowEl = document.getElementById('runeLuckRow');
+      const btnForceLuckOneEl = document.getElementById('btnForceLuckOne');
+      if (runeLuckRowEl && btnForceLuckOneEl) {
+        if (isNormalRps) {
+          runeLuckRowEl.className = 'grid grid-cols-2 gap-2';
+          btnForceLuckOneEl.classList.remove('hidden');
+          if (state.forceLuckOne) {
+            btnForceLuckOneEl.textContent = 'Luck = 1: ON';
+            btnForceLuckOneEl.className = 'w-full rounded-xl px-2 py-2 text-xs font-mono font-bold transition active:scale-95 neon-btn border border-purple-400';
+          } else {
+            btnForceLuckOneEl.textContent = 'Luck = 1: OFF';
+            btnForceLuckOneEl.className = 'w-full rounded-xl px-2 py-2 text-xs font-mono font-bold border border-[#3f4147] bg-[#1e1f22] text-[#b5bac1] hover:border-purple-500/50 hover:text-white transition active:scale-95';
+          }
+        } else {
+          runeLuckRowEl.className = 'grid grid-cols-1';
+          btnForceLuckOneEl.classList.add('hidden');
+        }
       }
       document.getElementById('statRunesPerSec').textContent = `${formatGameNumber(runesPerSec)} /s`;
       document.getElementById('statBasicLuckMulti').textContent = `${formatGameNumber(luck)}×`;
@@ -1890,6 +1920,11 @@
 
       ['runeLuckInput', 'runeBulkInput', 'runeSpeedInput'].forEach(id => {
         document.getElementById(id).addEventListener('input', renderAll);
+      });
+
+      document.getElementById('btnForceLuckOne').addEventListener('click', () => {
+        state.forceLuckOne = !state.forceLuckOne;
+        renderAll();
       });
 
       document.getElementById('btnOpenSingle').addEventListener('click', () => {
