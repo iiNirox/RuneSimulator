@@ -189,9 +189,9 @@
           <div class="space-y-3">
             <!-- Rune Bulk -->
             <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="runeBulkInput" class="text-xs font-medium text-[#b5bac1]">Rune Bulk</label>
-                <span id="parsedBulkLabel" class="text-[11px] font-mono text-purple-300">1</span>
+              <div class="flex items-center justify-between mb-1 gap-1">
+                <label id="labelRuneBulk" for="runeBulkInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Bulk</label>
+                <span id="parsedBulkLabel" class="text-[11px] font-mono text-purple-300 shrink-0">1</span>
               </div>
               <input id="runeBulkInput" type="text" value="1" placeholder="e.g. 1, 100, 5K"
                 class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
@@ -199,9 +199,9 @@
 
             <!-- Rune Luck -->
             <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="runeLuckInput" class="text-xs font-medium text-[#b5bac1]">Rune Luck (×)</label>
-                <span id="parsedLuckLabel" class="text-[11px] font-mono text-purple-300">1×</span>
+              <div class="flex items-center justify-between mb-1 gap-1">
+                <label id="labelRuneLuck" for="runeLuckInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Luck (×)</label>
+                <span id="parsedLuckLabel" class="text-[11px] font-mono text-purple-300 shrink-0">1×</span>
               </div>
               <div id="runeLuckRow" class="grid grid-cols-2 gap-2">
                 <input id="runeLuckInput" type="text" value="1" placeholder="e.g. 1, 50K, 10Qd"
@@ -215,9 +215,9 @@
 
             <!-- Rune Speed -->
             <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="runeSpeedInput" class="text-xs font-medium text-[#b5bac1]">Rune Speed (s)</label>
-                <span id="parsedSpeedLabel" class="text-[11px] font-mono text-purple-300">0.05s</span>
+              <div class="flex items-center justify-between mb-1 gap-1">
+                <label id="labelRuneSpeed" for="runeSpeedInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Speed (s)</label>
+                <span id="parsedSpeedLabel" class="text-[11px] font-mono text-purple-300 shrink-0">0.05s</span>
               </div>
               <input id="runeSpeedInput" type="number" step="0.005" min="0.001" value="0.05"
                 class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
@@ -1373,10 +1373,10 @@
       isAutoOpening: false,
       forceLuckOne: false,
       rpsProfiles: {
-        'Normal RPS': { bulk: '1', speed: '0.05' },
-        'Football RPS': { bulk: '1', speed: '0.05' },
-        'Halloween RPS': { bulk: '1', speed: '0.05' },
-        'Prism RPS': { bulk: '1', speed: '0.05' }
+        'Normal RPS': { bulk: '1', luck: '1', speed: '0.05' },
+        'Football RPS': { bulk: '1', luck: '1', speed: '0.05' },
+        'Halloween RPS': { bulk: '1', luck: '1', speed: '0.05' },
+        'Prism RPS': { bulk: '1', luck: '1', speed: '0.05' }
       },
       sim: {
         batchesOpened: 0,
@@ -1398,17 +1398,24 @@
       return 'Normal RPS';
     }
 
+    function getCategoryPrefix(packName) {
+      const cat = getRpsCategory(packName);
+      return cat.replace(' RPS', '');
+    }
+
     function applyRpsProfileForCurrentPack() {
       const cat = getRpsCategory(state.pack);
-      const profile = state.rpsProfiles[cat] || { bulk: '1', speed: '0.05' };
-      document.getElementById('runeBulkInput').value = profile.bulk;
-      document.getElementById('runeSpeedInput').value = profile.speed;
+      const profile = state.rpsProfiles[cat] || { bulk: '1', luck: '1', speed: '0.05' };
+      document.getElementById('runeBulkInput').value = profile.bulk !== undefined ? profile.bulk : '1';
+      document.getElementById('runeLuckInput').value = profile.luck !== undefined ? profile.luck : '1';
+      document.getElementById('runeSpeedInput').value = profile.speed !== undefined ? profile.speed : '0.05';
     }
 
     function syncCurrentInputsToRpsProfile() {
       const cat = getRpsCategory(state.pack);
       state.rpsProfiles[cat] = {
         bulk: document.getElementById('runeBulkInput').value,
+        luck: document.getElementById('runeLuckInput').value,
         speed: document.getElementById('runeSpeedInput').value
       };
     }
@@ -1422,10 +1429,7 @@
         const settings = {
           realm: state.realm,
           pack: state.pack,
-          luck: document.getElementById('runeLuckInput').value,
           forceLuckOne: state.forceLuckOne,
-          bulk: document.getElementById('runeBulkInput').value,
-          speed: document.getElementById('runeSpeedInput').value,
           rpsProfiles: state.rpsProfiles
         };
         localStorage.setItem('noob_rune_sim_settings', JSON.stringify(settings));
@@ -1443,23 +1447,26 @@
           if (settings.pack && RUNE_DATABASE[state.realm].packs[settings.pack]) {
             state.pack = settings.pack;
           }
-          if (settings.luck !== undefined) document.getElementById('runeLuckInput').value = settings.luck;
           if (settings.forceLuckOne !== undefined) state.forceLuckOne = Boolean(settings.forceLuckOne);
+          const activeCat = getRpsCategory(state.pack);
+          const legacyBulk = settings.bulk !== undefined ? String(settings.bulk) : '1';
+          const legacyLuck = settings.luck !== undefined ? String(settings.luck) : '1';
+          const legacySpeed = settings.speed !== undefined ? String(settings.speed) : '0.05';
+
           if (settings.rpsProfiles && typeof settings.rpsProfiles === 'object') {
             ['Normal RPS', 'Football RPS', 'Halloween RPS', 'Prism RPS'].forEach(cat => {
               if (settings.rpsProfiles[cat]) {
+                const p = settings.rpsProfiles[cat];
                 state.rpsProfiles[cat] = {
-                  bulk: settings.rpsProfiles[cat].bulk !== undefined ? String(settings.rpsProfiles[cat].bulk) : '1',
-                  speed: settings.rpsProfiles[cat].speed !== undefined ? String(settings.rpsProfiles[cat].speed) : '0.05'
+                  bulk: p.bulk !== undefined ? String(p.bulk) : '1',
+                  luck: p.luck !== undefined ? String(p.luck) : (cat === activeCat ? legacyLuck : '1'),
+                  speed: p.speed !== undefined ? String(p.speed) : '0.05'
                 };
               }
             });
           } else {
-            const legacyBulk = settings.bulk !== undefined ? String(settings.bulk) : '1';
-            const legacySpeed = settings.speed !== undefined ? String(settings.speed) : '0.05';
-            const activeCat = getRpsCategory(state.pack);
-            state.rpsProfiles['Normal RPS'] = { bulk: legacyBulk, speed: legacySpeed };
-            state.rpsProfiles[activeCat] = { bulk: legacyBulk, speed: legacySpeed };
+            state.rpsProfiles['Normal RPS'] = { bulk: legacyBulk, luck: legacyLuck, speed: legacySpeed };
+            state.rpsProfiles[activeCat] = { bulk: legacyBulk, luck: legacyLuck, speed: legacySpeed };
           }
           applyRpsProfileForCurrentPack();
         }
@@ -1746,11 +1753,18 @@
       document.getElementById('btnBulkLabel').textContent = formatGameNumber(bulk, 0);
 
       const rpsCategory = getRpsCategory(state.pack);
+      const catPrefix = getCategoryPrefix(state.pack);
       const isNormalRps = rpsCategory === 'Normal RPS';
       const rpsCatLabelEl = document.getElementById('statRpsCategoryLabel');
       if (rpsCatLabelEl) {
         rpsCatLabelEl.textContent = rpsCategory;
       }
+      const labelBulkEl = document.getElementById('labelRuneBulk');
+      const labelLuckEl = document.getElementById('labelRuneLuck');
+      const labelSpeedEl = document.getElementById('labelRuneSpeed');
+      if (labelBulkEl) labelBulkEl.textContent = `${catPrefix} Rune Bulk`;
+      if (labelLuckEl) labelLuckEl.textContent = `${catPrefix} Rune Luck (×)`;
+      if (labelSpeedEl) labelSpeedEl.textContent = `${catPrefix} Rune Speed (s)`;
       const runeLuckRowEl = document.getElementById('runeLuckRow');
       const btnForceLuckOneEl = document.getElementById('btnForceLuckOne');
       if (runeLuckRowEl && btnForceLuckOneEl) {
