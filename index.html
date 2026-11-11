@@ -3,211 +3,220 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noob Incremental — Rune Simulator</title>
+  <title>Noob Incremental — Rune &amp; Prism Utility</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            discord: {
-              950: '#1e1f22',
-              900: '#2b2d31',
-              800: '#313338',
-              700: '#383a40',
-              600: '#4e5058',
-              text: '#f2f3f5',
-              muted: '#b5bac1',
-              subtle: '#949ba4'
-            },
-            neon: {
-              purple: '#a855f7',
-              bright: '#c084fc',
-              deep: '#7e22ce'
-            }
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['IBM Plex Mono', ' monospace'],
           }
         }
       }
     };
   </script>
   <style>
+    :root {
+      --bg-base: #121316;
+      --bg-surface: #181a1f;
+      --bg-elevated: #1f2229;
+      --bg-input: #101114;
+      --border-subtle: #282b33;
+      --border-focus: #d97706;
+      --text-main: #e6e8ec;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --accent: #e59934;
+      --accent-hover: #f0ab4d;
+    }
+
     body {
-      background-color: #1e1f22;
-      color: #f2f3f5;
-      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .discord-card {
-      background-color: #2b2d31;
-      border: 1px solid #3f4147;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+    .panel {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
     }
-    .discord-panel {
-      background-color: #313338;
-      border: 1px solid #3f4147;
+
+    .subpanel {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
     }
-    .discord-input {
-      background-color: #1e1f22;
-      border: 1px solid #3f4147;
-      color: #f2f3f5;
-      text-align: center;
-      text-align-last: center;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    .field-input {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      color: var(--text-main);
+      transition: border-color 0.12s ease;
     }
-    .discord-input:focus {
+
+    .field-input:hover {
+      border-color: #383c47;
+    }
+
+    .field-input:focus {
       outline: none;
-      border-color: #a855f7;
-      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.28);
+      border-color: var(--accent);
     }
-    .neon-border {
-      border: 1px solid rgba(168, 85, 247, 0.55);
-      box-shadow: 0 0 18px rgba(168, 85, 247, 0.18);
+
+    .btn-primary {
+      background-color: #d97706;
+      color: #111215;
+      font-weight: 600;
+      border: 1px solid #f59e0b;
+      border-radius: 4px;
+      transition: background-color 0.12s ease;
     }
-    .neon-btn {
-      background: linear-gradient(135deg, #9333ea, #a855f7);
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+
+    .btn-primary:hover {
+      background-color: #f59e0b;
     }
-    .neon-btn:hover {
-      background: linear-gradient(135deg, #a855f7, #c084fc);
-      box-shadow: 0 0 22px rgba(192, 132, 252, 0.55);
+
+    .btn-secondary {
+      background-color: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid #323640;
+      border-radius: 4px;
+      transition: background-color 0.12s ease, border-color 0.12s ease;
     }
-    .noobinial-neon-row {
-      background: linear-gradient(90deg, rgba(139, 92, 246, 0.14), rgba(168, 85, 247, 0.05));
-      border-left: 3px solid #a78bfa;
-      box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.10);
+
+    .btn-secondary:hover {
+      background-color: #272b34;
+      border-color: #434857;
     }
-    .noobinial-neon-text {
-      color: #d8b4fe;
-      text-shadow: 0 0 6px rgba(167, 139, 250, 0.28);
+
+    .noobinial-row {
+      background-color: rgba(217, 119, 6, 0.06);
+      border-left: 2px solid #f59e0b;
     }
-    @keyframes pulsePop {
-      0% { transform: scale(0.95); opacity: 0.5; }
-      50% { transform: scale(1.02); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+
+    .noobinial-row:hover {
+      background-color: rgba(217, 119, 6, 0.11);
     }
-    .animate-pop {
-      animation: pulsePop 0.2s ease-out forwards;
+
+    .noobinial-text {
+      color: #fbbf24;
     }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #1e1f22;
+      background: #121316;
     }
     ::-webkit-scrollbar-thumb {
-      background: #4e5058;
-      border-radius: 3px;
+      background: #2e323b;
+      border-radius: 2px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #a855f7;
+      background: #434857;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-purple-500 selection:text-white">
+<body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
 
-  <!-- Top Header -->
-  <header class="sticky top-0 z-30 border-b border-[#3f4147] bg-[#2b2d31]/95 backdrop-blur-md">
-    <div class="max-w-[1720px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-30 border-b border-[#282b33] bg-[#15171c]">
+    <div class="max-w-[1680px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-fuchsia-500 p-0.5 shadow-lg shadow-purple-500/30">
-          <div class="w-full h-full bg-[#1e1f22] rounded-[10px] flex items-center justify-center">
-            <svg class="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
-              <circle cx="12" cy="12" r="4" class="text-purple-300" stroke="currentColor"></circle>
-            </svg>
-          </div>
-        </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
-            <span>Noob Incremental Rune Simulator</span>
+        <div class="flex items-baseline gap-2.5">
+          <h1 class="text-sm sm:text-base font-semibold tracking-tight text-[#f3f4f6]">
+            Noob Incremental
           </h1>
-          <p class="text-xs text-[#b5bac1]">Simulate rune openings with custom Rune Luck, Bulk &amp; Speed</p>
-          <p class="text-xs text-[#ffffff]">Made by <a href="https://github.com/iiNirox">@iiNirox</a></p>
+          <span class="text-xs text-[#6b7280]">/</span>
+          <span class="text-xs font-mono text-[#9ca3af]">Rune &amp; Prism Utility</span>
         </div>
+        <span class="hidden sm:inline-block text-xs text-[#6b7280] border-l border-[#282b33] pl-3">
+          by <a href="https://github.com/iiNirox" target="_blank" rel="noopener noreferrer" class="text-[#9ca3af] hover:text-white underline underline-offset-2">@iiNirox</a>
+        </span>
       </div>
 
-      <!-- Mode Switcher (Far Right) -->
-      <div class="flex items-center gap-1.5 bg-[#1e1f22] p-1.5 rounded-xl border border-[#3f4147]">
-        <button id="btnModeRune" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn">
+      <!-- Mode Switcher -->
+      <div class="flex items-center gap-1 bg-[#101114] p-1 rounded border border-[#282b33]">
+        <button id="btnModeRune" type="button" class="px-3 py-1 rounded text-xs font-medium transition btn-primary">
           Rune Mode
         </button>
-        <button id="btnModePrism" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent">
+        <button id="btnModePrism" type="button" class="px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white">
           Prism Mode
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main 3-Column Layout: Left (Selection + Player Stats) | Middle (Simulator) | Right (Rune Chances List) -->
-  <main class="flex-1 max-w-[1720px] w-full mx-auto px-4 py-5">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-[1680px] w-full mx-auto px-4 py-4">
+    <!-- RUNE MODE LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 
-      <!-- LEFT COLUMN: Selection & Player Stats Stacked Vertically -->
+      <!-- LEFT COLUMN: Pack Selection & Stats -->
       <aside class="lg:col-span-2 flex flex-col gap-4">
-        <!-- 1. Selection -->
-        <div class="discord-card rounded-2xl p-4 space-y-3.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-              Selection
-            </span>
+        <!-- Selection -->
+        <div class="panel p-3.5 space-y-3">
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
+            <h2 class="text-xs font-semibold text-[#d1d5db]">Pack Selection</h2>
           </div>
 
-          <div class="space-y-3">
+          <div class="space-y-2.5">
             <div>
-              <label for="realmSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Realm</label>
-              <select id="realmSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm">
+              <label for="realmSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Realm</label>
+              <select id="realmSelect" class="w-full field-input px-2.5 py-1.5 text-xs">
               </select>
             </div>
             <div>
-              <label for="runePackSelect" class="block text-xs font-medium text-[#b5bac1] mb-1">Opening Rune</label>
-              <select id="runePackSelect" class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm">
+              <label for="runePackSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Opening Rune</label>
+              <select id="runePackSelect" class="w-full field-input px-2.5 py-1.5 text-xs">
               </select>
             </div>
           </div>
         </div>
 
-        <!-- 2. Player Stats -->
-        <div class="discord-card rounded-2xl p-4 space-y-3.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-              Player Stats
-            </span>
+        <!-- Player Stats -->
+        <div class="panel p-3.5 space-y-3">
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
+            <h2 class="text-xs font-semibold text-[#d1d5db]">Player Stats</h2>
           </div>
 
-          <div class="space-y-3">
+          <div class="space-y-2.5">
             <!-- Rune Bulk -->
             <div>
               <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneBulk" for="runeBulkInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Bulk</label>
-                <span id="parsedBulkLabel" class="text-[11px] font-mono text-purple-300 shrink-0">1</span>
+                <label id="labelRuneBulk" for="runeBulkInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Bulk</label>
+                <span id="parsedBulkLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">1</span>
               </div>
-              <input id="runeBulkInput" type="text" value="1" placeholder="e.g. 1, 100, 5K"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+              <input id="runeBulkInput" type="text" value="1" placeholder="1, 100, 5K"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
             <!-- Rune Luck -->
             <div>
               <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneLuck" for="runeLuckInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Luck (×)</label>
-                <span id="parsedLuckLabel" class="text-[11px] font-mono text-purple-300 shrink-0">1×</span>
+                <label id="labelRuneLuck" for="runeLuckInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Luck (×)</label>
+                <span id="parsedLuckLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">1×</span>
               </div>
-              <div id="runeLuckRow" class="grid grid-cols-2 gap-2">
-                <input id="runeLuckInput" type="text" value="1" placeholder="e.g. 1, 50K, 10Qd"
-                  class="w-full rounded-xl discord-input text-center px-2 py-2 text-sm font-mono" />
-                <button id="btnForceLuckOne" type="button" title="Set active Rune Luck to 1 without changing the value in the Rune Luck box"
-                  class="w-full rounded-xl px-2 py-2 text-xs font-mono font-bold border border-[#3f4147] bg-[#1e1f22] text-[#b5bac1] hover:border-purple-500/50 hover:text-white transition active:scale-95">
+              <div id="runeLuckRow" class="grid grid-cols-2 gap-1.5">
+                <input id="runeLuckInput" type="text" value="1" placeholder="1, 50K, 10Qd"
+                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+                <button id="btnForceLuckOne" type="button" title="Toggle active Rune Luck = 1 without overwriting input"
+                  class="w-full px-2 py-1.5 text-[11px] font-mono font-medium btn-secondary">
                   Luck = 1
                 </button>
               </div>
@@ -216,436 +225,419 @@
             <!-- Rune Speed -->
             <div>
               <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneSpeed" for="runeSpeedInput" class="text-xs font-medium text-[#b5bac1] truncate">Normal Rune Speed (s)</label>
-                <span id="parsedSpeedLabel" class="text-[11px] font-mono text-purple-300 shrink-0">0.05s</span>
+                <label id="labelRuneSpeed" for="runeSpeedInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Speed (s)</label>
+                <span id="parsedSpeedLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">0.05s</span>
               </div>
               <input id="runeSpeedInput" type="number" step="0.005" min="0.001" value="0.05"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
 
-          <!-- Combined Single Box for Rune Luck & RPS -->
-          <div class="discord-panel neon-border rounded-xl p-3 flex items-center justify-center gap-3">
-            <div class="flex-1 text-center">
-              <div class="text-[10px] uppercase tracking-wider text-[#949ba4]">Rune Luck</div>
-              <div id="statBasicLuckMulti" class="text-sm font-mono font-bold text-purple-400 mt-0.5">1×</div>
+          <!-- Effective Output Readout -->
+          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33]">
+            <div class="pr-2">
+              <div class="text-[10px] text-[#6b7280]">Active Luck</div>
+              <div id="statBasicLuckMulti" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">1×</div>
             </div>
-            <div class="h-7 w-px bg-[#3f4147]"></div>
-            <div class="flex-1 text-center">
-              <div id="statRpsCategoryLabel" class="text-[10px] uppercase tracking-wider text-[#949ba4]">Normal RPS</div>
-              <div id="statRunesPerSec" class="text-sm font-mono font-bold text-purple-300 mt-0.5">20 /s</div>
+            <div class="pl-2.5">
+              <div id="statRpsCategoryLabel" class="text-[10px] text-[#6b7280] truncate">Normal RPS</div>
+              <div id="statRunesPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">20 /s</div>
             </div>
           </div>
         </div>
       </aside>
 
-      <!-- MIDDLE COLUMN: Rune Opening Simulator + Chance Calculator -->
-      <div class="lg:col-span-4 flex flex-col gap-0">
-      <section class="discord-card neon-border rounded-t-2xl rounded-b-none p-4 sm:p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#3f4147] pb-3">
-          <div class="flex items-center gap-2.5">
-            <h2 class="text-base sm:text-lg font-bold text-white">Rune Simulator</h2>
-            <span id="simStatusPill" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#1e1f22] text-[#b5bac1] border border-[#3f4147]">
-              IDLE
-            </span>
-          </div>
-          <button id="btnResetSim" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#313338] hover:bg-rose-950/80 text-[#b5bac1] hover:text-rose-300 border border-[#3f4147] hover:border-rose-700/50 transition">
-            Reset
-          </button>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="btnOpenSingle" type="button" class="flex-1 min-w-[140px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold neon-btn transition active:scale-95">
-            Open 1 Batch (<span id="btnBulkLabel">1</span>)
-          </button>
-          <button id="btnToggleAuto" type="button" class="flex-1 min-w-[140px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#383a40] hover:bg-purple-600 text-white border border-purple-500/40 transition active:scale-95 flex items-center justify-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-            <span id="autoBtnText">Start Auto-Open</span>
-          </button>
-        </div>
-
-        <!-- Time Warp Bar -->
-        <div class="flex items-center justify-between bg-[#1e1f22] rounded-xl p-2 border border-[#3f4147] gap-2">
-          <span class="text-xs text-[#949ba4] pl-1 font-medium">Time Warp:</span>
-          <div class="flex items-center gap-1.5">
-            <button type="button" data-warp-sec="60" class="warp-btn px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
-              +1m
-            </button>
-            <button type="button" data-warp-sec="3600" class="warp-btn px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
-              +1h
-            </button>
-            <button type="button" data-warp-sec="86400" class="warp-btn px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
-              +24h
+      <!-- MIDDLE COLUMN: Simulator & Quick Calculator -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+        <!-- Simulator Panel -->
+        <section class="panel p-4 space-y-3.5">
+          <div class="flex items-center justify-between gap-2 border-b border-[#282b33] pb-2.5">
+            <div class="flex items-center gap-2">
+              <h2 class="text-sm font-semibold text-[#f3f4f6]">Roll Simulator</h2>
+              <span id="simStatusPill" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">
+                IDLE
+              </span>
+            </div>
+            <button id="btnResetSim" type="button" class="px-2.5 py-1 rounded text-xs font-medium bg-[#1f2229] hover:bg-red-950/60 text-[#9ca3af] hover:text-red-300 border border-[#282b33] hover:border-red-800/60 transition">
+              Reset
             </button>
           </div>
-        </div>
 
-        <!-- Session Stats Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-2 gap-2.5">
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Runes Opened</div>
-            <div id="simRunesOpened" class="text-sm font-mono font-bold text-purple-300 mt-0.5">0</div>
+          <!-- Primary Controls -->
+          <div class="grid grid-cols-2 gap-2">
+            <button id="btnOpenSingle" type="button" class="px-3 py-2 text-xs btn-primary">
+              Open 1 Batch (<span id="btnBulkLabel">1</span>)
+            </button>
+            <button id="btnToggleAuto" type="button" class="px-3 py-2 text-xs font-medium btn-secondary flex items-center justify-center gap-1.5">
+              <span id="autoBtnText">Start Auto-Open</span>
+            </button>
           </div>
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Simulated Time</div>
-            <div id="simTimeElapsed" class="text-sm font-mono font-bold text-white mt-0.5">0s</div>
-          </div>
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Noobinials Pulled</div>
-            <div id="simNoobinialsPulled" class="text-sm font-mono font-bold text-violet-300 mt-0.5">0</div>
-            <div id="simNoobinialLuckNote" class="text-[10px] font-mono text-violet-400 mt-0.5">x1.5 due to luck being 1</div>
-          </div>
-          <div class="discord-panel rounded-xl p-3 border-purple-500/40 text-center">
-            <div class="text-[11px] text-purple-300">Rarest Drop Rolled</div>
-            <div id="simRarestDrop" class="text-xs font-mono font-bold text-purple-300 mt-0.5 truncate">None yet</div>
-          </div>
-        </div>
 
-        <!-- Latest Batch Drops Strip -->
-        <div class="bg-[#1e1f22] border border-[#3f4147] rounded-xl p-3.5">
-          <div class="flex items-center justify-between mb-2.5">
-            <span class="text-xs font-semibold uppercase tracking-wider text-[#949ba4]">Latest Batch Drops</span>
-            <span id="lastBatchSummary" class="text-[11px] font-mono text-[#949ba4]">Ready to roll</span>
-          </div>
-          <div id="latestDropsShowcase" class="grid grid-cols-2 sm:grid-cols-3 gap-2 min-h-[72px]">
-            <div class="col-span-full flex items-center justify-center text-xs text-[#949ba4] py-4 border border-dashed border-[#3f4147] rounded-lg">
-              Click "Open 1 Batch" or "Start Auto-Open" to simulate rune drops
+          <!-- Time Skip -->
+          <div class="flex items-center justify-between bg-[#101114] rounded px-2.5 py-1.5 border border-[#282b33]">
+            <span class="text-xs text-[#9ca3af]">Fast-forward:</span>
+            <div class="flex items-center gap-1">
+              <button type="button" data-warp-sec="60" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+                +1m
+              </button>
+              <button type="button" data-warp-sec="3600" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+                +1h
+              </button>
+              <button type="button" data-warp-sec="86400" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+                +24h
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Chance Calculator -->
-      <section class="discord-card rounded-b-2xl rounded-t-none p-4 sm:p-5 space-y-4">
-        <div class="flex items-center gap-2 border-b border-[#3f4147] pb-3">
-          <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-          <h2 class="text-base sm:text-lg font-bold text-white">Chance Calculator</h2>
-        </div>
-        <p class="text-xs text-[#949ba4]">Estimate the average time needed to get a rune based on your RPS and its chance.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label for="chanceCalcRps" class="block text-xs font-medium text-[#b5bac1] mb-1">Runes per second (RPS)</label>
-            <input id="chanceCalcRps" type="text" placeholder="e.g. 1Qd"
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          <!-- Telemetry Grid -->
+          <div class="grid grid-cols-2 gap-2">
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Runes Opened</div>
+              <div id="simRunesOpened" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">0</div>
+            </div>
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Simulated Time</div>
+              <div id="simTimeElapsed" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">0s</div>
+            </div>
+            <div class="subpanel p-2.5">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-[11px] text-[#6b7280]">Noobinials Pulled</span>
+                <span id="simNoobinialLuckNote" class="text-[10px] font-mono text-amber-400/90">1.5× (Luck=1)</span>
+              </div>
+              <div id="simNoobinialsPulled" class="text-sm font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">0</div>
+            </div>
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Rarest Pull</div>
+              <div id="simRarestDrop" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-1 truncate">None yet</div>
+            </div>
           </div>
-          <div>
-            <label for="chanceCalcOdds" class="block text-xs font-medium text-[#b5bac1] mb-1">Rune chance (1 in ...)</label>
-            <input id="chanceCalcOdds" type="text" placeholder="e.g. 1Qn"
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+
+          <!-- Latest Batch Log -->
+          <div class="bg-[#101114] border border-[#282b33] rounded p-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-medium text-[#9ca3af]">Last Batch Drops</span>
+              <span id="lastBatchSummary" class="text-[11px] font-mono text-[#6b7280]">Ready to roll</span>
+            </div>
+            <div id="latestDropsShowcase" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 min-h-[60px]">
+              <div class="col-span-full flex items-center justify-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
+                No rolls recorded in this session
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="discord-panel neon-border rounded-xl p-4 text-center">
-          <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Estimated average time</div>
-          <div id="chanceCalcResult" class="text-lg sm:text-xl font-mono font-bold text-purple-300 mt-1 break-words">1000s</div>
-          <div id="chanceCalcDetails" class="text-xs text-[#949ba4] mt-1">1Qn chance ÷ 1Qd RPS</div>
-        </div>
-      </section>
+        </section>
+
+        <!-- Standalone Odds ETA Calculator -->
+        <section class="panel p-4 space-y-3">
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Quick Odds Calculator</h2>
+            <span class="text-[11px] text-[#6b7280]">1/X ÷ RPS</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label for="chanceCalcRps" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Runes / sec (RPS)</label>
+              <input id="chanceCalcRps" type="text" placeholder="e.g. 1Qd"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            </div>
+            <div>
+              <label for="chanceCalcOdds" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Target Odds (1 in ...)</label>
+              <input id="chanceCalcOdds" type="text" placeholder="e.g. 1Qn"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            </div>
+          </div>
+
+          <div class="subpanel p-3 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-[11px] text-[#6b7280]">Average Time</div>
+              <div id="chanceCalcDetails" class="text-[11px] text-[#9ca3af] mt-0.5 font-mono">Both RPS and rune chance must be greater than zero.</div>
+            </div>
+            <div id="chanceCalcResult" class="text-sm sm:text-base font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+              Enter valid values
+            </div>
+          </div>
+        </section>
       </div>
 
-      <!-- RIGHT COLUMN: Combined Rune Chances List -->
-      <section class="lg:col-start-7 lg:col-span-6 lg:row-start-1 discord-card rounded-2xl p-5 sm:p-6 flex flex-col">
-        <div class="flex items-center justify-between border-b border-[#3f4147] pb-3 mb-3">
+      <!-- RIGHT COLUMN: Drop Table -->
+      <section class="lg:col-start-7 lg:col-span-6 lg:row-start-1 panel p-4 flex flex-col">
+        <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5 mb-2.5">
           <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-            <h3 class="text-sm sm:text-base font-bold text-white uppercase tracking-wider">Rune Chances</h3>
+            <h3 class="text-sm font-semibold text-[#f3f4f6]">Drop Table</h3>
+            <span class="text-xs text-[#6b7280]">•</span>
+            <span id="packHeaderLabel" class="text-xs font-mono text-amber-400">Basic Rune</span>
           </div>
-          <span id="packHeaderLabel" class="text-xs font-mono text-purple-300">Basic Rune</span>
+          <span class="text-[11px] text-[#6b7280]">Amber rows ignore luck</span>
         </div>
 
         <!-- Column Headers -->
-        <div id="runeTableHeaders" class="grid px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-[#949ba4] gap-2 items-center" style="grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 1.1fr)">
+        <div id="runeTableHeaders" class="grid px-2.5 pb-2 text-[11px] font-medium text-[#9ca3af] gap-2 items-center border-b border-[#282b33]" style="grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 1.1fr)">
           <div>Rune</div>
-          <div class="text-right">Base Chance</div>
-          <div class="text-right">Current Chance</div>
-          <div class="flex items-center justify-end gap-1.5 pl-2 flex-wrap">
+          <div class="text-right">Base</div>
+          <div class="text-right">Effective</div>
+          <div class="flex items-center justify-end gap-1.5 pl-2">
             <span>ETA</span>
-            <button id="etaModeToggleBtn" type="button" title="Switch between Pure Math ETA and Lucky / Avg / Unlucky ETAs" class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#1e1f22] hover:bg-purple-600/30 text-purple-300 border border-purple-500/50 transition active:scale-95 flex items-center gap-1 cursor-pointer select-none">
+            <button id="etaModeToggleBtn" type="button" title="Toggle between single expected ETA and Lucky / Median / Unlucky percentiles" class="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-[#101114] hover:bg-[#252830] text-[#d1d5db] border border-[#323640] transition cursor-pointer select-none">
               <span id="etaModeBtnText">Math</span>
             </button>
           </div>
-          <div class="text-right leading-tight" title="Runes Per Second">Runes Per Second</div>
+          <div class="text-right" title="Expected drops per second">Drops/s</div>
         </div>
 
-        <!-- Single Combined Rune List -->
-        <div id="combinedRunesList" class="divide-y divide-[#3f4147]/70 rounded-xl overflow-hidden border border-[#3f4147] bg-[#313338]">
+        <!-- Rows -->
+        <div id="combinedRunesList" class="divide-y divide-[#22252c] bg-[#14161a] border-x border-b border-[#282b33] rounded-b">
         </div>
       </section>
 
     </div>
 
-    <!-- PRISM MODE 3-COLUMN LAYOUT -->
-    <div id="prismModeGrid" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+    <!-- PRISM MODE LAYOUT -->
+    <div id="prismModeGrid" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 
-      <!-- BOX 1 (LEFT): Small Player Stats Box -->
+      <!-- LEFT: Prism Stats -->
       <aside class="lg:col-span-2 flex flex-col gap-4">
-        <div class="discord-card rounded-2xl p-4 space-y-3.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-              Player Stats
-            </span>
+        <div class="panel p-3.5 space-y-3">
+          <div class="border-b border-[#282b33] pb-2">
+            <h2 class="text-xs font-semibold text-[#d1d5db]">Prism Income</h2>
           </div>
 
-          <div class="space-y-3">
-            <!-- Prism Per Cycle -->
+          <div class="space-y-2.5">
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label for="prismPerCycleInput" class="text-xs font-medium text-[#b5bac1]">Prism Per Cycle</label>
-                <span id="parsedPrismPerCycleLabel" class="text-[11px] font-mono text-purple-300">10</span>
+                <label for="prismPerCycleInput" class="text-[11px] font-medium text-[#9ca3af]">Prism / Cycle</label>
+                <span id="parsedPrismPerCycleLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
               </div>
-              <input id="prismPerCycleInput" type="text" value="" placeholder="e.g. 10, 5K, 1M"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+              <input id="prismPerCycleInput" type="text" value="" placeholder="10, 5K, 1M"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
-            <!-- Cycle Length (s) -->
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label for="prismCycleLengthInput" class="text-xs font-medium text-[#b5bac1]">Cycle Length (s)</label>
-                <span id="parsedCycleLengthLabel" class="text-[11px] font-mono text-purple-300">1s</span>
+                <label for="prismCycleLengthInput" class="text-[11px] font-medium text-[#9ca3af]">Cycle Length (s)</label>
+                <span id="parsedCycleLengthLabel" class="text-[11px] font-mono text-[#9ca3af]">1s</span>
               </div>
-              <input id="prismCycleLengthInput" type="number" step="0.1" min="0.001" value="1" placeholder="Seconds (e.g. 1, 5)"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+              <input id="prismCycleLengthInput" type="number" step="0.1" min="0.001" value="1" placeholder="1"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
 
-          <!-- Combined Stat Box for Prism/s & Cycle -->
-          <div class="discord-panel neon-border rounded-xl p-3 flex items-center justify-center gap-3">
-            <div class="flex-1 text-center">
-              <div class="text-[10px] uppercase tracking-wider text-[#949ba4]">Prism / Sec</div>
-              <div id="statPrismPerSec" class="text-sm font-mono font-bold text-purple-400 mt-0.5">10 /s</div>
+          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33]">
+            <div class="pr-2">
+              <div class="text-[10px] text-[#6b7280]">Prism / Sec</div>
+              <div id="statPrismPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">0 /s</div>
             </div>
-            <div class="h-7 w-px bg-[#3f4147]"></div>
-            <div class="flex-1 text-center">
-              <div class="text-[10px] uppercase tracking-wider text-[#949ba4]">Cycle</div>
-              <div id="statPrismCycle" class="text-sm font-mono font-bold text-purple-300 mt-0.5">1s</div>
+            <div class="pl-2.5">
+              <div class="text-[10px] text-[#6b7280]">Cycle</div>
+              <div id="statPrismCycle" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">1s</div>
             </div>
           </div>
         </div>
       </aside>
 
-      <!-- MIDDLE COLUMN WRAPPER: Capsule Opening Calculator + Chest Rolls -->
-      <div class="lg:col-span-5 flex flex-col gap-5">
-      <!-- BOX 2 (MIDDLE): Capsule Opening Calculator -->
-      <section class="lg:col-span-5 discord-card neon-border rounded-2xl p-4 sm:p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-[#3f4147] pb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-            <h2 class="text-base sm:text-lg font-bold text-white">Capsule opening calculator</h2>
-          </div>
-          <span id="capsuleOpenSpeedPill" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#1e1f22] text-purple-300 border border-purple-500/40">
-            1.0s / open
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Capsule Cost -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="capsuleCostInput" class="text-xs font-medium text-[#b5bac1]">Capsule cost</label>
-              <span id="parsedCapsuleCostLabel" class="text-[11px] font-mono text-purple-300">10</span>
-            </div>
-            <input id="capsuleCostInput" type="text" value="" placeholder="e.g. 10, 1K"
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+      <!-- MIDDLE: Capsule Sustainment & Trial Chest Estimator -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <!-- Capsule Opening Calculator -->
+        <section class="panel p-4 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Capsule Sustainment</h2>
+            <span id="capsuleOpenSpeedPill" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">
+              1.0s / open
+            </span>
           </div>
 
-          <!-- Capsule Bulk -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="capsuleBulkInput" class="text-xs font-medium text-[#b5bac1]">Capsule bulk</label>
-              <span id="parsedCapsuleBulkLabel" class="text-[11px] font-mono text-purple-300">15</span>
-            </div>
-            <input id="capsuleBulkInput" type="text" value="15" placeholder="e.g. 1, 15, 100"
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
-          </div>
-
-          <!-- Reserve Prism -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="reservePrismInput" class="text-xs font-medium text-[#b5bac1]">Reserve Prism</label>
-              <span id="parsedReservePrismLabel" class="text-[11px] font-mono text-purple-300">1K</span>
-            </div>
-            <input id="reservePrismInput" type="text" value="1000" placeholder="e.g. 0, 10K, 1M"
-              class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
-          </div>
-        </div>
-
-        <!-- Minion Master Gamepass Checkbox -->
-        <label for="minionMasterCheckbox" class="flex items-center justify-between bg-[#1e1f22] hover:bg-[#313338]/70 border border-[#3f4147] rounded-xl p-3 cursor-pointer transition select-none">
-          <div class="flex items-center gap-3">
-            <input id="minionMasterCheckbox" type="checkbox" class="w-4 h-4 rounded accent-purple-500 cursor-pointer" />
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             <div>
-              <div class="text-xs sm:text-sm font-semibold text-white">Minion Master Gamepass</div>
-              <div class="text-[11px] text-[#949ba4]">Reduces capsule open time from 1.0s to 0.9s</div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="capsuleCostInput" class="text-[11px] font-medium text-[#9ca3af]">Capsule Cost</label>
+                <span id="parsedCapsuleCostLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
+              </div>
+              <input id="capsuleCostInput" type="text" value="" placeholder="10, 1K"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="capsuleBulkInput" class="text-[11px] font-medium text-[#9ca3af]">Capsule Bulk</label>
+                <span id="parsedCapsuleBulkLabel" class="text-[11px] font-mono text-[#9ca3af]">15</span>
+              </div>
+              <input id="capsuleBulkInput" type="text" value="15" placeholder="1, 15, 100"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="reservePrismInput" class="text-[11px] font-medium text-[#9ca3af]">Reserve Prism</label>
+                <span id="parsedReservePrismLabel" class="text-[11px] font-mono text-[#9ca3af]">1K</span>
+              </div>
+              <input id="reservePrismInput" type="text" value="1000" placeholder="0, 10K, 1M"
+                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
-          <span id="gamepassBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#313338] text-[#949ba4] border border-[#3f4147]">
-            OFF (1.0s)
-          </span>
-        </label>
 
-        <!-- Result Banner -->
-        <div class="discord-panel neon-border rounded-xl p-4 text-center">
-          <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Opening Duration</div>
-          <div id="capsuleCalcResult" class="text-xl sm:text-2xl font-mono font-extrabold text-purple-300 mt-1 break-words">
-            7.14s
-          </div>
-          <div id="capsuleCalcSubtext" class="text-xs text-[#949ba4] mt-1">
-            Net drain: 140 Prism/s from 1K Reserve Prism
-          </div>
-        </div>
+          <!-- Gamepass Toggle -->
+          <label for="minionMasterCheckbox" class="flex items-center justify-between bg-[#101114] hover:bg-[#15171c] border border-[#282b33] rounded p-2.5 cursor-pointer transition select-none">
+            <div class="flex items-center gap-2.5">
+              <input id="minionMasterCheckbox" type="checkbox" class="w-3.5 h-3.5 rounded accent-amber-500 cursor-pointer" />
+              <div>
+                <div class="text-xs font-medium text-[#e6e8ec]">Minion Master Gamepass</div>
+                <div class="text-[11px] text-[#6b7280]">Reduces open interval from 1.0s to 0.9s</div>
+              </div>
+            </div>
+            <span id="gamepassBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#181a1f] text-[#9ca3af] border border-[#282b33]">
+              OFF (1.0s)
+            </span>
+          </label>
 
-        <!-- Breakdown Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Consumption / Sec</div>
-            <div id="capsuleCostPerSecStat" class="text-sm font-mono font-bold text-rose-300 mt-0.5">150 /s</div>
+          <!-- Output Readout -->
+          <div class="subpanel p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="text-[11px] text-[#6b7280]">Opening Duration</div>
+              <div id="capsuleCalcSubtext" class="text-xs text-[#9ca3af] mt-0.5">
+                Net drain: 140 Prism/s from 1K Reserve Prism
+              </div>
+            </div>
+            <div id="capsuleCalcResult" class="text-lg font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+              7.14s
+            </div>
           </div>
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Passive Gain / Sec</div>
-            <div id="capsuleGainPerSecStat" class="text-sm font-mono font-bold text-emerald-300 mt-0.5">10 /s</div>
-          </div>
-          <div class="discord-panel rounded-xl p-3 col-span-2 sm:col-span-1 text-center">
-            <div class="text-[11px] text-[#949ba4]">Capsules Opened</div>
-            <div id="capsuleTotalOpenedStat" class="text-sm font-mono font-bold text-purple-300 mt-0.5">107</div>
-          </div>
-        </div>
-      </section>
 
-      <!-- CHEST ROLLS BOX (Added Under Capsule Opening) -->
-      <section id="chestRollsSection" class="discord-card neon-border rounded-2xl p-4 sm:p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#3f4147] pb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-            <h2 class="text-base sm:text-lg font-bold text-white">Chest Rolls</h2>
+          <!-- Breakdown -->
+          <div class="grid grid-cols-3 gap-2">
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Drain / Sec</div>
+              <div id="capsuleCostPerSecStat" class="text-xs font-mono font-semibold text-red-400 mt-0.5 tabular-nums">150 /s</div>
+            </div>
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Income / Sec</div>
+              <div id="capsuleGainPerSecStat" class="text-xs font-mono font-semibold text-emerald-400 mt-0.5 tabular-nums">10 /s</div>
+            </div>
+            <div class="subpanel p-2.5">
+              <div class="text-[11px] text-[#6b7280]">Capsules Opened</div>
+              <div id="capsuleTotalOpenedStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">107</div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <p class="text-xs text-[#949ba4]">Set the amount of chests and press Open to generate an estimate of combined rolls for both T1 and T2 chests.</p>
+        <!-- Trial Chest Expected Yields -->
+        <section id="chestRollsSection" class="panel p-4 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Trial Chest Estimator</h2>
+            <span id="chestRollsSummaryLabel" class="text-[11px] font-mono text-[#9ca3af]">0 T1 + 0 T2 Chests</span>
+          </div>
 
-        <!-- Chest Counter Controls -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="t1ChestAmountInput" class="text-[11px] font-medium text-[#9ca3af]">T1 Trial Chest</label>
+                <span id="parsedT1ChestLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="https://i.imgur.com/kU8AKzO.png" alt="T1 Trial Chest" class="w-8 h-8 object-contain shrink-0 bg-[#101114] p-1 rounded border border-[#282b33]">
+                <input id="t1ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
+                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="t2ChestAmountInput" class="text-[11px] font-medium text-[#9ca3af]">T2 Trial Chest</label>
+                <span id="parsedT2ChestLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="https://i.imgur.com/kn9tEpd.png" alt="T2 Trial Chest" class="w-8 h-8 object-contain shrink-0 bg-[#101114] p-1 rounded border border-[#282b33]">
+                <input id="t2ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
+                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <div class="relative flex items-center justify-center mb-1">
-              <label for="t1ChestAmountInput" class="text-xs font-medium text-[#b5bac1] text-center">T1 Trial Chest</label>
-              <span id="parsedT1ChestLabel" class="absolute right-0 text-[11px] font-mono text-purple-300">0</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <img src="https://i.imgur.com/kU8AKzO.png" alt="T1 Trial Chest" style="width:40px; height:40px; object-fit:contain;" class="shrink-0">
-              <input id="t1ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
-            </div>
+            <button id="btnOpenChests" type="button" class="w-full px-3 py-2 text-xs btn-primary">
+              Open (<span id="btnOpenChestsLabel">0 T1 + 0 T2</span>)
+            </button>
           </div>
 
-          <div>
-            <div class="relative flex items-center justify-center mb-1">
-              <label for="t2ChestAmountInput" class="text-xs font-medium text-[#b5bac1] text-center">T2 Trial Chest</label>
-              <span id="parsedT2ChestLabel" class="absolute right-0 text-[11px] font-mono text-purple-300">0</span>
+          <div class="border border-[#282b33] rounded overflow-hidden">
+            <div class="bg-[#101114] px-3 py-1.5 border-b border-[#282b33] flex items-center justify-between text-[11px] text-[#9ca3af]">
+              <span>Reward</span>
+              <span>Expected Total (T1 + T2)</span>
             </div>
-            <div class="flex items-center gap-2">
-              <img src="https://i.imgur.com/kn9tEpd.png" alt="T2 Trial Chest" style="width:40px; height:40px; object-fit:contain;" class="shrink-0">
-              <input id="t2ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
-                class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+            <div id="chestCombinedResultsList" class="divide-y divide-[#22252c] bg-[#14161a]">
             </div>
           </div>
-        </div>
-
-        <!-- Open Button -->
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="btnOpenChests" type="button" class="w-full px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold neon-btn transition active:scale-95">
-            Open (<span id="btnOpenChestsLabel">0 T1 + 0 T2</span>)
-          </button>
-        </div>
-
-        <!-- Combined Roll Results List -->
-        <div class="bg-[#1e1f22] border border-[#3f4147] rounded-xl p-3.5 space-y-2.5">
-          <div class="flex items-center justify-between border-b border-[#3f4147] pb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Combined Roll Results (T1 + T2)</span>
-            <span id="chestRollsSummaryLabel" class="text-[11px] font-mono text-[#949ba4]">0 T1 + 0 T2 Chests</span>
-          </div>
-          <div id="chestCombinedResultsList" class="divide-y divide-[#3f4147]/70 rounded-xl overflow-hidden border border-[#3f4147] bg-[#313338]">
-          </div>
-        </div>
-      </section>
+        </section>
       </div>
 
-      <!-- BOX 3 (RIGHT): Prism Calculator -->
-      <section class="lg:col-span-5 discord-card rounded-2xl p-4 sm:p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-[#3f4147] pb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]"></span>
-            <h2 class="text-base sm:text-lg font-bold text-white">Prism Calculator</h2>
-          </div>
-          <span class="text-xs font-mono text-purple-300">Passive Generation</span>
+      <!-- RIGHT: Passive Prism Projection -->
+      <section class="lg:col-span-5 panel p-4 space-y-3.5">
+        <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
+          <h2 class="text-sm font-semibold text-[#f3f4f6]">Passive Prism Projection</h2>
+          <span class="text-[11px] font-mono text-[#9ca3af]">Supports e.g. 2d 4h 30m</span>
         </div>
 
-        <p class="text-xs text-[#949ba4]">Calculate how much Prism will be generated over a set amount of time based on your Player Stats.</p>
-        <p class="text-xs text-[#949ba4]">You can use combined time format for ex.: 3h 15m</p>
-
-        <!-- Time Input (supports s, m, h, d, w and combined formats like "2d 4h") -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label for="prismCalcTimeInput" class="text-xs font-medium text-[#b5bac1]">Time Duration</label>
-            <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-purple-300">1hrs</span>
+            <label for="prismCalcTimeInput" class="text-[11px] font-medium text-[#9ca3af]">Time Duration</label>
+            <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-[#9ca3af]">1hrs</span>
           </div>
-          <input id="prismCalcTimeInput" type="text" value="1h" placeholder="e.g. 30s, 10m, 2h, 2d 4h, 1w"
-            class="w-full rounded-xl discord-input text-center px-3 py-2 text-sm font-mono" />
+          <input id="prismCalcTimeInput" type="text" value="1h" placeholder="30s, 10m, 2h, 2d 4h, 1w"
+            class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
         </div>
 
-        <!-- Quick Time Presets -->
-        <div class="flex flex-wrap items-center justify-between bg-[#1e1f22] rounded-xl p-2 border border-[#3f4147] gap-2">
-          <span class="text-xs text-[#949ba4] pl-1 font-medium">Quick Set:</span>
-          <div class="flex flex-wrap items-center gap-1.5">
-            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+        <div class="flex flex-wrap items-center justify-between bg-[#101114] rounded px-2.5 py-1.5 border border-[#282b33] gap-2">
+          <span class="text-xs text-[#9ca3af]">Presets:</span>
+          <div class="flex flex-wrap items-center gap-1">
+            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
               1m
             </button>
-            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
               10m
             </button>
-            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
               1h
             </button>
-            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
               6h
             </button>
-            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-[#313338] hover:bg-purple-600 text-[#f2f3f5] hover:text-white transition">
+            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
               24h
             </button>
           </div>
         </div>
 
-        <!-- Generated Prism Output -->
-        <div class="discord-panel neon-border rounded-xl p-4 text-center">
-          <div class="text-[11px] uppercase tracking-wider text-[#949ba4]">Prism Generated</div>
-          <div id="prismCalcGeneratedResult" class="text-xl sm:text-2xl font-mono font-extrabold text-purple-300 mt-1 break-words">
-            36K Prism
+        <div class="subpanel p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div class="text-[11px] text-[#6b7280]">Prism Generated</div>
+            <div id="prismCalcDetails" class="text-xs text-[#9ca3af] mt-0.5">
+              3,600 cycles over 1h (10 Prism / 1s cycle)
+            </div>
           </div>
-          <div id="prismCalcDetails" class="text-xs text-[#949ba4] mt-1">
-            3,600 cycles over 1h (10 Prism / 1s cycle)
+          <div id="prismCalcGeneratedResult" class="text-lg font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+            36K Prism
           </div>
         </div>
 
-        <!-- Secondary Stats -->
-        <div class="grid grid-cols-2 gap-2.5">
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Total Cycles</div>
-            <div id="prismCalcCyclesStat" class="text-sm font-mono font-bold text-white mt-0.5">3.6K</div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="subpanel p-2.5">
+            <div class="text-[11px] text-[#6b7280]">Total Cycles</div>
+            <div id="prismCalcCyclesStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">3.6K</div>
           </div>
-          <div class="discord-panel rounded-xl p-3 text-center">
-            <div class="text-[11px] text-[#949ba4]">Total w/ Reserve Prism</div>
-            <div id="prismCalcTotalWithReserveStat" class="text-sm font-mono font-bold text-purple-300 mt-0.5">37K</div>
+          <div class="subpanel p-2.5">
+            <div class="text-[11px] text-[#6b7280]">Total w/ Reserve</div>
+            <div id="prismCalcTotalWithReserveStat" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">37K</div>
           </div>
         </div>
       </section>
 
     </div>
   </main>
-  
-   <!-- Visitor Badge Footer -->
-  <footer class="py-6 flex justify-center items-center">
-    <img src="https://visitor-badge.laobi.icu/badge?page_id=iiNirox.RuneSimulator&left_text=visitors&right_color=%23a24df4" alt="visitor badge"/>
-  </footer>
 
+  <!-- Footer -->
+  <footer class="py-4 border-t border-[#282b33] mt-6">
+    <div class="max-w-[1680px] mx-auto px-4 flex items-center justify-between text-xs text-[#6b7280]">
+      <span>Noob Incremental Simulator</span>
+      <img src="https://visitor-badge.laobi.icu/badge?page_id=iiNirox.RuneSimulator&left_text=visitors&right_color=%23d97706" alt="visitor badge" class="h-4 opacity-80" />
+    </div>
+  </footer>
 
   <script>
     // =========================================================================
@@ -1643,11 +1635,11 @@
       if (etaSeconds < 3600) {
         etaColorClass = 'text-emerald-400';
       } else if (etaSeconds < 86400) {
-        etaColorClass = 'text-yellow-400';
+        etaColorClass = 'text-amber-300';
       } else if (etaSeconds < 604800) {
         etaColorClass = 'text-orange-400';
       } else {
-        etaColorClass = 'text-rose-400';
+        etaColorClass = 'text-red-400';
       }
       if (etaSeconds < 0.5) {
         etaColorClass = 'text-emerald-400';
@@ -1661,7 +1653,7 @@
       let etaCellHtml = '';
       if (!isLuckMode) {
         etaCellHtml = `
-          <div class="text-right pl-3 font-mono text-xs sm:text-sm font-semibold ${etaColorClass} truncate" title="${etaText}">
+          <div class="text-right pl-3 font-mono text-xs font-medium ${etaColorClass} truncate tabular-nums" title="${etaText}">
             ${etaText}
           </div>
         `;
@@ -1680,42 +1672,41 @@
         const p99Text = p99Sec < 0.5 ? 'Instant' : formatEta(p99Sec);
 
         etaCellHtml = `
-          <div class="pl-2 grid grid-cols-3 gap-1.5 text-center font-mono">
-            <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Lucky: ${p1Text}">
-              <div class="text-[9px] uppercase tracking-tight text-emerald-300/90 font-sans font-bold leading-tight whitespace-nowrap">Lucky</div>
-              <div class="text-[11px] sm:text-xs font-bold text-emerald-400 whitespace-nowrap mt-0.5">${p1Text}</div>
+          <div class="pl-2 grid grid-cols-3 gap-1 text-center font-mono">
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="1% Lucky: ${p1Text}">
+              <div class="text-[9px] text-[#6b7280] font-sans leading-tight">1%</div>
+              <div class="text-[11px] font-medium text-emerald-400 whitespace-nowrap">${p1Text}</div>
             </div>
-            <div class="rounded-lg bg-amber-500/10 border border-amber-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Avg: ${p50Text}">
-              <div class="text-[9px] uppercase tracking-tight text-amber-300/90 font-sans font-bold leading-tight whitespace-nowrap">Avg</div>
-              <div class="text-[11px] sm:text-xs font-bold text-amber-300 whitespace-nowrap mt-0.5">${p50Text}</div>
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="50% Median: ${p50Text}">
+              <div class="text-[9px] text-[#6b7280] font-sans leading-tight">50%</div>
+              <div class="text-[11px] font-medium text-amber-300 whitespace-nowrap">${p50Text}</div>
             </div>
-            <div class="rounded-lg bg-rose-500/10 border border-rose-500/30 px-2 py-1 min-w-0 flex flex-col justify-center" title="Unlucky: ${p99Text}${isNoob ? ' (2× Pity Cap)' : ''}">
-              <div class="text-[9px] uppercase tracking-tight text-rose-300/90 font-sans font-bold leading-tight whitespace-nowrap">Unlucky</div>
-              <div class="text-[11px] sm:text-xs font-bold text-rose-400 whitespace-nowrap mt-0.5">${p99Text}</div>
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="99% Unlucky: ${p99Text}${isNoob ? ' (2× Pity Cap)' : ''}">
+              <div class="text-[9px] text-[#6b7280] font-sans leading-tight">99%</div>
+              <div class="text-[11px] font-medium text-red-400 whitespace-nowrap">${p99Text}</div>
             </div>
           </div>
         `;
       }
 
       return `
-        <div class="grid items-center px-3 py-2.5 gap-2 ${isNoob ? 'noobinial-neon-row' : 'hover:bg-[#383a40]/60'} transition" style="grid-template-columns: ${gridTemplate}">
+        <div class="grid items-center px-2.5 py-2 gap-2 ${isNoob ? 'noobinial-row' : 'hover:bg-[#1b1d24]'} transition" style="grid-template-columns: ${gridTemplate}">
           <div class="flex items-center gap-2 min-w-0">
-            <span class="w-2 h-2 rounded-full shrink-0 ${isNoob ? 'bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.5)]' : 'bg-[#949ba4]'}"></span>
-            <span class="text-xs sm:text-sm font-semibold ${isNoob ? 'noobinial-neon-text font-bold' : 'text-[#f2f3f5]'} shrink-0 whitespace-nowrap" title="${drop.name}">${drop.name}</span>
-            ${obtained > 0 ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/25 text-purple-200 border border-purple-500/40 shrink-0">+${formatGameNumber(obtained, 0)}</span>` : ''}
+            <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate" title="${drop.name}">${drop.name}</span>
+            ${obtained > 0 ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#252830] text-[#d1d5db] border border-[#323640] shrink-0">+${formatGameNumber(obtained, 0)}</span>` : ''}
           </div>
-          <div class="text-right font-mono text-xs ${isNoob ? 'text-violet-300/75' : 'text-[#949ba4]'} truncate" title="1/${formatGameNumber(info.baseOdds)}">
+          <div class="text-right font-mono text-xs ${isNoob ? 'text-amber-200/70' : 'text-[#6b7280]'} truncate tabular-nums" title="1/${formatGameNumber(info.baseOdds)}">
             1/${formatGameNumber(info.baseOdds)}
           </div>
-          <div class="flex items-center justify-end gap-1 font-mono text-xs sm:text-sm min-w-0" title="1/${formatGameNumber(info.chance)}${info.capped ? ' [CAP]' : ''}">
-            <span class="truncate ${isNoob ? 'noobinial-neon-text font-bold' : 'text-purple-300 font-semibold'}">1/${formatGameNumber(info.chance)}</span>
-            ${info.capped ? '<span class="text-[9px] font-bold px-1 rounded bg-purple-500/25 text-purple-300 border border-purple-500/40 shrink-0">CAP</span>' : ''}
+          <div class="flex items-center justify-end gap-1 font-mono text-xs min-w-0 tabular-nums" title="1/${formatGameNumber(info.chance)}${info.capped ? ' [CAP]' : ''}">
+            <span class="truncate ${isNoob ? 'noobinial-text font-semibold' : 'text-[#d1d5db]'}">1/${formatGameNumber(info.chance)}</span>
+            ${info.capped ? '<span class="text-[9px] font-medium px-1 rounded bg-[#252830] text-[#9ca3af] border border-[#323640] shrink-0">CAP</span>' : ''}
           </div>
           ${etaCellHtml}
-          <div class="text-right pl-2 font-mono text-xs sm:text-sm min-w-0" title="${(runesPerSec / info.chance) >= 1 ? `${formatGameNumber(runesPerSec / info.chance)} /s` : 'Less than 1/s'}">
+          <div class="text-right pl-2 font-mono text-xs min-w-0 tabular-nums" title="${(runesPerSec / info.chance) >= 1 ? `${formatGameNumber(runesPerSec / info.chance)} /s` : 'Less than 1/s'}">
             ${(runesPerSec / info.chance) >= 1
-              ? `<span class="inline-flex items-center justify-end px-2 py-0.5 rounded-md font-semibold truncate max-w-full ${isNoob ? 'bg-violet-500/15 text-violet-200 border border-violet-400/30' : 'bg-purple-500/10 text-purple-300 border border-purple-500/25'}">${formatGameNumber(runesPerSec / info.chance)}/s</span>`
-              : `<span class="text-[#949ba4]/50 select-none">--</span>`
+              ? `<span class="text-[#d1d5db]">${formatGameNumber(runesPerSec / info.chance)}/s</span>`
+              : `<span class="text-[#6b7280]/50 select-none">—</span>`
             }
           </div>
         </div>
@@ -1769,14 +1760,14 @@
       const btnForceLuckOneEl = document.getElementById('btnForceLuckOne');
       if (runeLuckRowEl && btnForceLuckOneEl) {
         if (isNormalRps) {
-          runeLuckRowEl.className = 'grid grid-cols-2 gap-2';
+          runeLuckRowEl.className = 'grid grid-cols-2 gap-1.5';
           btnForceLuckOneEl.classList.remove('hidden');
           if (state.forceLuckOne) {
             btnForceLuckOneEl.textContent = 'Luck = 1: ON';
-            btnForceLuckOneEl.className = 'w-full rounded-xl px-2 py-2 text-xs font-mono font-bold transition active:scale-95 neon-btn border border-purple-400';
+            btnForceLuckOneEl.className = 'w-full px-2 py-1.5 text-[11px] font-mono font-semibold btn-primary';
           } else {
             btnForceLuckOneEl.textContent = 'Luck = 1: OFF';
-            btnForceLuckOneEl.className = 'w-full rounded-xl px-2 py-2 text-xs font-mono font-bold border border-[#3f4147] bg-[#1e1f22] text-[#b5bac1] hover:border-purple-500/50 hover:text-white transition active:scale-95';
+            btnForceLuckOneEl.className = 'w-full px-2 py-1.5 text-[11px] font-mono font-medium btn-secondary text-[#9ca3af]';
           }
         } else {
           runeLuckRowEl.className = 'grid grid-cols-1';
@@ -1798,20 +1789,20 @@
       const showcase = document.getElementById('latestDropsShowcase');
       if (state.sim.latestBatchDrops.length > 0) {
         document.getElementById('lastBatchSummary').textContent =
-          `Rolled ${formatGameNumber(bulk, 0)} rune(s) • ${state.sim.latestBatchDrops.length} tier(s) hit`;
+          `Rolled ${formatGameNumber(bulk, 0)} • ${state.sim.latestBatchDrops.length} tier(s)`;
         showcase.innerHTML = state.sim.latestBatchDrops.map(d => {
           const isNoob = d.type === 'NOOBINIAL';
           return `
-            <div class="p-2.5 rounded-xl border animate-pop flex flex-col justify-between ${
+            <div class="p-2 rounded border flex flex-col justify-between ${
               isNoob
-                ? 'bg-violet-950/35 border-violet-400/50 shadow-[0_0_10px_rgba(139,92,246,0.18)]'
-                : 'bg-[#313338] border-[#3f4147]'
+                ? 'bg-amber-950/20 border-amber-500/40'
+                : 'bg-[#181a1f] border-[#282b33]'
             }">
               <div class="flex items-center justify-between gap-1">
-                <span class="text-xs font-bold ${isNoob ? 'noobinial-neon-text' : 'text-white'} truncate">${d.name}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-semibold">+${formatGameNumber(d.count, 0)}</span>
+                <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate">${d.name}</span>
+                <span class="text-[10px] font-mono px-1 py-0.5 rounded bg-[#252830] text-[#d1d5db]">+${formatGameNumber(d.count, 0)}</span>
               </div>
-              <div class="text-[10px] font-mono text-[#949ba4] mt-1">
+              <div class="text-[10px] font-mono text-[#6b7280] mt-1">
                 1/${formatGameNumber(d.chance)} ${d.capped ? '[CAP]' : ''}
               </div>
             </div>
@@ -1854,7 +1845,7 @@
       document.getElementById('autoBtnText').textContent = 'Start Auto-Open';
       const pill = document.getElementById('simStatusPill');
       pill.textContent = 'IDLE';
-      pill.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#1e1f22] text-[#b5bac1] border border-[#3f4147]';
+      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]';
     }
 
     function startAutoOpen() {
@@ -1862,8 +1853,8 @@
       state.isAutoOpening = true;
       document.getElementById('autoBtnText').textContent = 'Stop Auto-Open';
       const pill = document.getElementById('simStatusPill');
-      pill.textContent = 'AUTO-OPENING';
-      pill.className = 'text-xs font-mono px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/50 animate-pulse';
+      pill.textContent = 'RUNNING';
+      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40';
 
       let remainderBatches = 0;
       state.autoOpenTimer = setInterval(() => {
@@ -1891,8 +1882,8 @@
         latestBatchDrops: []
       };
       document.getElementById('latestDropsShowcase').innerHTML = `
-        <div class="col-span-full flex items-center justify-center text-xs text-[#949ba4] py-4 border border-dashed border-[#3f4147] rounded-lg">
-          Click "Open 1 Batch" or "Start Auto-Open" to simulate rune drops
+        <div class="col-span-full flex items-center justify-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
+          No rolls recorded in this session
         </div>
       `;
       document.getElementById('lastBatchSummary').textContent = 'Ready to roll';
@@ -1915,8 +1906,6 @@
         document.getElementById(id).addEventListener('input', updateChanceCalculator);
       });
       updateChanceCalculator();
-
-
 
       document.getElementById('realmSelect').addEventListener('change', (e) => {
         state.realm = e.target.value;
@@ -2061,13 +2050,13 @@
         if (mode === 'prism') {
           runeModeGrid.classList.add('hidden');
           prismModeGrid.classList.remove('hidden');
-          btnModePrism.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn';
-          btnModeRune.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent';
+          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium transition btn-primary';
+          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white';
         } else {
           prismModeGrid.classList.add('hidden');
           runeModeGrid.classList.remove('hidden');
-          btnModeRune.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition neon-btn';
-          btnModePrism.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition text-[#b5bac1] hover:text-white bg-transparent';
+          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium transition btn-primary';
+          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white';
         }
         try {
           localStorage.setItem('noob_rune_sim_active_mode', mode);
@@ -2106,10 +2095,10 @@
         const badgeEl = document.getElementById('gamepassBadge');
         if (hasGamepass) {
           badgeEl.textContent = 'ON (0.9s)';
-          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40';
         } else {
           badgeEl.textContent = 'OFF (1.0s)';
-          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-[#313338] text-[#949ba4] border border-[#3f4147]';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-[#181a1f] text-[#9ca3af] border border-[#282b33]';
         }
 
         document.getElementById('capsuleCostPerSecStat').textContent = `${formatGameNumber(costPerSec)} /s`;
@@ -2370,7 +2359,7 @@
             const t1Expected = t1 * p1 * prismReward;
             const t2Expected = t2 * p2 * prismReward;
             combinedExpectedAmt = t1Expected + t2Expected;
-            detailsText = `T1: ${formatGameNumber(t1Expected, 1)} + T2: ${formatGameNumber(t2Expected, 1)}`;
+            detailsText = `T1: ${formatGameNumber(t1Expected, 1)} · T2: ${formatGameNumber(t2Expected, 1)}`;
           } else if (item.isCombinedShards) {
             // Rare shards: 12% T1 (40 amt), 10% T2 (20 amt)
             // Legendary shards: 1.75% T1 (200 amt), 2.5% T2 (135 amt)
@@ -2379,14 +2368,14 @@
             const legT1Exp = t1 * (1.75 / 100) * 200;
             const legT2Exp = t2 * (2.5 / 100) * 135;
             combinedExpectedAmt = rareT1Exp + rareT2Exp + legT1Exp + legT2Exp;
-            detailsText = `Rare T1/T2: ${formatGameNumber(rareT1Exp + rareT2Exp, 1)} | Leg T1/T2: ${formatGameNumber(legT1Exp + legT2Exp, 1)}`;
+            detailsText = `Rare: ${formatGameNumber(rareT1Exp + rareT2Exp, 1)} · Leg: ${formatGameNumber(legT1Exp + legT2Exp, 1)}`;
           } else {
             const p1 = item.t1Chance / 100;
             const p2 = item.t2Chance / 100;
             const t1Expected = t1 * p1 * item.t1Amount;
             const t2Expected = t2 * p2 * item.t2Amount;
             combinedExpectedAmt = t1Expected + t2Expected;
-            detailsText = `T1: ${formatGameNumber(t1Expected, 1)} + T2: ${formatGameNumber(t2Expected, 1)}`;
+            detailsText = `T1: ${formatGameNumber(t1Expected, 1)} · T2: ${formatGameNumber(t2Expected, 1)}`;
           }
 
           return {
@@ -2401,16 +2390,17 @@
           const { item, combinedExpectedAmt, detailsText } = entry;
 
           return `
-            <div class="flex items-center justify-center px-3 py-3 gap-4 hover:bg-[#383a40]/60 transition animate-pop text-center">
-              <div class="flex items-center justify-center gap-3 min-w-0">
-                <img src="${item.icon}" alt="${item.name}" style="width:48px; height:48px; object-fit:contain;" class="shrink-0 rounded-lg bg-[#1e1f22] p-0.5 border border-[#3f4147]">
-                <div class="min-w-0 text-center">
-                  <div class="text-sm sm:text-base font-semibold text-[#f2f3f5] truncate">${item.name}</div>
+            <div class="flex items-center justify-between px-3 py-2 gap-3 hover:bg-[#1b1d24] transition">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <img src="${item.icon}" alt="${item.name}" class="w-8 h-8 object-contain shrink-0 rounded bg-[#101114] p-1 border border-[#282b33]">
+                <div class="min-w-0">
+                  <div class="text-xs font-medium text-[#e6e8ec] truncate">${item.name}</div>
+                  <div class="text-[10px] text-[#6b7280]">${item.category}</div>
                 </div>
               </div>
-              <div class="text-center font-mono">
-                <div class="text-sm sm:text-base font-bold text-purple-300">${formatGameNumber(combinedExpectedAmt, 2)}</div>
-                <div class="text-xs text-[#949ba4]">${detailsText}</div>
+              <div class="text-right font-mono shrink-0 tabular-nums">
+                <div class="text-xs font-semibold text-amber-400">${formatGameNumber(combinedExpectedAmt, 2)}</div>
+                <div class="text-[10px] text-[#6b7280]">${detailsText}</div>
               </div>
             </div>
           `;
