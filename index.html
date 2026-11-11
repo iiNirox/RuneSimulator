@@ -48,12 +48,82 @@
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 6px;
+      text-align: center;
     }
 
     .subpanel {
       background-color: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: 4px;
+      text-align: center;
+    }
+
+    /* Appealing framed input card that fills layout width while keeping the input itself compact & balanced */
+    .field-card {
+      background: linear-gradient(180deg, #16181d 0%, #13151a 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.5rem 0.625rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field-card:hover {
+      border-color: #343844;
+    }
+
+    .field-card:focus-within {
+      border-color: rgba(229, 153, 52, 0.65);
+      box-shadow: 0 0 0 1px rgba(229, 153, 52, 0.15);
+    }
+
+    .input-shell {
+      width: 100%;
+      display: flex;
+      align-items: stretch;
+      background-color: var(--bg-input);
+      border: 1px solid #252830;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.12s ease;
+    }
+
+    .input-shell:hover {
+      border-color: #383c47;
+    }
+
+    .input-shell:focus-within {
+      border-color: var(--accent);
+    }
+
+    .input-wing {
+      width: 3.75rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #15171c;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      user-select: none;
+      padding: 0 0.25rem;
+      text-align: center;
+    }
+
+    .input-wing-left {
+      border-right: 1px solid #22252d;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .input-wing-right {
+      border-left: 1px solid #22252d;
+      color: #fbbf24;
+      font-size: 11px;
     }
 
     .field-input {
@@ -61,7 +131,27 @@
       border: 1px solid var(--border-subtle);
       border-radius: 4px;
       color: var(--text-main);
+      text-align: center;
+      text-align-last: center;
       transition: border-color 0.12s ease;
+    }
+    
+    select.field-input {
+      color: var(--text-main);
+      background-color: var(--bg-input);
+    }
+
+    select.field-input option {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    .input-shell .field-input {
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
+      flex: 1 1 0%;
+      min-width: 0;
     }
 
     .field-input:hover {
@@ -73,12 +163,23 @@
       border-color: var(--accent);
     }
 
+    /* Hide number input spin buttons so centered numbers stay truly centered */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
     .btn-primary {
       background-color: #d97706;
       color: #111215;
       font-weight: 600;
       border: 1px solid #f59e0b;
       border-radius: 4px;
+      text-align: center;
       transition: background-color 0.12s ease;
     }
 
@@ -91,6 +192,7 @@
       color: var(--text-main);
       border: 1px solid #323640;
       border-radius: 4px;
+      text-align: center;
       transition: background-color 0.12s ease, border-color 0.12s ease;
     }
 
@@ -137,8 +239,8 @@
   <!-- Top Bar -->
   <header class="sticky top-0 z-30 border-b border-[#282b33] bg-[#15171c]">
     <div class="max-w-[1680px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="flex items-baseline gap-2.5">
+      <div class="flex items-center justify-center gap-3 text-center">
+        <div class="flex items-baseline justify-center gap-2.5">
           <h1 class="text-sm sm:text-base font-semibold tracking-tight text-[#f3f4f6]">
             Noob Incremental
           </h1>
@@ -151,11 +253,11 @@
       </div>
 
       <!-- Mode Switcher -->
-      <div class="flex items-center gap-1 bg-[#101114] p-1 rounded border border-[#282b33]">
-        <button id="btnModeRune" type="button" class="px-3 py-1 rounded text-xs font-medium transition btn-primary">
+      <div class="flex items-center justify-center gap-1 bg-[#101114] p-1 rounded border border-[#282b33]">
+        <button id="btnModeRune" type="button" class="px-3 py-1 rounded text-xs font-medium text-center transition btn-primary">
           Rune Mode
         </button>
-        <button id="btnModePrism" type="button" class="px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white">
+        <button id="btnModePrism" type="button" class="px-3 py-1 rounded text-xs font-medium text-center transition text-[#9ca3af] hover:text-white">
           Prism Mode
         </button>
       </div>
@@ -171,77 +273,84 @@
       <aside class="lg:col-span-2 flex flex-col gap-4">
         <!-- Selection -->
         <div class="panel p-3.5 space-y-3">
-          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
-            <h2 class="text-xs font-semibold text-[#d1d5db]">Pack Selection</h2>
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-center text-center">
+            <h2 class="text-xs font-semibold text-[#d1d5db]">Rune Selection</h2>
           </div>
 
           <div class="space-y-2.5">
-            <div>
-              <label for="realmSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Realm</label>
-              <select id="realmSelect" class="w-full field-input px-2.5 py-1.5 text-xs">
-              </select>
+            <div class="field-card">
+              <label for="realmSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Realm</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">Realm</span>
+                <select id="realmSelect" class="w-full field-input px-2 py-1.5 text-xs font-medium text-center cursor-pointer">
+                </select>
+              </div>
             </div>
-            <div>
-              <label for="runePackSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Opening Rune</label>
-              <select id="runePackSelect" class="w-full field-input px-2.5 py-1.5 text-xs">
-              </select>
+            <div class="field-card">
+              <label for="runePackSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Opening Rune</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">Rune</span>
+                <select id="runePackSelect" class="w-full field-input px-2 py-1.5 text-xs font-medium text-center cursor-pointer">
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Player Stats -->
         <div class="panel p-3.5 space-y-3">
-          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-center text-center">
             <h2 class="text-xs font-semibold text-[#d1d5db]">Player Stats</h2>
           </div>
 
           <div class="space-y-2.5">
             <!-- Rune Bulk -->
-            <div>
-              <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneBulk" for="runeBulkInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Bulk</label>
-                <span id="parsedBulkLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">1</span>
+            <div class="field-card">
+              <label id="labelRuneBulk" for="runeBulkInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center truncate w-full">Normal Rune Bulk</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">BULK</span>
+                <input id="runeBulkInput" type="text" value="1" placeholder="1, 100, 5K"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="runeBulkInput" type="text" value="1" placeholder="1, 100, 5K"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
             <!-- Rune Luck -->
-            <div>
-              <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneLuck" for="runeLuckInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Luck (×)</label>
-                <span id="parsedLuckLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">1×</span>
-              </div>
-              <div id="runeLuckRow" class="grid grid-cols-2 gap-1.5">
-                <input id="runeLuckInput" type="text" value="1" placeholder="1, 50K, 10Qd"
-                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            <div class="field-card">
+              <label id="labelRuneLuck" for="runeLuckInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center truncate w-full">Normal Rune Luck (×)</label>
+              <div id="runeLuckRow" class="w-full flex flex-col gap-1.5">
+                <div class="input-shell">
+                  <span class="input-wing input-wing-left">LUCK</span>
+                  <input id="runeLuckInput" type="text" value="1" placeholder="1, 50K, 10Qd"
+                    class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+                  <span id="parsedLuckLabel" class="input-wing input-wing-right truncate">1×</span>
+                </div>
                 <button id="btnForceLuckOne" type="button" title="Toggle active Rune Luck = 1 without overwriting input"
-                  class="w-full px-2 py-1.5 text-[11px] font-mono font-medium btn-secondary">
+                  class="w-full px-2 py-1 text-[11px] font-mono font-medium btn-secondary text-center">
                   Luck = 1
                 </button>
               </div>
             </div>
 
             <!-- Rune Speed -->
-            <div>
-              <div class="flex items-center justify-between mb-1 gap-1">
-                <label id="labelRuneSpeed" for="runeSpeedInput" class="text-[11px] font-medium text-[#9ca3af] truncate">Normal Rune Speed (s)</label>
-                <span id="parsedSpeedLabel" class="text-[11px] font-mono text-[#9ca3af] shrink-0">0.05s</span>
+            <div class="field-card">
+              <label id="labelRuneSpeed" for="runeSpeedInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center truncate w-full">Normal Rune Speed (s)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">SPEED</span>
+                <input id="runeSpeedInput" type="number" step="0.005" min="0.001" value="0.05"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="runeSpeedInput" type="number" step="0.005" min="0.001" value="0.05"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
 
           <!-- Effective Output Readout -->
-          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33]">
-            <div class="pr-2">
-              <div class="text-[10px] text-[#6b7280]">Active Luck</div>
-              <div id="statBasicLuckMulti" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">1×</div>
+          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33] text-center">
+            <div class="px-1 flex flex-col items-center justify-center">
+              <div class="text-[10px] text-[#6b7280] text-center">Active Luck</div>
+              <div id="statBasicLuckMulti" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">1×</div>
             </div>
-            <div class="pl-2.5">
-              <div id="statRpsCategoryLabel" class="text-[10px] text-[#6b7280] truncate">Normal RPS</div>
-              <div id="statRunesPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">20 /s</div>
+            <div class="px-1 flex flex-col items-center justify-center">
+              <div id="statRpsCategoryLabel" class="text-[10px] text-[#6b7280] truncate text-center w-full">Normal RPS</div>
+              <div id="statRunesPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">20 /s</div>
             </div>
           </div>
         </div>
@@ -252,38 +361,38 @@
         <!-- Simulator Panel -->
         <section class="panel p-4 space-y-3.5">
           <div class="flex items-center justify-between gap-2 border-b border-[#282b33] pb-2.5">
-            <div class="flex items-center gap-2">
-              <h2 class="text-sm font-semibold text-[#f3f4f6]">Roll Simulator</h2>
-              <span id="simStatusPill" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">
+            <div class="flex items-center justify-center gap-2">
+              <h2 class="text-sm font-semibold text-[#f3f4f6] text-center">Rolling Simulator</h2>
+              <span id="simStatusPill" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33] text-center">
                 IDLE
               </span>
             </div>
-            <button id="btnResetSim" type="button" class="px-2.5 py-1 rounded text-xs font-medium bg-[#1f2229] hover:bg-red-950/60 text-[#9ca3af] hover:text-red-300 border border-[#282b33] hover:border-red-800/60 transition">
+            <button id="btnResetSim" type="button" class="px-2.5 py-1 rounded text-xs font-medium bg-[#1f2229] hover:bg-red-950/60 text-[#9ca3af] hover:text-red-300 border border-[#282b33] hover:border-red-800/60 transition text-center">
               Reset
             </button>
           </div>
 
           <!-- Primary Controls -->
           <div class="grid grid-cols-2 gap-2">
-            <button id="btnOpenSingle" type="button" class="px-3 py-2 text-xs btn-primary">
-              Open 1 Batch (<span id="btnBulkLabel">1</span>)
+            <button id="btnOpenSingle" type="button" class="px-3 py-2 text-xs btn-primary text-center flex items-center justify-center">
+              <span>Roll Once (<span id="btnBulkLabel">1</span>)</span>
             </button>
-            <button id="btnToggleAuto" type="button" class="px-3 py-2 text-xs font-medium btn-secondary flex items-center justify-center gap-1.5">
+            <button id="btnToggleAuto" type="button" class="px-3 py-2 text-xs font-medium btn-secondary flex items-center justify-center gap-1.5 text-center">
               <span id="autoBtnText">Start Auto-Open</span>
             </button>
           </div>
 
           <!-- Time Skip -->
-          <div class="flex items-center justify-between bg-[#101114] rounded px-2.5 py-1.5 border border-[#282b33]">
+          <div class="flex flex-wrap items-center justify-center gap-2 bg-[#101114] rounded px-2.5 py-2 border border-[#282b33] text-center">
             <span class="text-xs text-[#9ca3af]">Fast-forward:</span>
-            <div class="flex items-center gap-1">
-              <button type="button" data-warp-sec="60" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+            <div class="flex items-center justify-center gap-1.5">
+              <button type="button" data-warp-sec="60" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
                 +1m
               </button>
-              <button type="button" data-warp-sec="3600" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+              <button type="button" data-warp-sec="3600" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
                 +1h
               </button>
-              <button type="button" data-warp-sec="86400" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary">
+              <button type="button" data-warp-sec="86400" class="warp-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
                 +24h
               </button>
             </div>
@@ -291,35 +400,35 @@
 
           <!-- Telemetry Grid -->
           <div class="grid grid-cols-2 gap-2">
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Runes Opened</div>
-              <div id="simRunesOpened" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">0</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Runes Opened</div>
+              <div id="simRunesOpened" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">0</div>
             </div>
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Simulated Time</div>
-              <div id="simTimeElapsed" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">0s</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Simulated Time</div>
+              <div id="simTimeElapsed" class="text-sm font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">0s</div>
             </div>
-            <div class="subpanel p-2.5">
-              <div class="flex items-center justify-between gap-1">
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="flex flex-wrap items-center justify-center gap-1 text-center">
                 <span class="text-[11px] text-[#6b7280]">Noobinials Pulled</span>
                 <span id="simNoobinialLuckNote" class="text-[10px] font-mono text-amber-400/90">1.5× (Luck=1)</span>
               </div>
-              <div id="simNoobinialsPulled" class="text-sm font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">0</div>
+              <div id="simNoobinialsPulled" class="text-sm font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">0</div>
             </div>
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Rarest Pull</div>
-              <div id="simRarestDrop" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-1 truncate">None yet</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Rarest Pull</div>
+              <div id="simRarestDrop" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-1 truncate max-w-full text-center">None yet</div>
             </div>
           </div>
 
-          <!-- Latest Batch Log -->
-          <div class="bg-[#101114] border border-[#282b33] rounded p-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[11px] font-medium text-[#9ca3af]">Last Batch Drops</span>
+          <!-- All Rolled Runes Log -->
+          <div class="bg-[#101114] border border-[#282b33] rounded p-3 text-center">
+            <div class="flex flex-col items-center justify-center gap-0.5 mb-2.5 text-center">
+              <span class="text-[11px] font-semibold text-[#d1d5db]">All Rolled Runes</span>
               <span id="lastBatchSummary" class="text-[11px] font-mono text-[#6b7280]">Ready to roll</span>
             </div>
             <div id="latestDropsShowcase" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 min-h-[60px]">
-              <div class="col-span-full flex items-center justify-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
+              <div class="col-span-full flex items-center justify-center text-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
                 No rolls recorded in this session
               </div>
             </div>
@@ -328,41 +437,44 @@
 
         <!-- Standalone Odds ETA Calculator -->
         <section class="panel p-4 space-y-3">
-          <div class="border-b border-[#282b33] pb-2 flex items-center justify-between">
-            <h2 class="text-sm font-semibold text-[#f3f4f6]">Quick Odds Calculator</h2>
-            <span class="text-[11px] text-[#6b7280]">1/X ÷ RPS</span>
+          <div class="border-b border-[#282b33] pb-2 flex flex-col items-center justify-center gap-0.5 text-center">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Rune Chance Calculator</h2>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div>
-              <label for="chanceCalcRps" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Runes / sec (RPS)</label>
-              <input id="chanceCalcRps" type="text" placeholder="e.g. 1Qd"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            <div class="field-card">
+              <label for="chanceCalcRps" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Runes / sec (RPS)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">RATE</span>
+                <input id="chanceCalcRps" type="text" placeholder="e.g. 1Qd"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              </div>
             </div>
-            <div>
-              <label for="chanceCalcOdds" class="block text-[11px] font-medium text-[#9ca3af] mb-1">Target Odds (1 in ...)</label>
-              <input id="chanceCalcOdds" type="text" placeholder="e.g. 1Qn"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+            <div class="field-card">
+              <label for="chanceCalcOdds" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Target Odds (1 in ...)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">ODDS</span>
+                <input id="chanceCalcOdds" type="text" placeholder="e.g. 1Qn"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              </div>
             </div>
           </div>
 
-          <div class="subpanel p-3 flex items-center justify-between gap-3">
-            <div>
-              <div class="text-[11px] text-[#6b7280]">Average Time</div>
-              <div id="chanceCalcDetails" class="text-[11px] text-[#9ca3af] mt-0.5 font-mono">Both RPS and rune chance must be greater than zero.</div>
-            </div>
-            <div id="chanceCalcResult" class="text-sm sm:text-base font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+          <div class="subpanel p-3 flex flex-col items-center justify-center gap-1 text-center">
+            <div class="text-[11px] text-[#6b7280] text-center">Average Time</div>
+            <div id="chanceCalcResult" class="text-sm sm:text-base font-mono font-semibold text-amber-400 tabular-nums text-center">
               Enter valid values
             </div>
+            <div id="chanceCalcDetails" class="text-[11px] text-[#9ca3af] font-mono text-center">Both RPS and rune chance must be greater than zero.</div>
           </div>
         </section>
       </div>
 
       <!-- RIGHT COLUMN: Drop Table -->
       <section class="lg:col-start-7 lg:col-span-6 lg:row-start-1 panel p-4 flex flex-col">
-        <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5 mb-2.5">
-          <div class="flex items-center gap-2">
-            <h3 class="text-sm font-semibold text-[#f3f4f6]">Drop Table</h3>
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 mb-2.5 gap-1 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <h3 class="text-sm font-semibold text-[#f3f4f6]">Rune Pool</h3>
             <span class="text-xs text-[#6b7280]">•</span>
             <span id="packHeaderLabel" class="text-xs font-mono text-amber-400">Basic Rune</span>
           </div>
@@ -370,21 +482,21 @@
         </div>
 
         <!-- Column Headers -->
-        <div id="runeTableHeaders" class="grid px-2.5 pb-2 text-[11px] font-medium text-[#9ca3af] gap-2 items-center border-b border-[#282b33]" style="grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 1.1fr)">
-          <div>Rune</div>
-          <div class="text-right">Base</div>
-          <div class="text-right">Effective</div>
-          <div class="flex items-center justify-end gap-1.5 pl-2">
+        <div id="runeTableHeaders" class="grid px-2.5 pb-2 text-[11px] font-medium text-[#9ca3af] gap-2 items-center border-b border-[#282b33] text-center" style="grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.05fr) minmax(0, 1.1fr)">
+          <div class="text-center">Rune</div>
+          <div class="text-center">Base Chance</div>
+          <div class="text-center">Current Chance</div>
+          <div class="flex items-center justify-center gap-1.5 text-center">
             <span>ETA</span>
             <button id="etaModeToggleBtn" type="button" title="Toggle between single expected ETA and Lucky / Median / Unlucky percentiles" class="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-[#101114] hover:bg-[#252830] text-[#d1d5db] border border-[#323640] transition cursor-pointer select-none">
               <span id="etaModeBtnText">Math</span>
             </button>
           </div>
-          <div class="text-right" title="Expected drops per second">Drops/s</div>
+          <div class="text-center" title="Expected drops per second">Drops/s</div>
         </div>
 
         <!-- Rows -->
-        <div id="combinedRunesList" class="divide-y divide-[#22252c] bg-[#14161a] border-x border-b border-[#282b33] rounded-b">
+        <div id="combinedRunesList" class="divide-y divide-[#22252c] bg-[#14161a] border-x border-b border-[#282b33] rounded-b text-center">
         </div>
       </section>
 
@@ -396,38 +508,38 @@
       <!-- LEFT: Prism Stats -->
       <aside class="lg:col-span-2 flex flex-col gap-4">
         <div class="panel p-3.5 space-y-3">
-          <div class="border-b border-[#282b33] pb-2">
+          <div class="border-b border-[#282b33] pb-2 flex items-center justify-center text-center">
             <h2 class="text-xs font-semibold text-[#d1d5db]">Prism Income</h2>
           </div>
 
           <div class="space-y-2.5">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="prismPerCycleInput" class="text-[11px] font-medium text-[#9ca3af]">Prism / Cycle</label>
-                <span id="parsedPrismPerCycleLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
+            <div class="field-card">
+              <label for="prismPerCycleInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Prism / Cycle</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">GAIN</span>
+                <input id="prismPerCycleInput" type="text" value="" placeholder="10, 5K, 1M"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="prismPerCycleInput" type="text" value="" placeholder="10, 5K, 1M"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="prismCycleLengthInput" class="text-[11px] font-medium text-[#9ca3af]">Cycle Length (s)</label>
-                <span id="parsedCycleLengthLabel" class="text-[11px] font-mono text-[#9ca3af]">1s</span>
+            <div class="field-card">
+              <label for="prismCycleLengthInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Cycle Length (s)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">TIME</span>
+                <input id="prismCycleLengthInput" type="number" step="0.1" min="0.001" value="1" placeholder="1"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="prismCycleLengthInput" type="number" step="0.1" min="0.001" value="1" placeholder="1"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
 
-          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33]">
-            <div class="pr-2">
-              <div class="text-[10px] text-[#6b7280]">Prism / Sec</div>
-              <div id="statPrismPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">0 /s</div>
+          <div class="subpanel p-2.5 grid grid-cols-2 divide-x divide-[#282b33] text-center">
+            <div class="px-1 flex flex-col items-center justify-center">
+              <div class="text-[10px] text-[#6b7280] text-center">Prism / Sec</div>
+              <div id="statPrismPerSec" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">0 /s</div>
             </div>
-            <div class="pl-2.5">
-              <div class="text-[10px] text-[#6b7280]">Cycle</div>
-              <div id="statPrismCycle" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">1s</div>
+            <div class="px-1 flex flex-col items-center justify-center">
+              <div class="text-[10px] text-[#6b7280] text-center">Cycle</div>
+              <div id="statPrismCycle" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">1s</div>
             </div>
           </div>
         </div>
@@ -437,47 +549,47 @@
       <div class="lg:col-span-5 flex flex-col gap-4">
         <!-- Capsule Opening Calculator -->
         <section class="panel p-4 space-y-3.5">
-          <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
-            <h2 class="text-sm font-semibold text-[#f3f4f6]">Capsule Sustainment</h2>
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Capsule Opening</h2>
             <span id="capsuleOpenSpeedPill" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">
               1.0s / open
             </span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="capsuleCostInput" class="text-[11px] font-medium text-[#9ca3af]">Capsule Cost</label>
-                <span id="parsedCapsuleCostLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
+            <div class="field-card">
+              <label for="capsuleCostInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Capsule Cost</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">COST</span>
+                <input id="capsuleCostInput" type="text" value="" placeholder="10, 1K"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="capsuleCostInput" type="text" value="" placeholder="10, 1K"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="capsuleBulkInput" class="text-[11px] font-medium text-[#9ca3af]">Capsule Bulk</label>
-                <span id="parsedCapsuleBulkLabel" class="text-[11px] font-mono text-[#9ca3af]">15</span>
+            <div class="field-card">
+              <label for="capsuleBulkInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Capsule Bulk</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">BULK</span>
+                <input id="capsuleBulkInput" type="text" value="15" placeholder="1, 15, 100"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="capsuleBulkInput" type="text" value="15" placeholder="1, 15, 100"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="reservePrismInput" class="text-[11px] font-medium text-[#9ca3af]">Reserve Prism</label>
-                <span id="parsedReservePrismLabel" class="text-[11px] font-mono text-[#9ca3af]">1K</span>
+            <div class="field-card">
+              <label for="reservePrismInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Reserve Prism</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">BANK</span>
+                <input id="reservePrismInput" type="text" value="1000" placeholder="0, 10K, 1M"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
-              <input id="reservePrismInput" type="text" value="1000" placeholder="0, 10K, 1M"
-                class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
             </div>
           </div>
 
           <!-- Gamepass Toggle -->
-          <label for="minionMasterCheckbox" class="flex items-center justify-between bg-[#101114] hover:bg-[#15171c] border border-[#282b33] rounded p-2.5 cursor-pointer transition select-none">
-            <div class="flex items-center gap-2.5">
+          <label for="minionMasterCheckbox" class="flex flex-col sm:flex-row items-center justify-center bg-[#101114] hover:bg-[#15171c] border border-[#282b33] rounded p-2.5 gap-2.5 cursor-pointer transition select-none text-center">
+            <div class="flex items-center justify-center gap-2.5 text-center">
               <input id="minionMasterCheckbox" type="checkbox" class="w-3.5 h-3.5 rounded accent-amber-500 cursor-pointer" />
-              <div>
+              <div class="text-center">
                 <div class="text-xs font-medium text-[#e6e8ec]">Minion Master Gamepass</div>
                 <div class="text-[11px] text-[#6b7280]">Reduces open interval from 1.0s to 0.9s</div>
               </div>
@@ -488,80 +600,76 @@
           </label>
 
           <!-- Output Readout -->
-          <div class="subpanel p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <div class="text-[11px] text-[#6b7280]">Opening Duration</div>
-              <div id="capsuleCalcSubtext" class="text-xs text-[#9ca3af] mt-0.5">
-                Net drain: 140 Prism/s from 1K Reserve Prism
-              </div>
-            </div>
-            <div id="capsuleCalcResult" class="text-lg font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+          <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
+            <div class="text-[11px] text-[#6b7280] text-center">Opening Duration</div>
+            <div id="capsuleCalcResult" class="text-lg font-mono font-semibold text-amber-400 tabular-nums text-center">
               7.14s
+            </div>
+            <div id="capsuleCalcSubtext" class="text-xs text-[#9ca3af] text-center">
+              Net drain: 140 Prism/s from 1K Reserve Prism
             </div>
           </div>
 
           <!-- Breakdown -->
           <div class="grid grid-cols-3 gap-2">
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Drain / Sec</div>
-              <div id="capsuleCostPerSecStat" class="text-xs font-mono font-semibold text-red-400 mt-0.5 tabular-nums">150 /s</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Drain / Sec</div>
+              <div id="capsuleCostPerSecStat" class="text-xs font-mono font-semibold text-red-400 mt-0.5 tabular-nums text-center">150 /s</div>
             </div>
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Income / Sec</div>
-              <div id="capsuleGainPerSecStat" class="text-xs font-mono font-semibold text-emerald-400 mt-0.5 tabular-nums">10 /s</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Income / Sec</div>
+              <div id="capsuleGainPerSecStat" class="text-xs font-mono font-semibold text-emerald-400 mt-0.5 tabular-nums text-center">10 /s</div>
             </div>
-            <div class="subpanel p-2.5">
-              <div class="text-[11px] text-[#6b7280]">Capsules Opened</div>
-              <div id="capsuleTotalOpenedStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">107</div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Capsules Opened</div>
+              <div id="capsuleTotalOpenedStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">107</div>
             </div>
           </div>
         </section>
 
         <!-- Trial Chest Expected Yields -->
         <section id="chestRollsSection" class="panel p-4 space-y-3.5">
-          <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
             <h2 class="text-sm font-semibold text-[#f3f4f6]">Trial Chest Estimator</h2>
             <span id="chestRollsSummaryLabel" class="text-[11px] font-mono text-[#9ca3af]">0 T1 + 0 T2 Chests</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="t1ChestAmountInput" class="text-[11px] font-medium text-[#9ca3af]">T1 Trial Chest</label>
-                <span id="parsedT1ChestLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <img src="https://i.imgur.com/kU8AKzO.png" alt="T1 Trial Chest" class="w-8 h-8 object-contain shrink-0 bg-[#101114] p-1 rounded border border-[#282b33]">
+            <div class="field-card">
+              <label for="t1ChestAmountInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">T1 Trial Chest</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">
+                  <img src="https://i.imgur.com/kU8AKzO.png" alt="T1 Trial Chest" class="w-5 h-5 object-contain">
+                </span>
                 <input id="t1ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
-                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
             </div>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="t2ChestAmountInput" class="text-[11px] font-medium text-[#9ca3af]">T2 Trial Chest</label>
-                <span id="parsedT2ChestLabel" class="text-[11px] font-mono text-[#9ca3af]">0</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <img src="https://i.imgur.com/kn9tEpd.png" alt="T2 Trial Chest" class="w-8 h-8 object-contain shrink-0 bg-[#101114] p-1 rounded border border-[#282b33]">
+            <div class="field-card">
+              <label for="t2ChestAmountInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">T2 Trial Chest</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">
+                  <img src="https://i.imgur.com/kn9tEpd.png" alt="T2 Trial Chest" class="w-5 h-5 object-contain">
+                </span>
                 <input id="t2ChestAmountInput" type="text" value="" placeholder="e.g. 10, 100"
-                  class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
               </div>
             </div>
           </div>
 
           <div>
-            <button id="btnOpenChests" type="button" class="w-full px-3 py-2 text-xs btn-primary">
+            <button id="btnOpenChests" type="button" class="w-full px-3 py-2 text-xs btn-primary text-center">
               Open (<span id="btnOpenChestsLabel">0 T1 + 0 T2</span>)
             </button>
           </div>
 
-          <div class="border border-[#282b33] rounded overflow-hidden">
-            <div class="bg-[#101114] px-3 py-1.5 border-b border-[#282b33] flex items-center justify-between text-[11px] text-[#9ca3af]">
-              <span>Reward</span>
-              <span>Expected Total (T1 + T2)</span>
+          <div class="border border-[#282b33] rounded overflow-hidden text-center">
+            <div class="bg-[#101114] px-3 py-1.5 border-b border-[#282b33] grid grid-cols-2 items-center text-[11px] text-[#9ca3af] text-center">
+              <span class="text-center">Reward</span>
+              <span class="text-center">Expected Total (T1 + T2)</span>
             </div>
-            <div id="chestCombinedResultsList" class="divide-y divide-[#22252c] bg-[#14161a]">
+            <div id="chestCombinedResultsList" class="divide-y divide-[#22252c] bg-[#14161a] text-center">
             </div>
           </div>
         </section>
@@ -569,61 +677,60 @@
 
       <!-- RIGHT: Passive Prism Projection -->
       <section class="lg:col-span-5 panel p-4 space-y-3.5">
-        <div class="flex items-center justify-between border-b border-[#282b33] pb-2.5">
-          <h2 class="text-sm font-semibold text-[#f3f4f6]">Passive Prism Projection</h2>
-          <span class="text-[11px] font-mono text-[#9ca3af]">Supports e.g. 2d 4h 30m</span>
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
+          <h2 class="text-sm font-semibold text-[#f3f4f6]">Passive Prism Income</h2>
+          <span class="text-[11px] font-mono text-[#9ca3af]">Supports combined formats e.g. 2d 4h 30m</span>
         </div>
 
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label for="prismCalcTimeInput" class="text-[11px] font-medium text-[#9ca3af]">Time Duration</label>
-            <span id="parsedPrismTimeLabel" class="text-[11px] font-mono text-[#9ca3af]">1hrs</span>
+        <div class="field-card">
+          <label for="prismCalcTimeInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Time Duration</label>
+          <div class="input-shell max-w-md mx-auto">
+            <span class="input-wing input-wing-left">SPAN</span>
+            <input id="prismCalcTimeInput" type="text" value="1h" placeholder="30s, 10m, 2h, 2d 4h, 1w"
+              class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+            <span id="parsedPrismTimeLabel" class="input-wing input-wing-right truncate">1hrs</span>
           </div>
-          <input id="prismCalcTimeInput" type="text" value="1h" placeholder="30s, 10m, 2h, 2d 4h, 1w"
-            class="w-full field-input px-2.5 py-1.5 text-xs font-mono" />
         </div>
 
-        <div class="flex flex-wrap items-center justify-between bg-[#101114] rounded px-2.5 py-1.5 border border-[#282b33] gap-2">
+        <div class="flex flex-wrap items-center justify-center bg-[#101114] rounded px-2.5 py-2 border border-[#282b33] gap-2 text-center">
           <span class="text-xs text-[#9ca3af]">Presets:</span>
-          <div class="flex flex-wrap items-center gap-1">
-            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
+          <div class="flex flex-wrap items-center justify-center gap-1.5">
+            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
               1m
             </button>
-            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
+            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
               10m
             </button>
-            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
+            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
               1h
             </button>
-            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
+            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
               6h
             </button>
-            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2 py-1 rounded text-xs font-mono btn-secondary">
+            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
               24h
             </button>
           </div>
         </div>
 
-        <div class="subpanel p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <div class="text-[11px] text-[#6b7280]">Prism Generated</div>
-            <div id="prismCalcDetails" class="text-xs text-[#9ca3af] mt-0.5">
-              3,600 cycles over 1h (10 Prism / 1s cycle)
-            </div>
-          </div>
-          <div id="prismCalcGeneratedResult" class="text-lg font-mono font-semibold text-amber-400 shrink-0 tabular-nums">
+        <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
+          <div class="text-[11px] text-[#6b7280] text-center">Prism Generated</div>
+          <div id="prismCalcGeneratedResult" class="text-lg font-mono font-semibold text-amber-400 tabular-nums text-center">
             36K Prism
+          </div>
+          <div id="prismCalcDetails" class="text-xs text-[#9ca3af] text-center">
+            3,600 cycles over 1h (10 Prism / 1s cycle)
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
-          <div class="subpanel p-2.5">
-            <div class="text-[11px] text-[#6b7280]">Total Cycles</div>
-            <div id="prismCalcCyclesStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums">3.6K</div>
+          <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+            <div class="text-[11px] text-[#6b7280] text-center">Total Cycles</div>
+            <div id="prismCalcCyclesStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">3.6K</div>
           </div>
-          <div class="subpanel p-2.5">
-            <div class="text-[11px] text-[#6b7280]">Total w/ Reserve</div>
-            <div id="prismCalcTotalWithReserveStat" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums">37K</div>
+          <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+            <div class="text-[11px] text-[#6b7280] text-center">Total w/ Reserve</div>
+            <div id="prismCalcTotalWithReserveStat" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">37K</div>
           </div>
         </div>
       </section>
@@ -1546,10 +1653,6 @@
       state.sim.timeElapsed += batchCount * speed;
       state.sim.currencySpent += runesOpenedThisStep * costPerRune;
 
-      const batchDrops = [];
-      let triggeredNoobinial = false;
-      let triggeredRare = false;
-
       const isLuckOne = Math.abs(luck - 1) < 1e-9;
       packObj.drops.forEach(drop => {
         const info = computeRuneChance(drop, luck);
@@ -1558,19 +1661,9 @@
         const hits = sampleBinomialOrPoisson(runesOpenedThisStep, prob);
         if (hits > 0) {
           state.sim.inventory[drop.name] = (state.sim.inventory[drop.name] || 0) + hits;
-          batchDrops.push({
-            name: drop.name,
-            count: hits,
-            type: drop.type,
-            chance: info.chance,
-            capped: info.capped
-          });
 
           if (drop.type === 'NOOBINIAL') {
             state.sim.noobinialsPulled += hits;
-            triggeredNoobinial = true;
-          } else if (info.chance >= 1000) {
-            triggeredRare = true;
           }
 
           if (info.baseOdds > state.sim.rarestDropBaseOdds) {
@@ -1580,7 +1673,19 @@
         }
       });
 
-      state.sim.latestBatchDrops = batchDrops;
+      // Keep all rolled runes across the session in latestBatchDrops
+      state.sim.latestBatchDrops = packObj.drops
+        .filter(drop => (state.sim.inventory[drop.name] || 0) > 0)
+        .map(drop => {
+          const info = computeRuneChance(drop, luck);
+          return {
+            name: drop.name,
+            count: state.sim.inventory[drop.name],
+            type: drop.type,
+            chance: info.chance,
+            capped: info.capped
+          };
+        });
 
       renderAll();
     }
@@ -1626,7 +1731,6 @@
 
     function renderRuneRow(drop, luck, runesPerSec) {
       const info = computeRuneChance(drop, luck);
-      const obtained = state.sim.inventory[drop.name] || 0;
       const isNoob = info.isNoobinial;
       const etaSeconds = runesPerSec > 0 ? info.chance / runesPerSec : Infinity;
       const etaText = etaSeconds < 0.5 ? 'Instant' : formatEta(etaSeconds);
@@ -1648,12 +1752,12 @@
       const isLuckMode = state.etaMode === 'luck';
       const gridTemplate = isLuckMode
         ? 'minmax(0, 1.2fr) minmax(0, 0.75fr) minmax(0, 0.9fr) minmax(0, 2.35fr) minmax(0, 0.95fr)'
-        : 'minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 1.1fr)';
+        : 'minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.05fr) minmax(0, 1.1fr)';
 
       let etaCellHtml = '';
       if (!isLuckMode) {
         etaCellHtml = `
-          <div class="text-right pl-3 font-mono text-xs font-medium ${etaColorClass} truncate tabular-nums" title="${etaText}">
+          <div class="text-center font-mono text-xs font-medium ${etaColorClass} truncate tabular-nums" title="${etaText}">
             ${etaText}
           </div>
         `;
@@ -1672,16 +1776,16 @@
         const p99Text = p99Sec < 0.5 ? 'Instant' : formatEta(p99Sec);
 
         etaCellHtml = `
-          <div class="pl-2 grid grid-cols-3 gap-1 text-center font-mono">
-            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="1% Lucky: ${p1Text}">
+          <div class="grid grid-cols-3 gap-1 text-center font-mono">
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col items-center justify-center text-center" title="1% Lucky: ${p1Text}">
               <div class="text-[9px] text-[#6b7280] font-sans leading-tight">1%</div>
               <div class="text-[11px] font-medium text-emerald-400 whitespace-nowrap">${p1Text}</div>
             </div>
-            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="50% Median: ${p50Text}">
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col items-center justify-center text-center" title="50% Median: ${p50Text}">
               <div class="text-[9px] text-[#6b7280] font-sans leading-tight">50%</div>
               <div class="text-[11px] font-medium text-amber-300 whitespace-nowrap">${p50Text}</div>
             </div>
-            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col justify-center" title="99% Unlucky: ${p99Text}${isNoob ? ' (2× Pity Cap)' : ''}">
+            <div class="rounded bg-[#101114] border border-[#282b33] px-1.5 py-0.5 min-w-0 flex flex-col items-center justify-center text-center" title="99% Unlucky: ${p99Text}${isNoob ? ' (2× Pity Cap)' : ''}">
               <div class="text-[9px] text-[#6b7280] font-sans leading-tight">99%</div>
               <div class="text-[11px] font-medium text-red-400 whitespace-nowrap">${p99Text}</div>
             </div>
@@ -1690,20 +1794,19 @@
       }
 
       return `
-        <div class="grid items-center px-2.5 py-2 gap-2 ${isNoob ? 'noobinial-row' : 'hover:bg-[#1b1d24]'} transition" style="grid-template-columns: ${gridTemplate}">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate" title="${drop.name}">${drop.name}</span>
-            ${obtained > 0 ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#252830] text-[#d1d5db] border border-[#323640] shrink-0">+${formatGameNumber(obtained, 0)}</span>` : ''}
+        <div class="grid items-center px-2.5 py-2 gap-2 text-center ${isNoob ? 'noobinial-row' : 'hover:bg-[#1b1d24]'} transition" style="grid-template-columns: ${gridTemplate}">
+          <div class="flex items-center justify-center min-w-0 text-center">
+            <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate text-center" title="${drop.name}">${drop.name}</span>
           </div>
-          <div class="text-right font-mono text-xs ${isNoob ? 'text-amber-200/70' : 'text-[#6b7280]'} truncate tabular-nums" title="1/${formatGameNumber(info.baseOdds)}">
+          <div class="text-center font-mono text-xs ${isNoob ? 'text-amber-200/70' : 'text-[#6b7280]'} truncate tabular-nums" title="1/${formatGameNumber(info.baseOdds)}">
             1/${formatGameNumber(info.baseOdds)}
           </div>
-          <div class="flex items-center justify-end gap-1 font-mono text-xs min-w-0 tabular-nums" title="1/${formatGameNumber(info.chance)}${info.capped ? ' [CAP]' : ''}">
+          <div class="flex items-center justify-center gap-1 font-mono text-xs min-w-0 tabular-nums text-center" title="1/${formatGameNumber(info.chance)}${info.capped ? ' [CAP]' : ''}">
             <span class="truncate ${isNoob ? 'noobinial-text font-semibold' : 'text-[#d1d5db]'}">1/${formatGameNumber(info.chance)}</span>
             ${info.capped ? '<span class="text-[9px] font-medium px-1 rounded bg-[#252830] text-[#9ca3af] border border-[#323640] shrink-0">CAP</span>' : ''}
           </div>
           ${etaCellHtml}
-          <div class="text-right pl-2 font-mono text-xs min-w-0 tabular-nums" title="${(runesPerSec / info.chance) >= 1 ? `${formatGameNumber(runesPerSec / info.chance)} /s` : 'Less than 1/s'}">
+          <div class="text-center font-mono text-xs min-w-0 tabular-nums" title="${(runesPerSec / info.chance) >= 1 ? `${formatGameNumber(runesPerSec / info.chance)} /s` : 'Less than 1/s'}">
             ${(runesPerSec / info.chance) >= 1
               ? `<span class="text-[#d1d5db]">${formatGameNumber(runesPerSec / info.chance)}/s</span>`
               : `<span class="text-[#6b7280]/50 select-none">—</span>`
@@ -1739,8 +1842,6 @@
       const runesPerSec = batchesPerSec * bulk;
 
       document.getElementById('parsedLuckLabel').textContent = `${formatGameNumber(luck)}×`;
-      document.getElementById('parsedBulkLabel').textContent = formatGameNumber(bulk, 0);
-      document.getElementById('parsedSpeedLabel').textContent = `${speed}s`;
       document.getElementById('btnBulkLabel').textContent = formatGameNumber(bulk, 0);
 
       const rpsCategory = getRpsCategory(state.pack);
@@ -1760,17 +1861,17 @@
       const btnForceLuckOneEl = document.getElementById('btnForceLuckOne');
       if (runeLuckRowEl && btnForceLuckOneEl) {
         if (isNormalRps) {
-          runeLuckRowEl.className = 'grid grid-cols-2 gap-1.5';
+          runeLuckRowEl.className = 'w-full flex flex-col gap-1.5';
           btnForceLuckOneEl.classList.remove('hidden');
           if (state.forceLuckOne) {
             btnForceLuckOneEl.textContent = 'Luck = 1: ON';
-            btnForceLuckOneEl.className = 'w-full px-2 py-1.5 text-[11px] font-mono font-semibold btn-primary';
+            btnForceLuckOneEl.className = 'w-full px-2 py-1 text-[11px] font-mono font-semibold btn-primary text-center';
           } else {
             btnForceLuckOneEl.textContent = 'Luck = 1: OFF';
-            btnForceLuckOneEl.className = 'w-full px-2 py-1.5 text-[11px] font-mono font-medium btn-secondary text-[#9ca3af]';
+            btnForceLuckOneEl.className = 'w-full px-2 py-1 text-[11px] font-mono font-medium btn-secondary text-[#9ca3af] text-center';
           }
         } else {
-          runeLuckRowEl.className = 'grid grid-cols-1';
+          runeLuckRowEl.className = 'w-full flex flex-col';
           btnForceLuckOneEl.classList.add('hidden');
         }
       }
@@ -1786,28 +1887,48 @@
       }
       document.getElementById('simRarestDrop').textContent = state.sim.rarestDropName || 'None yet';
 
+      // Build cumulative rolled runes list across all rolls in the session
+      const allRolledRunes = packObj.drops
+        .filter(drop => (state.sim.inventory[drop.name] || 0) > 0)
+        .map(drop => {
+          const info = computeRuneChance(drop, luck);
+          return {
+            name: drop.name,
+            count: state.sim.inventory[drop.name],
+            type: drop.type,
+            chance: info.chance,
+            capped: info.capped
+          };
+        });
+      state.sim.latestBatchDrops = allRolledRunes;
+
       const showcase = document.getElementById('latestDropsShowcase');
-      if (state.sim.latestBatchDrops.length > 0) {
+      if (allRolledRunes.length > 0) {
         document.getElementById('lastBatchSummary').textContent =
-          `Rolled ${formatGameNumber(bulk, 0)} • ${state.sim.latestBatchDrops.length} tier(s)`;
-        showcase.innerHTML = state.sim.latestBatchDrops.map(d => {
+          `${allRolledRunes.length} / ${packObj.drops.length} runes unlocked`;
+        showcase.innerHTML = allRolledRunes.map(d => {
           const isNoob = d.type === 'NOOBINIAL';
           return `
-            <div class="p-2 rounded border flex flex-col justify-between ${
+            <div class="p-2 rounded border flex flex-col items-center justify-center text-center gap-0.5 ${
               isNoob
                 ? 'bg-amber-950/20 border-amber-500/40'
                 : 'bg-[#181a1f] border-[#282b33]'
             }">
-              <div class="flex items-center justify-between gap-1">
-                <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate">${d.name}</span>
-                <span class="text-[10px] font-mono px-1 py-0.5 rounded bg-[#252830] text-[#d1d5db]">+${formatGameNumber(d.count, 0)}</span>
-              </div>
-              <div class="text-[10px] font-mono text-[#6b7280] mt-1">
+              <span class="text-xs font-medium ${isNoob ? 'noobinial-text font-semibold' : 'text-[#e6e8ec]'} truncate max-w-full text-center" title="${d.name}">${d.name}</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#252830] text-[#d1d5db] text-center">+${formatGameNumber(d.count, 0)}</span>
+              <div class="text-[10px] font-mono text-[#6b7280] text-center">
                 1/${formatGameNumber(d.chance)} ${d.capped ? '[CAP]' : ''}
               </div>
             </div>
           `;
         }).join('');
+      } else {
+        document.getElementById('lastBatchSummary').textContent = 'Ready to roll';
+        showcase.innerHTML = `
+          <div class="col-span-full flex items-center justify-center text-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
+            No rolls recorded in this session
+          </div>
+        `;
       }
 
       document.getElementById('packHeaderLabel').textContent = `${state.pack} Rune`;
@@ -1820,7 +1941,7 @@
       if (headerEl) {
         headerEl.style.gridTemplateColumns = isLuckMode
           ? 'minmax(0, 1.2fr) minmax(0, 0.75fr) minmax(0, 0.9fr) minmax(0, 2.35fr) minmax(0, 0.95fr)'
-          : 'minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.95fr) minmax(0, 1.1fr)';
+          : 'minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.05fr) minmax(0, 1.1fr)';
       }
       const modeTextEl = document.getElementById('etaModeBtnText');
       if (modeTextEl) {
@@ -1845,7 +1966,7 @@
       document.getElementById('autoBtnText').textContent = 'Start Auto-Open';
       const pill = document.getElementById('simStatusPill');
       pill.textContent = 'IDLE';
-      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]';
+      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33] text-center';
     }
 
     function startAutoOpen() {
@@ -1854,7 +1975,7 @@
       document.getElementById('autoBtnText').textContent = 'Stop Auto-Open';
       const pill = document.getElementById('simStatusPill');
       pill.textContent = 'RUNNING';
-      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40';
+      pill.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40 text-center';
 
       let remainderBatches = 0;
       state.autoOpenTimer = setInterval(() => {
@@ -1881,12 +2002,6 @@
         inventory: {},
         latestBatchDrops: []
       };
-      document.getElementById('latestDropsShowcase').innerHTML = `
-        <div class="col-span-full flex items-center justify-center text-xs text-[#6b7280] py-3 border border-dashed border-[#282b33] rounded">
-          No rolls recorded in this session
-        </div>
-      `;
-      document.getElementById('lastBatchSummary').textContent = 'Ready to roll';
       renderAll();
     }
 
@@ -2050,13 +2165,13 @@
         if (mode === 'prism') {
           runeModeGrid.classList.add('hidden');
           prismModeGrid.classList.remove('hidden');
-          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium transition btn-primary';
-          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white';
+          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium text-center transition btn-primary';
+          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium text-center transition text-[#9ca3af] hover:text-white';
         } else {
           prismModeGrid.classList.add('hidden');
           runeModeGrid.classList.remove('hidden');
-          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium transition btn-primary';
-          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium transition text-[#9ca3af] hover:text-white';
+          btnModeRune.className = 'px-3 py-1 rounded text-xs font-medium text-center transition btn-primary';
+          btnModePrism.className = 'px-3 py-1 rounded text-xs font-medium text-center transition text-[#9ca3af] hover:text-white';
         }
         try {
           localStorage.setItem('noob_rune_sim_active_mode', mode);
@@ -2071,8 +2186,6 @@
         const prismPerSec = prismPerCycle / cycleLength;
 
         // Update Box 1: Player Stats labels
-        document.getElementById('parsedPrismPerCycleLabel').textContent = formatGameNumber(prismPerCycle);
-        document.getElementById('parsedCycleLengthLabel').textContent = `${cycleLength}s`;
         document.getElementById('statPrismPerSec').textContent = `${formatGameNumber(prismPerSec)} /s`;
         document.getElementById('statPrismCycle').textContent = `${cycleLength}s`;
 
@@ -2087,18 +2200,16 @@
         const costPerSec = costPerOpenBatch / openInterval;
         const netDrainPerSec = costPerSec - prismPerSec;
 
-        document.getElementById('parsedCapsuleCostLabel').textContent = formatGameNumber(capsuleCost);
-        document.getElementById('parsedCapsuleBulkLabel').textContent = formatGameNumber(capsuleBulk, 0);
-        document.getElementById('parsedReservePrismLabel').textContent = formatGameNumber(reservePrism);
+
 
         document.getElementById('capsuleOpenSpeedPill').textContent = `${openInterval.toFixed(1)}s / open`;
         const badgeEl = document.getElementById('gamepassBadge');
         if (hasGamepass) {
           badgeEl.textContent = 'ON (0.9s)';
-          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40 text-center';
         } else {
           badgeEl.textContent = 'OFF (1.0s)';
-          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-[#181a1f] text-[#9ca3af] border border-[#282b33]';
+          badgeEl.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-[#181a1f] text-[#9ca3af] border border-[#282b33] text-center';
         }
 
         document.getElementById('capsuleCostPerSecStat').textContent = `${formatGameNumber(costPerSec)} /s`;
@@ -2344,8 +2455,6 @@
         const { t1, t2 } = getChestCounts();
         const prismReward = getCurrentPrismGainForChests();
 
-        document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1);
-        document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2);
         document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2`;
         document.getElementById('chestRollsSummaryLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2 Chests`;
 
@@ -2390,17 +2499,17 @@
           const { item, combinedExpectedAmt, detailsText } = entry;
 
           return `
-            <div class="flex items-center justify-between px-3 py-2 gap-3 hover:bg-[#1b1d24] transition">
-              <div class="flex items-center gap-2.5 min-w-0">
+            <div class="grid grid-cols-2 items-center px-3 py-2 gap-3 hover:bg-[#1b1d24] transition text-center">
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-2 min-w-0 text-center">
                 <img src="${item.icon}" alt="${item.name}" class="w-8 h-8 object-contain shrink-0 rounded bg-[#101114] p-1 border border-[#282b33]">
-                <div class="min-w-0">
-                  <div class="text-xs font-medium text-[#e6e8ec] truncate">${item.name}</div>
-                  <div class="text-[10px] text-[#6b7280]">${item.category}</div>
+                <div class="min-w-0 text-center">
+                  <div class="text-xs font-medium text-[#e6e8ec] truncate text-center">${item.name}</div>
+                  <div class="text-[10px] text-[#6b7280] text-center">${item.category}</div>
                 </div>
               </div>
-              <div class="text-right font-mono shrink-0 tabular-nums">
-                <div class="text-xs font-semibold text-amber-400">${formatGameNumber(combinedExpectedAmt, 2)}</div>
-                <div class="text-[10px] text-[#6b7280]">${detailsText}</div>
+              <div class="text-center font-mono shrink-0 tabular-nums">
+                <div class="text-xs font-semibold text-amber-400 text-center">${formatGameNumber(combinedExpectedAmt, 2)}</div>
+                <div class="text-[10px] text-[#6b7280] text-center">${detailsText}</div>
               </div>
             </div>
           `;
@@ -2413,8 +2522,6 @@
       [t1ChestInput, t2ChestInput].forEach(inp => {
         inp.addEventListener('input', () => {
           const { t1, t2 } = getChestCounts();
-          document.getElementById('parsedT1ChestLabel').textContent = formatGameNumber(t1);
-          document.getElementById('parsedT2ChestLabel').textContent = formatGameNumber(t2);
           document.getElementById('btnOpenChestsLabel').textContent = `${formatGameNumber(t1)} T1 + ${formatGameNumber(t2)} T2`;
         });
       });
