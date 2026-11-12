@@ -470,35 +470,112 @@
         </section>
       </div>
 
-      <!-- RIGHT COLUMN: Drop Table -->
-      <section class="lg:col-start-7 lg:col-span-6 lg:row-start-1 panel p-4 flex flex-col">
-        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 mb-2.5 gap-1 text-center">
-          <div class="flex items-center justify-center gap-2">
-            <h3 class="text-sm font-semibold text-[#f3f4f6]">Rune Pool</h3>
-            <span class="text-xs text-[#6b7280]">•</span>
-            <span id="packHeaderLabel" class="text-xs font-mono text-amber-400">Basic Rune</span>
+      <!-- RIGHT COLUMN: Drop Table & Rune Sacrifice -->
+      <div class="lg:col-start-7 lg:col-span-6 lg:row-start-1 flex flex-col gap-4">
+        <section class="panel p-4 flex flex-col">
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 mb-2.5 gap-1 text-center">
+            <div class="flex items-center justify-center gap-2">
+              <h3 class="text-sm font-semibold text-[#f3f4f6]">Rune Pool</h3>
+              <span class="text-xs text-[#6b7280]">•</span>
+              <span id="packHeaderLabel" class="text-xs font-mono text-amber-400">Basic Rune</span>
+            </div>
+            <span class="text-[11px] text-[#6b7280]">Noobinials ignore luck</span>
           </div>
-          <span class="text-[11px] text-[#6b7280]">Noobinials ignore luck</span>
-        </div>
 
-        <!-- Column Headers -->
-        <div id="runeTableHeaders" class="grid px-2.5 pb-2 text-[11px] font-medium text-[#9ca3af] gap-2 items-center border-b border-[#282b33] text-center" style="grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.05fr) minmax(0, 1.1fr)">
-          <div class="text-center">Rune</div>
-          <div class="text-center">Base Chance</div>
-          <div class="text-center">Current Chance</div>
-          <div class="flex items-center justify-center gap-1.5 text-center">
-            <span>ETA</span>
-            <button id="etaModeToggleBtn" type="button" title="Toggle between single expected ETA and Lucky / Median / Unlucky percentiles" class="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-[#101114] hover:bg-[#252830] text-[#d1d5db] border border-[#323640] transition cursor-pointer select-none">
-              <span id="etaModeBtnText">Math</span>
-            </button>
+          <!-- Column Headers -->
+          <div id="runeTableHeaders" class="grid px-2.5 pb-2 text-[11px] font-medium text-[#9ca3af] gap-2 items-center border-b border-[#282b33] text-center" style="grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.05fr) minmax(0, 1.1fr)">
+            <div class="text-center">Rune</div>
+            <div class="text-center">Base Chance</div>
+            <div class="text-center">Current Chance</div>
+            <div class="flex items-center justify-center gap-1.5 text-center">
+              <span>ETA</span>
+              <button id="etaModeToggleBtn" type="button" title="Toggle between single expected ETA and Lucky / Median / Unlucky percentiles" class="px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-[#101114] hover:bg-[#252830] text-[#d1d5db] border border-[#323640] transition cursor-pointer select-none">
+                <span id="etaModeBtnText">Math</span>
+              </button>
+            </div>
+            <div class="text-center" title="Expected drops per second">Drops/s</div>
           </div>
-          <div class="text-center" title="Expected drops per second">Drops/s</div>
-        </div>
 
-        <!-- Rows -->
-        <div id="combinedRunesList" class="divide-y divide-[#22252c] bg-[#14161a] border-x border-b border-[#282b33] rounded-b text-center">
-        </div>
-      </section>
+          <!-- Rows -->
+          <div id="combinedRunesList" class="divide-y divide-[#22252c] bg-[#14161a] border-x border-b border-[#282b33] rounded-b text-center">
+          </div>
+        </section>
+
+        <!-- RUNE SACRIFICE BOX -->
+        <section id="runeSacrificeSection" class="panel p-4 space-y-3.5">
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1.5 text-center">
+            <div class="flex flex-wrap items-center justify-center gap-2">
+              <h3 class="text-sm font-semibold text-[#f3f4f6]">Rune Sacrifice</h3>
+              <span class="text-xs text-[#6b7280]">•</span>
+              <span id="sacrificeRuneHeaderLabel" class="text-xs font-mono text-amber-400">Chronos Core</span>
+              <span id="sacrificeRuneOddsBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">1/3.5QnDe</span>
+            </div>
+            <div class="flex items-center justify-center gap-1.5">
+              <span id="sacrificeLevelCapBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#101114] text-[#9ca3af] border border-[#282b33]">Lvl 1–100 (200 Max)</span>
+            </div>
+          </div>
+
+          <!-- Prism RPS Warning Banner -->
+          <div id="sacrificePrismWarning" class="hidden rounded bg-amber-500/10 border border-amber-500/40 px-3 py-2 text-xs font-medium text-amber-300 text-center">
+            Set your Prism RPS by selecting a prism rune
+          </div>
+
+          <!-- Inputs Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <!-- Sacrifice Rune Select -->
+            <div class="field-card">
+              <label for="sacrificeRuneSelect" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Sacrifice Rune</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">RUNE</span>
+                <select id="sacrificeRuneSelect" class="w-full field-input px-2 py-1.5 text-xs font-medium text-center cursor-pointer">
+                </select>
+              </div>
+            </div>
+
+            <!-- Current Level -->
+            <div class="field-card">
+              <label id="sacrificeCurrLvlLabel" for="sacrificeCurrentLvl" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Current Level (1–100)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">CURR</span>
+                <input id="sacrificeCurrentLvl" type="number" min="0" max="200" step="1" value="1"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              </div>
+            </div>
+
+            <!-- Wanted Level -->
+            <div class="field-card">
+              <label id="sacrificeWantLvlLabel" for="sacrificeWantedLvl" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Wanted Level (1–100)</label>
+              <div class="input-shell">
+                <span class="input-wing input-wing-left">WANT</span>
+                <input id="sacrificeWantedLvl" type="number" min="1" max="200" step="1" value="100"
+                  class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Include Current Level Checkbox -->
+          <div class="flex items-center justify-center bg-[#101114] rounded px-3 py-2 border border-[#282b33] text-center">
+            <label for="sacrificeIncludeCurrentCheckbox" class="flex items-center justify-center gap-2 cursor-pointer select-none">
+              <input id="sacrificeIncludeCurrentCheckbox" type="checkbox" class="w-3.5 h-3.5 rounded accent-amber-500 cursor-pointer" />
+              <span class="text-xs font-medium text-[#e6e8ec]">Include current level</span>
+            </label>
+          </div>
+
+          <!-- Main ETA Output Readout -->
+          <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
+            <div class="flex items-center justify-center gap-1.5 text-[11px] text-[#6b7280] text-center">
+              <span id="sacrificeEtaTitle">Estimated Time (Lvl 1 → Lvl 100)</span>
+            </div>
+            <div id="sacrificeEtaResult" class="text-base sm:text-lg font-mono font-semibold text-amber-400 tabular-nums text-center">
+              Forever
+            </div>
+            <div id="sacrificeEtaExactSub" class="text-xs font-mono text-[#d1d5db] text-center">
+            </div>
+            <div id="sacrificeEtaDetails" class="text-[11px] text-[#9ca3af] font-mono text-center">
+            </div>
+          </div>
+        </section>
+      </div>
 
     </div>
 
@@ -817,6 +894,7 @@
     });
     SUFFIX_LOWER_MAP['ct'] = 303;
     SUFFIX_LOWER_MAP['cent'] = 303;
+    SUFFIX_LOWER_MAP['n'] = 30;
 
     function parseGameNumber(str, fallback = 1) {
       if (typeof str === 'number') return isFinite(str) && str > 0 ? str : fallback;
@@ -1460,6 +1538,1917 @@
       }
     };
 
+    
+    // =========================================================================
+    // 2B. RUNE SACRIFICE LEVEL REQUIREMENTS DATABASE (FROM .TXT)
+    // =========================================================================
+    const SACRIFICE_RUNE_DATABASE = {
+      "Chronos Core": {
+            "name": "Chronos Core",
+            "dropName": "Chronos Core",
+            "realm": "Realm 1",
+            "pack": "Basic",
+            "odds": "3.5QnDe",
+            "type": "NOOBINIAL",
+            "maxLevel": 200,
+            "levels": [
+                  "499.91n",
+                  "1.00De",
+                  "2.00De",
+                  "4.00De",
+                  "8.00De",
+                  "16.00De",
+                  "31.99De",
+                  "63.99De",
+                  "127.98De",
+                  "255.95De",
+                  "511.90De",
+                  "1.02UDe",
+                  "2.05UDe",
+                  "4.10UDe",
+                  "8.19UDe",
+                  "16.38UDe",
+                  "32.76UDe",
+                  "65.52UDe",
+                  "131.05UDe",
+                  "262.10UDe",
+                  "524.19UDe",
+                  "1.05DDe",
+                  "2.10DDe",
+                  "4.19DDe",
+                  "8.39DDe",
+                  "16.77DDe",
+                  "33.55DDe",
+                  "67.10DDe",
+                  "134.19DDe",
+                  "268.39DDe",
+                  "536.77DDe",
+                  "1.07TDe",
+                  "2.15TDe",
+                  "4.29TDe",
+                  "8.59TDe",
+                  "17.18TDe",
+                  "34.35TDe",
+                  "68.71TDe",
+                  "137.41TDe",
+                  "274.83TDe",
+                  "549.66TDe",
+                  "1.10QdDe",
+                  "2.20QdDe",
+                  "4.40QdDe",
+                  "8.79QdDe",
+                  "17.59QdDe",
+                  "35.18QdDe",
+                  "70.36QdDe",
+                  "140.71QdDe",
+                  "281.42QdDe",
+                  "562.85QdDe",
+                  "1.13QnDe",
+                  "2.25QnDe",
+                  "4.50QnDe",
+                  "9.01QnDe",
+                  "18.01QnDe",
+                  "36.02QnDe",
+                  "72.04QnDe",
+                  "144.09QnDe",
+                  "288.18QnDe",
+                  "576.36QnDe",
+                  "1.15SxDe",
+                  "2.31SxDe",
+                  "4.61SxDe",
+                  "9.22SxDe",
+                  "18.44SxDe",
+                  "36.89SxDe",
+                  "73.77SxDe",
+                  "147.55SxDe",
+                  "295.09SxDe",
+                  "590.19SxDe",
+                  "1.18SpDe",
+                  "2.36SpDe",
+                  "4.72SpDe",
+                  "9.44SpDe",
+                  "18.89SpDe",
+                  "37.77SpDe",
+                  "75.54SpDe",
+                  "151.09SpDe",
+                  "302.18SpDe",
+                  "604.35SpDe",
+                  "1.21OcDe",
+                  "2.42OcDe",
+                  "4.83OcDe",
+                  "9.67OcDe",
+                  "19.34OcDe",
+                  "38.68OcDe",
+                  "77.36OcDe",
+                  "154.71OcDe",
+                  "309.43OcDe",
+                  "618.86OcDe",
+                  "1.24NoDe",
+                  "2.48NoDe",
+                  "4.95NoDe",
+                  "9.90NoDe",
+                  "19.80NoDe",
+                  "39.61NoDe",
+                  "79.21NoDe",
+                  "158.43NoDe",
+                  "316.85NoDe",
+                  "633.71NoDe",
+                  "1.27Vt",
+                  "2.53Vt",
+                  "5.07Vt",
+                  "10.14Vt",
+                  "20.28Vt",
+                  "40.56Vt",
+                  "81.11Vt",
+                  "162.23Vt",
+                  "324.46Vt",
+                  "648.92Vt",
+                  "1.30UVt",
+                  "2.60UVt",
+                  "5.19UVt",
+                  "10.38UVt",
+                  "20.77UVt",
+                  "41.53UVt",
+                  "83.06UVt",
+                  "166.12UVt",
+                  "332.25UVt",
+                  "664.49UVt",
+                  "1.33DVt",
+                  "2.66DVt",
+                  "5.32DVt",
+                  "10.63DVt",
+                  "21.26DVt",
+                  "42.53DVt",
+                  "85.05DVt",
+                  "170.11DVt",
+                  "340.22DVt",
+                  "680.44DVt",
+                  "1.36TVt",
+                  "2.72TVt",
+                  "5.44TVt",
+                  "10.89TVt",
+                  "21.77TVt",
+                  "43.55TVt",
+                  "87.10TVt",
+                  "174.19TVt",
+                  "348.39TVt",
+                  "696.77TVt",
+                  "1.39QdVt",
+                  "2.79QdVt",
+                  "5.57QdVt",
+                  "11.15QdVt",
+                  "22.30QdVt",
+                  "89.20NoDe",
+                  "178.40NoDe",
+                  "356.80NoDe",
+                  "713.60NoDe",
+                  "1.43Vt",
+                  "2.85Vt",
+                  "5.71Vt",
+                  "11.42Vt",
+                  "22.84Vt",
+                  "45.67Vt",
+                  "91.34Vt",
+                  "182.68Vt",
+                  "365.36Vt",
+                  "730.73Vt",
+                  "1.46UVt",
+                  "2.92UVt",
+                  "5.85UVt",
+                  "11.69UVt",
+                  "23.38UVt",
+                  "46.77UVt",
+                  "93.53UVt",
+                  "187.07UVt",
+                  "374.13UVt",
+                  "748.26UVt",
+                  "1.50DVt",
+                  "2.99DVt",
+                  "5.99DVt",
+                  "11.97DVt",
+                  "23.94DVt",
+                  "47.89DVt",
+                  "95.78DVt",
+                  "191.56DVt",
+                  "383.11DVt",
+                  "766.22DVt",
+                  "1.53TVt",
+                  "3.06TVt",
+                  "6.13TVt",
+                  "12.26TVt",
+                  "24.52TVt",
+                  "49.04TVt",
+                  "98.08TVt",
+                  "196.15TVt",
+                  "392.31TVt",
+                  "784.61TVt",
+                  "1.57QdVt",
+                  "3.14QdVt",
+                  "6.28QdVt",
+                  "12.55QdVt",
+                  "25.11QdVt",
+                  "50.22QdVt",
+                  "100.43QdVt",
+                  "200.86QdVt",
+                  "401.72QdVt",
+                  "803.44QdVt"
+            ]
+      },
+      "Oblivion Sigil": {
+            "name": "Oblivion Sigil",
+            "dropName": "Oblivion Sigil",
+            "realm": "Realm 1",
+            "pack": "Super",
+            "odds": "300QnDe",
+            "type": "NOOBINIAL",
+            "maxLevel": 200,
+            "levels": [
+                  "5.00n",
+                  "10.00n",
+                  "20.00n",
+                  "40.00n",
+                  "80.00n",
+                  "160.00n",
+                  "319.99n",
+                  "639.98n",
+                  "1.28De",
+                  "2.56De",
+                  "5.12De",
+                  "10.24De",
+                  "20.48De",
+                  "40.96De",
+                  "81.92De",
+                  "163.84De",
+                  "327.67De",
+                  "655.34De",
+                  "1.31UDe",
+                  "2.62UDe",
+                  "5.24UDe",
+                  "10.49UDe",
+                  "20.97UDe",
+                  "41.94UDe",
+                  "83.88UDe",
+                  "167.77UDe",
+                  "335.53UDe",
+                  "671.07UDe",
+                  "1.34DDe",
+                  "2.68DDe",
+                  "5.37DDe",
+                  "10.74DDe",
+                  "21.47DDe",
+                  "42.95DDe",
+                  "85.90DDe",
+                  "171.79DDe",
+                  "343.59DDe",
+                  "687.17DDe",
+                  "1.37TDe",
+                  "2.75TDe",
+                  "5.50TDe",
+                  "10.99TDe",
+                  "21.99TDe",
+                  "43.98TDe",
+                  "87.96TDe",
+                  "175.92TDe",
+                  "351.83TDe",
+                  "703.67TDe",
+                  "1.41QdDe",
+                  "2.81QdDe",
+                  "5.63QdDe",
+                  "11.26QdDe",
+                  "22.52QdDe",
+                  "45.03QdDe",
+                  "90.07QdDe",
+                  "180.14QdDe",
+                  "360.28QdDe",
+                  "720.56QdDe",
+                  "1.44QnDe",
+                  "2.88QnDe",
+                  "5.76QnDe",
+                  "11.53QnDe",
+                  "23.06QnDe",
+                  "46.12QnDe",
+                  "92.23QnDe",
+                  "184.46QnDe",
+                  "368.92QnDe",
+                  "737.85QnDe",
+                  "1.48SxDe",
+                  "2.95SxDe",
+                  "5.90SxDe",
+                  "11.81SxDe",
+                  "23.61SxDe",
+                  "47.22SxDe",
+                  "94.44SxDe",
+                  "188.89SxDe",
+                  "377.78SxDe",
+                  "755.56SxDe",
+                  "1.51SpDe",
+                  "3.02SpDe",
+                  "6.04SpDe",
+                  "12.09SpDe",
+                  "24.18SpDe",
+                  "48.36SpDe",
+                  "96.71SpDe",
+                  "193.42SpDe",
+                  "386.85SpDe",
+                  "773.69SpDe",
+                  "1.55OcDe",
+                  "3.09OcDe",
+                  "6.19OcDe",
+                  "12.38OcDe",
+                  "24.76OcDe",
+                  "49.52OcDe",
+                  "99.03OcDe",
+                  "198.07OcDe",
+                  "396.13OcDe",
+                  "792.26OcDe",
+                  "1.58NoDe",
+                  "3.17NoDe",
+                  "6.34NoDe",
+                  "12.68NoDe",
+                  "25.35NoDe",
+                  "50.70NoDe",
+                  "101.41NoDe",
+                  "202.82NoDe",
+                  "405.64NoDe",
+                  "811.27NoDe",
+                  "1.62Vt",
+                  "3.25Vt",
+                  "6.49Vt",
+                  "12.98Vt",
+                  "25.96Vt",
+                  "51.92Vt",
+                  "103.84Vt",
+                  "207.69Vt",
+                  "415.37Vt",
+                  "830.75Vt",
+                  "1.66UVt",
+                  "3.32UVt",
+                  "6.65UVt",
+                  "13.29UVt",
+                  "26.58UVt",
+                  "53.17UVt",
+                  "106.34UVt",
+                  "212.67UVt",
+                  "425.34UVt",
+                  "850.69UVt",
+                  "1.70DVt",
+                  "3.40DVt",
+                  "6.81DVt",
+                  "13.61DVt",
+                  "27.22DVt",
+                  "54.44DVt",
+                  "108.89DVt",
+                  "217.78DVt",
+                  "435.55DVt",
+                  "871.10DVt",
+                  "1.74TVt",
+                  "3.48TVt",
+                  "6.97TVt",
+                  "13.94TVt",
+                  "27.88TVt",
+                  "55.75TVt",
+                  "111.50TVt",
+                  "223.00TVt",
+                  "446.00TVt",
+                  "892.01TVt",
+                  "3.57NoDe",
+                  "7.14NoDe",
+                  "14.28NoDe",
+                  "28.56NoDe",
+                  "57.12NoDe",
+                  "114.24NoDe",
+                  "228.48NoDe",
+                  "456.96NoDe",
+                  "913.92NoDe",
+                  "1.83Vt",
+                  "3.66Vt",
+                  "7.31Vt",
+                  "14.62Vt",
+                  "29.25Vt",
+                  "58.49Vt",
+                  "116.98Vt",
+                  "233.96Vt",
+                  "467.93Vt",
+                  "935.85Vt",
+                  "1.87UVt",
+                  "3.74UVt",
+                  "7.49UVt",
+                  "14.97UVt",
+                  "29.95UVt",
+                  "59.89UVt",
+                  "119.79UVt",
+                  "239.58UVt",
+                  "479.16UVt",
+                  "958.31UVt",
+                  "1.92DVt",
+                  "3.83DVt",
+                  "7.67DVt",
+                  "15.33DVt",
+                  "30.67DVt",
+                  "61.33DVt",
+                  "122.66DVt",
+                  "245.33DVt",
+                  "490.66DVt",
+                  "981.31DVt",
+                  "1.96TVt",
+                  "3.93TVt",
+                  "7.85TVt",
+                  "15.70TVt",
+                  "31.40TVt",
+                  "62.80TVt",
+                  "125.61TVt",
+                  "251.22TVt",
+                  "502.43TVt",
+                  "1.00QdVt",
+                  "2.01QdVt",
+                  "4.02QdVt",
+                  "8.04QdVt"
+            ]
+      },
+      "Aetherion": {
+            "name": "Aetherion",
+            "dropName": "Aetherion",
+            "realm": "Realm 1",
+            "pack": "Advanced",
+            "odds": "12.5SxDe",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "300.28B",
+                  "600.56B",
+                  "1.20T",
+                  "2.40T",
+                  "4.80T",
+                  "9.61T",
+                  "19.22T",
+                  "38.44T",
+                  "76.87T",
+                  "153.74T",
+                  "307.49T",
+                  "614.97T",
+                  "1.23Qd",
+                  "2.46Qd",
+                  "4.92Qd",
+                  "9.84Qd",
+                  "19.68Qd",
+                  "39.36Qd",
+                  "78.72Qd",
+                  "157.43Qd",
+                  "314.87Qd",
+                  "629.73Qd",
+                  "1.26Qn",
+                  "2.52Qn",
+                  "5.04Qn",
+                  "10.08Qn",
+                  "20.15Qn",
+                  "40.30Qn",
+                  "80.61Qn",
+                  "161.21Qn",
+                  "322.42Qn",
+                  "644.85Qn",
+                  "1.29Sx",
+                  "2.58Sx",
+                  "5.16Sx",
+                  "10.32Sx",
+                  "20.64Sx",
+                  "41.27Sx",
+                  "82.54Sx",
+                  "165.08Sx",
+                  "330.16Sx",
+                  "660.32Sx",
+                  "1.32Sp",
+                  "2.64Sp",
+                  "5.28Sp",
+                  "10.57Sp",
+                  "21.13Sp",
+                  "42.26Sp",
+                  "84.52Sp",
+                  "169.04Sp",
+                  "338.09Sp",
+                  "676.17Sp",
+                  "1.35Oc",
+                  "2.70Oc",
+                  "5.41Oc",
+                  "10.82Oc",
+                  "21.64Oc",
+                  "43.28Oc",
+                  "86.55Oc",
+                  "173.10Oc",
+                  "346.20Oc",
+                  "692.40Oc",
+                  "1.38No",
+                  "2.77No",
+                  "5.54No",
+                  "11.08No",
+                  "22.16No",
+                  "44.31No",
+                  "88.63No",
+                  "177.26No",
+                  "354.51No",
+                  "709.02No",
+                  "1.42De",
+                  "2.84De",
+                  "5.67De",
+                  "11.34De",
+                  "22.69De",
+                  "45.38De",
+                  "90.75De",
+                  "181.50De",
+                  "363.00UDe",
+                  "726.00UDe",
+                  "1.45DDe",
+                  "2.90DDe",
+                  "5.81DDe",
+                  "11.62DDe",
+                  "23.23DDe",
+                  "46.46DDe",
+                  "92.93DDe",
+                  "185.86DDe",
+                  "371.71DDe",
+                  "743.42DDe",
+                  "1.49TDe",
+                  "2.97TDe",
+                  "5.95TDe",
+                  "11.89TDe",
+                  "23.79TDe",
+                  "47.58TDe",
+                  "95.16TDe",
+                  "190.32TDe"
+            ]
+      },
+      "UltimateShard": {
+            "name": "UltimateShard",
+            "dropName": "Ultimate Shard",
+            "realm": "Realm 1",
+            "pack": "Cosmic Prism",
+            "odds": "250B",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "2.00K",
+                  "4.00K",
+                  "8.00K",
+                  "16.01K",
+                  "32.01K",
+                  "64.03K",
+                  "128.06K",
+                  "256.12K",
+                  "512.23K",
+                  "1.02M",
+                  "2.05M",
+                  "4.10M",
+                  "8.20M",
+                  "16.39M",
+                  "32.78M",
+                  "65.57M",
+                  "131.13M",
+                  "262.26M",
+                  "524.52M",
+                  "1.05B",
+                  "2.10B",
+                  "4.20B",
+                  "8.39B",
+                  "16.78B",
+                  "33.57B",
+                  "67.14B",
+                  "134.28B",
+                  "268.55B",
+                  "537.11B",
+                  "1.07T",
+                  "2.15T",
+                  "4.30T",
+                  "8.59T",
+                  "17.19T",
+                  "34.38T",
+                  "68.75T",
+                  "137.50T",
+                  "275.00T",
+                  "550.00T",
+                  "1.10Qd",
+                  "2.20Qd",
+                  "4.40Qd",
+                  "8.80Qd",
+                  "17.60Qd",
+                  "35.20Qd",
+                  "70.40Qd",
+                  "140.80Qd",
+                  "281.60Qd",
+                  "563.20Qd",
+                  "1.13Qn",
+                  "2.25Qn",
+                  "4.51Qn",
+                  "9.01Qn",
+                  "18.02Qn",
+                  "36.04Qn",
+                  "72.09Qn",
+                  "144.18Qn",
+                  "288.36Qn",
+                  "576.72Qn",
+                  "1.15Sx",
+                  "2.31Sx",
+                  "4.61Sx",
+                  "9.23Sx",
+                  "18.45Sx",
+                  "36.91Sx",
+                  "73.82Sx",
+                  "147.64Sx",
+                  "295.28Sx",
+                  "590.56Sx",
+                  "1.18Sp",
+                  "2.36Sp",
+                  "4.72Sp",
+                  "9.45Sp",
+                  "18.90Sp",
+                  "37.80Sp",
+                  "75.59Sp",
+                  "151.18Sp",
+                  "302.37Sp",
+                  "604.73Sp",
+                  "1.21Oc",
+                  "2.42Oc",
+                  "4.84Oc",
+                  "9.68Oc",
+                  "19.35Oc",
+                  "38.70Oc",
+                  "77.41Oc",
+                  "154.81Oc",
+                  "309.62Oc",
+                  "619.25Oc",
+                  "1.24No",
+                  "2.48No",
+                  "4.95No",
+                  "9.91No",
+                  "19.82No",
+                  "39.63No",
+                  "79.26No",
+                  "158.53No",
+                  "317.05No",
+                  "634.11No",
+                  "1.27De"
+            ]
+      },
+      "Unstoppable Virus": {
+            "name": "Unstoppable Virus",
+            "dropName": "Unstoppable Virus",
+            "realm": "Realm 1",
+            "pack": "Hacker",
+            "odds": "1Dvt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "200.01M",
+                  "400.02M",
+                  "800.04M",
+                  "1.60B",
+                  "3.20B",
+                  "6.40B",
+                  "12.80B",
+                  "25.60B",
+                  "51.20B",
+                  "102.41B",
+                  "204.81B",
+                  "409.62B",
+                  "819.24B",
+                  "1.64T",
+                  "3.28T",
+                  "6.55T",
+                  "13.11T",
+                  "26.22T",
+                  "52.43T",
+                  "104.86T",
+                  "209.73T",
+                  "419.45T",
+                  "838.90T",
+                  "1.68Qd",
+                  "3.36Qd",
+                  "6.71Qd",
+                  "13.42Qd",
+                  "26.84Qd",
+                  "53.69Qd",
+                  "107.38Qd",
+                  "214.76Qd",
+                  "429.52Qd",
+                  "859.03Qd",
+                  "1.72Qn",
+                  "3.44Qn",
+                  "6.87Qn",
+                  "13.74Qn",
+                  "27.49Qn",
+                  "54.98Qn",
+                  "109.96Qn",
+                  "219.91Qn",
+                  "439.83Qn",
+                  "879.65Qn",
+                  "1.76Sx",
+                  "3.52Sx",
+                  "7.04Sx",
+                  "14.07Sx",
+                  "28.15Sx",
+                  "56.30Sx",
+                  "112.60Sx",
+                  "225.19Sx",
+                  "450.38Sx",
+                  "900.76Sx",
+                  "1.80Sp",
+                  "3.60Sp",
+                  "7.21Sp",
+                  "14.41Sp",
+                  "28.82Sp",
+                  "57.65Sp",
+                  "115.30Sp",
+                  "230.60Sp",
+                  "461.19Sp",
+                  "922.38Sp",
+                  "1.84Oc",
+                  "3.69Oc",
+                  "7.38Oc",
+                  "14.76Oc",
+                  "29.52Oc",
+                  "59.03Oc",
+                  "118.06Oc",
+                  "236.13Oc",
+                  "472.26Oc",
+                  "944.52Oc",
+                  "1.89No",
+                  "3.78No",
+                  "7.56No",
+                  "15.11No",
+                  "30.22No",
+                  "60.45No",
+                  "120.90No",
+                  "241.80No",
+                  "483.59No",
+                  "967.19No",
+                  "1.93De",
+                  "3.87De",
+                  "7.74De",
+                  "15.48De",
+                  "30.95De",
+                  "61.90UDe",
+                  "123.80UDe",
+                  "247.60UDe",
+                  "495.20UDe",
+                  "990.40UDe",
+                  "1.98DDe",
+                  "3.96DDe",
+                  "7.92DDe",
+                  "15.85DDe",
+                  "31.69DDe",
+                  "63.39DDe",
+                  "126.77DDe"
+            ]
+      },
+      "Everfrost": {
+            "name": "Everfrost",
+            "dropName": "Everfrost",
+            "realm": "Realm 2",
+            "pack": "Snowy",
+            "odds": "150OcDe",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "99.90M",
+                  "199.80M",
+                  "399.59M",
+                  "799.18M",
+                  "1.60B",
+                  "3.20B",
+                  "6.39B",
+                  "12.79B",
+                  "25.57B",
+                  "51.15B",
+                  "102.30B",
+                  "204.59B",
+                  "409.18B",
+                  "818.36B",
+                  "1.64T",
+                  "3.27T",
+                  "6.55T",
+                  "13.09T",
+                  "26.19T",
+                  "52.38T",
+                  "104.75T",
+                  "209.50T",
+                  "419.00T",
+                  "838.00T",
+                  "1.68Qd",
+                  "3.35Qd",
+                  "6.70Qd",
+                  "13.41Qd",
+                  "26.82Qd",
+                  "53.63Qd",
+                  "107.26Qd",
+                  "214.53Qd",
+                  "429.06Qd",
+                  "858.11Qd",
+                  "1.72Qn",
+                  "3.43Qn",
+                  "6.86Qn",
+                  "13.73Qn",
+                  "27.46Qn",
+                  "54.92Qn",
+                  "109.84Qn",
+                  "219.68Qn",
+                  "439.35Qn",
+                  "878.71Qn",
+                  "1.76Sx",
+                  "3.51Sx",
+                  "7.03Sx",
+                  "14.06Sx",
+                  "28.12Sx",
+                  "56.24Sx",
+                  "112.47Sx",
+                  "224.95Sx",
+                  "449.90Sx",
+                  "899.80Sx",
+                  "1.80Sp",
+                  "3.60Sp",
+                  "7.20Sp",
+                  "14.40Sp",
+                  "28.79Sp",
+                  "57.59Sp",
+                  "115.17Sp",
+                  "230.35Sp",
+                  "460.70Sp",
+                  "921.39Sp",
+                  "1.84Oc",
+                  "3.69Oc",
+                  "7.37Oc",
+                  "14.74Oc",
+                  "29.48Oc",
+                  "58.97Oc",
+                  "117.94Oc",
+                  "235.88Oc",
+                  "471.75Oc",
+                  "943.51Oc",
+                  "1.89No",
+                  "3.77No",
+                  "7.55No",
+                  "15.10No",
+                  "30.19No",
+                  "60.38No",
+                  "120.77No",
+                  "241.54No",
+                  "483.08No",
+                  "966.15No",
+                  "1.93De",
+                  "3.86De",
+                  "7.73De",
+                  "15.46De",
+                  "30.92De",
+                  "61.83De",
+                  "123.67De",
+                  "247.33De",
+                  "494.67De",
+                  "989.34De",
+                  "1.98UDe",
+                  "3.96UDe",
+                  "7.91UDe",
+                  "15.83UDe",
+                  "31.66UDe",
+                  "63.32UDe"
+            ]
+      },
+      "Deep Spirit": {
+            "name": "Deep Spirit",
+            "dropName": "Deep Spirit",
+            "realm": "Realm 2",
+            "pack": "Deepcore",
+            "odds": "250De",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "3.77T",
+                  "7.54T",
+                  "15.07T",
+                  "30.14T",
+                  "60.29T",
+                  "120.57T",
+                  "241.15T",
+                  "482.30T",
+                  "964.60T",
+                  "1.93Qd",
+                  "3.86Qd",
+                  "7.72Qd",
+                  "15.43Qd",
+                  "30.87Qd",
+                  "61.73Qd",
+                  "123.47Qd",
+                  "246.94Qd",
+                  "493.88Qd",
+                  "987.75Qd",
+                  "1.98Qn",
+                  "3.95Qn",
+                  "7.90Qn",
+                  "15.80Qn",
+                  "31.61Qn",
+                  "63.22Qn",
+                  "126.43Qn",
+                  "252.86Qn",
+                  "505.73Qn",
+                  "1.01Sx",
+                  "2.02Sx",
+                  "4.05Sx",
+                  "8.09Sx",
+                  "16.18Sx",
+                  "32.37Sx",
+                  "64.73Sx",
+                  "129.47Sx",
+                  "258.93Sx",
+                  "517.87Sx",
+                  "1.04Sp",
+                  "2.07Sp",
+                  "4.14Sp",
+                  "8.29Sp",
+                  "16.57Sp",
+                  "33.14Sp",
+                  "66.29Sp",
+                  "132.57Sp",
+                  "265.15Sp",
+                  "530.29Sp",
+                  "1.06Oc",
+                  "2.12Oc",
+                  "4.24Oc",
+                  "8.48Oc",
+                  "16.97Oc",
+                  "33.94Oc",
+                  "67.88Oc",
+                  "135.76Oc",
+                  "271.51Oc",
+                  "543.02Oc",
+                  "1.09No",
+                  "2.17No",
+                  "4.34No",
+                  "8.69No",
+                  "17.38No",
+                  "34.75No",
+                  "69.51No",
+                  "139.00No",
+                  "278.00TVt",
+                  "556.00TVt",
+                  "1.11QdVt",
+                  "2.22QdVt",
+                  "4.45QdVt",
+                  "8.90QdVt",
+                  "17.79QdVt",
+                  "35.58QdVt",
+                  "71.17QdVt",
+                  "142.34QdVt",
+                  "284.67QdVt",
+                  "569.34QdVt",
+                  "1.14QnVt",
+                  "2.28QnVt",
+                  "4.55QnVt",
+                  "9.11QnVt",
+                  "18.22QnVt",
+                  "36.44QnVt",
+                  "72.88QnVt",
+                  "145.75QnVt",
+                  "291.50QnVt",
+                  "583.01QnVt",
+                  "1.17SxVt",
+                  "2.33SxVt",
+                  "4.66SxVt",
+                  "9.33SxVt",
+                  "18.66SxVt",
+                  "37.31SxVt",
+                  "74.62SxVt",
+                  "149.25SxVt",
+                  "298.50SxVt",
+                  "597.00SxVt",
+                  "1.19SpVt",
+                  "2.39SpVt"
+            ]
+      },
+      "Dragon Shard": {
+            "name": "Dragon Shard",
+            "dropName": "Dragon Shard",
+            "realm": "Realm 2",
+            "pack": "Shard",
+            "odds": "600QdVt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "24.94T",
+                  "49.88T",
+                  "99.75T",
+                  "199.51T",
+                  "399.01T",
+                  "798.02T",
+                  "1.60Qd",
+                  "3.19Qd",
+                  "6.38Qd",
+                  "12.77Qd",
+                  "25.54Qd",
+                  "51.07Qd",
+                  "102.15Qd",
+                  "204.29Qd",
+                  "408.59Qd",
+                  "817.18Qd",
+                  "1.63Qn",
+                  "3.27Qn",
+                  "6.54Qn",
+                  "13.07Qn",
+                  "26.15Qn",
+                  "52.30Qn",
+                  "104.60Qn",
+                  "209.20Qn",
+                  "418.40Qn",
+                  "836.79Qn",
+                  "1.67Sx",
+                  "3.35Sx",
+                  "6.69Sx",
+                  "13.39Sx",
+                  "26.78Sx",
+                  "53.55Sx",
+                  "107.11Sx",
+                  "214.22Sx",
+                  "428.44Sx",
+                  "856.88Sx",
+                  "1.71Sp",
+                  "3.43Sp",
+                  "6.86Sp",
+                  "13.71Sp",
+                  "27.42Sp",
+                  "54.84Sp",
+                  "109.68Sp",
+                  "219.36Sp",
+                  "438.72Sp",
+                  "877.44Sp",
+                  "1.75Oc",
+                  "3.51Oc",
+                  "7.02Oc",
+                  "14.04Oc",
+                  "28.08Oc",
+                  "56.16Oc",
+                  "112.31Oc",
+                  "224.62Oc",
+                  "449.25Oc",
+                  "898.50Oc",
+                  "1.80No",
+                  "3.59No",
+                  "7.19No",
+                  "14.38No",
+                  "28.75No",
+                  "57.50No",
+                  "115.00No",
+                  "230.00No",
+                  "460.00No",
+                  "920.00No",
+                  "1.84De",
+                  "3.68De",
+                  "7.36De",
+                  "14.72De",
+                  "29.44De",
+                  "58.88De",
+                  "117.76De",
+                  "235.52De",
+                  "471.04De",
+                  "942.08De",
+                  "1.88UDe",
+                  "3.77UDe",
+                  "7.54UDe",
+                  "15.07UDe",
+                  "30.15UDe",
+                  "60.29UDe",
+                  "120.59UDe",
+                  "241.17UDe",
+                  "482.34UDe",
+                  "964.69UDe",
+                  "1.93DDe",
+                  "3.86DDe",
+                  "7.72DDe",
+                  "15.44DDe",
+                  "30.87DDe",
+                  "61.74DDe",
+                  "123.48DDe",
+                  "246.96DDe",
+                  "493.92DDe",
+                  "987.84DDe",
+                  "1.98TDe",
+                  "3.95TDe",
+                  "7.90TDe",
+                  "15.81TDe"
+            ]
+      },
+      "Ancient Fragment": {
+            "name": "Ancient Fragment",
+            "dropName": "Ancient Fragment",
+            "realm": "Realm 3",
+            "pack": "Dunes",
+            "odds": "35Vt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "399.86M",
+                  "799.72M",
+                  "1.60B",
+                  "3.20B",
+                  "6.40B",
+                  "12.80B",
+                  "25.59B",
+                  "51.18B",
+                  "102.36B",
+                  "204.73B",
+                  "409.46B",
+                  "818.91B",
+                  "1.64T",
+                  "3.28T",
+                  "6.55T",
+                  "13.10T",
+                  "26.21T",
+                  "52.41T",
+                  "104.82T",
+                  "209.64T",
+                  "419.28T",
+                  "838.57T",
+                  "1.68Qd",
+                  "3.35Qd",
+                  "6.71Qd",
+                  "13.42Qd",
+                  "26.83Qd",
+                  "53.67Qd",
+                  "107.34Qd",
+                  "214.67Qd",
+                  "429.35Qd",
+                  "858.69Qd",
+                  "1.72Qn",
+                  "3.43Qn",
+                  "6.87Qn",
+                  "13.74Qn",
+                  "27.48Qn",
+                  "54.96Qn",
+                  "109.91Qn",
+                  "219.83Qn",
+                  "439.65Qn",
+                  "879.30Qn",
+                  "1.76Sx",
+                  "3.52Sx",
+                  "7.03Sx",
+                  "14.07Sx",
+                  "28.14Sx",
+                  "56.28Sx",
+                  "112.55Sx",
+                  "225.10Sx",
+                  "450.20Sx",
+                  "900.41Sx",
+                  "1.80Sp",
+                  "3.60Sp",
+                  "7.20Sp",
+                  "14.41Sp",
+                  "28.81Sp",
+                  "57.63Sp",
+                  "115.25Sp",
+                  "230.50Sp",
+                  "461.01Sp",
+                  "922.02Sp",
+                  "1.84Oc",
+                  "3.69Oc",
+                  "7.38Oc",
+                  "14.75Oc",
+                  "29.50Oc",
+                  "59.01Oc",
+                  "118.02Oc",
+                  "236.04Oc",
+                  "472.07Oc",
+                  "944.14Oc",
+                  "1.89No",
+                  "3.78No",
+                  "7.55No",
+                  "15.11No",
+                  "30.21No",
+                  "60.43No",
+                  "120.85No",
+                  "241.70No",
+                  "483.40No",
+                  "966.80No",
+                  "1.93De",
+                  "3.87De",
+                  "7.73De",
+                  "15.47De",
+                  "30.94De",
+                  "61.88De",
+                  "123.75De",
+                  "247.50De",
+                  "495.00De",
+                  "990.00DDe",
+                  "1.98TDe",
+                  "3.96TDe",
+                  "7.92TDe",
+                  "15.84TDe",
+                  "31.68TDe",
+                  "63.36TDe",
+                  "126.72TDe",
+                  "253.44TDe"
+            ]
+      },
+      "Secret of Egypt": {
+            "name": "Secret of Egypt",
+            "dropName": "Secrets of Egypt",
+            "realm": "Realm 3",
+            "pack": "Sunfire",
+            "odds": "300Vt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "59.98M",
+                  "119.96M",
+                  "239.92M",
+                  "479.83M",
+                  "959.66M",
+                  "1.92B",
+                  "3.84B",
+                  "7.68B",
+                  "15.35B",
+                  "30.71B",
+                  "61.42B",
+                  "122.84B",
+                  "245.67B",
+                  "491.35B",
+                  "982.69B",
+                  "1.97T",
+                  "3.93T",
+                  "7.86T",
+                  "15.72T",
+                  "31.45T",
+                  "62.89T",
+                  "125.78T",
+                  "251.57T",
+                  "503.14T",
+                  "1.01Qd",
+                  "2.01Qd",
+                  "4.03Qd",
+                  "8.05Qd",
+                  "16.10Qd",
+                  "32.20Qd",
+                  "64.40Qd",
+                  "128.80Qd",
+                  "257.61Qd",
+                  "515.21Qd",
+                  "1.03Qn",
+                  "2.06Qn",
+                  "4.12Qn",
+                  "8.24Qn",
+                  "16.49Qn",
+                  "32.97Qn",
+                  "65.95Qn",
+                  "131.89Qn",
+                  "263.79Qn",
+                  "527.58Qn",
+                  "1.06Sx",
+                  "2.11Sx",
+                  "4.22Sx",
+                  "8.44Sx",
+                  "16.88Sx",
+                  "33.76Sx",
+                  "67.53Sx",
+                  "135.06Sx",
+                  "270.12Sx",
+                  "540.24Sx",
+                  "1.08Sp",
+                  "2.16Sp",
+                  "4.32Sp",
+                  "8.64Sp",
+                  "17.29Sp",
+                  "34.58Sp",
+                  "69.15Sp",
+                  "138.30Sp",
+                  "276.60Sp",
+                  "553.20Sp",
+                  "1.11Oc",
+                  "2.21Oc",
+                  "4.43Oc",
+                  "8.85Oc",
+                  "17.70Oc",
+                  "35.40Oc",
+                  "70.81Oc",
+                  "141.62Oc",
+                  "283.24Oc",
+                  "566.48Oc",
+                  "1.13No",
+                  "2.27No",
+                  "4.53No",
+                  "9.06No",
+                  "18.13No",
+                  "36.25No",
+                  "72.51No",
+                  "145.02No",
+                  "290.04No",
+                  "580.08No",
+                  "1.16De",
+                  "2.32De",
+                  "4.64De",
+                  "9.28De",
+                  "18.56De",
+                  "37.13De",
+                  "74.25De",
+                  "148.50De",
+                  "297.00De",
+                  "594.00DDe",
+                  "1.19TDe",
+                  "2.38TDe",
+                  "4.75TDe",
+                  "9.50TDe",
+                  "19.01TDe",
+                  "38.02TDe"
+            ]
+      },
+      "Omnira (Prism Rune)": {
+            "name": "Omnira (Prism Rune)",
+            "dropName": "Omnira",
+            "realm": "Realm 3",
+            "pack": "Sunstorm Prism",
+            "odds": "1.25Qd",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "5.00K",
+                  "10.00K",
+                  "20.00K",
+                  "40.00K",
+                  "79.99K",
+                  "159.98K",
+                  "319.96K",
+                  "639.92K",
+                  "1.28M",
+                  "2.56M",
+                  "5.12M",
+                  "10.24M",
+                  "20.48M",
+                  "40.95M",
+                  "81.91M",
+                  "163.82M",
+                  "327.64M",
+                  "655.27M",
+                  "1.31B",
+                  "2.62B",
+                  "5.24B",
+                  "10.48B",
+                  "20.97B",
+                  "41.94B",
+                  "83.88B",
+                  "167.75B",
+                  "335.50B",
+                  "671.00B",
+                  "1.34T",
+                  "2.68T",
+                  "5.37T",
+                  "10.74T",
+                  "21.47T",
+                  "42.94T",
+                  "85.89T",
+                  "171.78T",
+                  "343.55T",
+                  "687.10T",
+                  "1.37Qd",
+                  "2.75Qd",
+                  "5.50Qd",
+                  "10.99Qd",
+                  "21.99Qd",
+                  "43.97Qd",
+                  "87.95Qd",
+                  "175.90Qd",
+                  "351.80Qd",
+                  "703.59Qd",
+                  "1.41Qn",
+                  "2.81Qn",
+                  "5.63Qn",
+                  "11.26Qn",
+                  "22.51Qn",
+                  "45.03Qn",
+                  "90.06Qn",
+                  "180.12Qn",
+                  "360.24Qn",
+                  "720.48Qn",
+                  "1.44Sx",
+                  "2.88Sx",
+                  "5.76Sx",
+                  "11.53Sx",
+                  "23.06Sx",
+                  "46.11Sx",
+                  "92.22Sx",
+                  "184.44Sx",
+                  "368.89Sx",
+                  "737.77Sx",
+                  "1.48Sp",
+                  "2.95Sp",
+                  "5.90Sp",
+                  "11.80Sp",
+                  "23.61Sp",
+                  "47.22Sp",
+                  "94.43Sp",
+                  "188.87Sp",
+                  "377.74Sp",
+                  "755.48Sp",
+                  "1.51Oc",
+                  "3.02Oc",
+                  "6.04Oc",
+                  "12.09Oc",
+                  "24.18Oc",
+                  "48.35Oc",
+                  "96.70Oc",
+                  "193.40Oc",
+                  "386.81Oc",
+                  "773.61Oc",
+                  "1.55No",
+                  "3.09No",
+                  "6.19No",
+                  "12.38No",
+                  "24.76No",
+                  "49.51No",
+                  "99.02No",
+                  "198.04No",
+                  "396.09No",
+                  "792.18No",
+                  "1.58De",
+                  "3.17De"
+            ]
+      },
+      "Chaotic Destruction": {
+            "name": "Chaotic Destruction",
+            "dropName": "Chaotic Destruction",
+            "realm": "Realm 4",
+            "pack": "Starlight",
+            "odds": "3QnVt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "372.89Sx",
+                  "745.79Sx",
+                  "1.49Sp",
+                  "2.98Sp",
+                  "5.97Sp",
+                  "11.93Sp",
+                  "23.87Sp",
+                  "47.73Sp",
+                  "95.46Sp",
+                  "190.92Sp",
+                  "381.84Sp",
+                  "763.69Sp",
+                  "1.53Oc",
+                  "3.05Oc",
+                  "6.11Oc",
+                  "12.22Oc",
+                  "24.44Oc",
+                  "48.88Oc",
+                  "97.75Oc",
+                  "195.50Oc",
+                  "391.01Oc",
+                  "782.01Oc",
+                  "1.56No",
+                  "3.13No",
+                  "6.26No",
+                  "12.51No",
+                  "25.02No",
+                  "50.05No",
+                  "100.10No",
+                  "200.20No",
+                  "400.39No",
+                  "800.78No",
+                  "1.60De",
+                  "3.20De",
+                  "6.41De",
+                  "12.81De",
+                  "25.63De",
+                  "51.25De",
+                  "102.50De",
+                  "205.00De",
+                  "410.00No",
+                  "820.00No",
+                  "1.64De",
+                  "3.28De",
+                  "6.56De",
+                  "13.12De",
+                  "26.24De",
+                  "52.48De",
+                  "104.96De",
+                  "209.92De",
+                  "419.84De",
+                  "839.68De",
+                  "1.68UDe",
+                  "3.36UDe",
+                  "6.72UDe",
+                  "13.43UDe",
+                  "26.87UDe",
+                  "53.74UDe",
+                  "107.48UDe",
+                  "214.96UDe",
+                  "429.92UDe",
+                  "859.83UDe",
+                  "1.72DDe",
+                  "3.44DDe",
+                  "6.88DDe",
+                  "13.76DDe",
+                  "27.51DDe",
+                  "55.03DDe",
+                  "110.06DDe",
+                  "220.12DDe",
+                  "440.23DDe",
+                  "880.47DDe",
+                  "1.76TDe",
+                  "3.52TDe",
+                  "7.04TDe",
+                  "14.09TDe",
+                  "28.18TDe",
+                  "56.35TDe",
+                  "112.70TDe",
+                  "225.40TDe",
+                  "450.80TDe",
+                  "901.60TDe",
+                  "1.80QdDe",
+                  "3.61QdDe",
+                  "7.21QdDe",
+                  "14.43QdDe",
+                  "28.85QdDe",
+                  "57.70QdDe",
+                  "115.40QdDe",
+                  "230.81QdDe",
+                  "461.62QdDe",
+                  "923.24QdDe",
+                  "1.85QnDe",
+                  "3.69QnDe",
+                  "7.39QnDe",
+                  "14.77QnDe",
+                  "29.54QnDe",
+                  "59.09QnDe",
+                  "118.17QnDe",
+                  "236.35QnDe"
+            ]
+      },
+      "Elemental Creation": {
+            "name": "Elemental Creation",
+            "dropName": "Elemental Creation",
+            "realm": "Realm 4",
+            "pack": "Cosma",
+            "odds": "35QnVt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "4.99T",
+                  "9.99T",
+                  "19.97T",
+                  "39.95T",
+                  "79.89T",
+                  "159.78T",
+                  "319.57T",
+                  "639.13T",
+                  "1.28Qd",
+                  "2.56Qd",
+                  "5.11Qd",
+                  "10.23Qd",
+                  "20.45Qd",
+                  "40.90Qd",
+                  "81.81Qd",
+                  "163.62Qd",
+                  "327.24Qd",
+                  "654.47Qd",
+                  "1.31Qn",
+                  "2.62Qn",
+                  "5.24Qn",
+                  "10.47Qn",
+                  "20.94Qn",
+                  "41.89Qn",
+                  "83.77Qn",
+                  "167.55Qn",
+                  "335.09Qn",
+                  "670.18Qn",
+                  "1.34Sx",
+                  "2.68Sx",
+                  "5.36Sx",
+                  "10.72Sx",
+                  "21.45Sx",
+                  "42.89Sx",
+                  "85.78Sx",
+                  "171.57Sx",
+                  "343.13Sx",
+                  "686.27Sx",
+                  "1.37Sp",
+                  "2.75Sp",
+                  "5.49Sp",
+                  "10.98Sp",
+                  "21.96Sp",
+                  "43.92Sp",
+                  "87.84Sp",
+                  "175.68Sp",
+                  "351.37Sp",
+                  "702.74Sp",
+                  "1.41Oc",
+                  "2.81Oc",
+                  "5.62Oc",
+                  "11.24Oc",
+                  "22.49Oc",
+                  "44.98Oc",
+                  "89.95Oc",
+                  "179.90Oc",
+                  "359.80Oc",
+                  "719.60Oc",
+                  "1.44No",
+                  "2.88No",
+                  "5.76No",
+                  "11.52No",
+                  "23.04No",
+                  "46.08No",
+                  "92.16No",
+                  "184.32No",
+                  "368.64No",
+                  "737.28No",
+                  "1.47De",
+                  "2.95De",
+                  "5.90De",
+                  "11.80De",
+                  "23.59De",
+                  "47.19De",
+                  "94.37De",
+                  "188.74De",
+                  "377.49De",
+                  "754.97De",
+                  "1.51UDe",
+                  "3.02UDe",
+                  "6.04UDe",
+                  "12.08UDe",
+                  "24.16UDe",
+                  "48.32UDe",
+                  "96.64UDe",
+                  "193.27UDe",
+                  "386.55UDe",
+                  "773.09UDe",
+                  "1.55DDe",
+                  "3.09DDe",
+                  "6.18DDe",
+                  "12.37DDe",
+                  "24.74DDe",
+                  "49.48DDe",
+                  "98.96DDe",
+                  "197.91DDe",
+                  "395.82DDe",
+                  "791.65DDe",
+                  "1.58TDe",
+                  "3.17TDe"
+            ]
+      },
+      "Ultimate Light": {
+            "name": "Ultimate Light",
+            "dropName": "Ultimate Light",
+            "realm": "Realm 4",
+            "pack": "Light",
+            "odds": "200SpVt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "4.00T",
+                  "8.00T",
+                  "16.01T",
+                  "32.01T",
+                  "64.03T",
+                  "128.06T",
+                  "256.11T",
+                  "512.23T",
+                  "1.02Qd",
+                  "2.05Qd",
+                  "4.10Qd",
+                  "8.20Qd",
+                  "16.39Qd",
+                  "32.78Qd",
+                  "65.57Qd",
+                  "131.13Qd",
+                  "262.26Qd",
+                  "524.52Qd",
+                  "1.05Qn",
+                  "2.10Qn",
+                  "4.20Qn",
+                  "8.39Qn",
+                  "16.78Qn",
+                  "33.57Qn",
+                  "67.14Qn",
+                  "134.28Qn",
+                  "268.55Qn",
+                  "537.11Qn",
+                  "1.07Sx",
+                  "2.15Sx",
+                  "4.30Sx",
+                  "8.59Sx",
+                  "17.19Sx",
+                  "34.38Sx",
+                  "68.75Sx",
+                  "137.50Sx",
+                  "275.00Sx",
+                  "550.00Sx",
+                  "1.10Sp",
+                  "2.20Sp",
+                  "4.40Sp",
+                  "8.80Sp",
+                  "17.60Sp",
+                  "35.20Sp",
+                  "70.40Sp",
+                  "140.80Sp",
+                  "281.60Sp",
+                  "563.20Sp",
+                  "1.13Oc",
+                  "2.25Oc",
+                  "4.51Oc",
+                  "9.01Oc",
+                  "18.02Oc",
+                  "36.04Oc",
+                  "72.09Oc",
+                  "144.18Oc",
+                  "288.36Oc",
+                  "576.72Oc",
+                  "1.15No",
+                  "2.31No",
+                  "4.61No",
+                  "9.23No",
+                  "18.45No",
+                  "36.91No",
+                  "73.82No",
+                  "147.64No",
+                  "295.28No",
+                  "590.56No",
+                  "1.18De",
+                  "2.36De",
+                  "4.72De",
+                  "9.45De",
+                  "18.90De",
+                  "37.80De",
+                  "75.59De",
+                  "151.18De",
+                  "302.37De",
+                  "604.73De",
+                  "1.21UDe",
+                  "2.42UDe",
+                  "4.84UDe",
+                  "9.68UDe",
+                  "19.35UDe",
+                  "38.70UDe",
+                  "77.41UDe",
+                  "154.81UDe",
+                  "309.62UDe",
+                  "619.25UDe",
+                  "1.24DDe",
+                  "2.48DDe",
+                  "4.95DDe",
+                  "9.91DDe",
+                  "19.82DDe",
+                  "39.63DDe",
+                  "79.26DDe",
+                  "158.53DDe",
+                  "317.05DDe",
+                  "634.11DDe",
+                  "1.27TDe",
+                  "2.54TDe"
+            ]
+      },
+      "Ultimate Darkness": {
+            "name": "Ultimate Darkness",
+            "dropName": "Ultimate Darkness",
+            "realm": "Realm 4",
+            "pack": "Dark",
+            "odds": "1.25OcVt",
+            "type": "NOOBINIAL",
+            "maxLevel": 100,
+            "levels": [
+                  "700.32B",
+                  "1.40T",
+                  "2.80T",
+                  "5.60T",
+                  "11.21T",
+                  "22.41T",
+                  "44.82T",
+                  "89.64T",
+                  "179.28T",
+                  "358.56T",
+                  "717.13T",
+                  "1.43Qd",
+                  "2.87Qd",
+                  "5.74Qd",
+                  "11.47Qd",
+                  "22.95Qd",
+                  "45.90Qd",
+                  "91.79Qd",
+                  "183.59Qd",
+                  "367.17Qd",
+                  "734.35Qd",
+                  "1.47Qn",
+                  "2.94Qn",
+                  "5.87Qn",
+                  "11.75Qn",
+                  "23.50Qn",
+                  "47.00Qn",
+                  "94.00Qn",
+                  "187.99Qn",
+                  "375.99Qn",
+                  "751.97Qn",
+                  "1.50Sx",
+                  "3.01Sx",
+                  "6.02Sx",
+                  "12.03Sx",
+                  "24.06Sx",
+                  "48.13Sx",
+                  "96.25Sx",
+                  "192.50Sx",
+                  "385.00Sx",
+                  "770.00Sx",
+                  "1.54Sp",
+                  "3.08Sp",
+                  "6.16Sp",
+                  "12.32Sp",
+                  "24.64Sp",
+                  "49.28Sp",
+                  "98.56Sp",
+                  "197.12Sp",
+                  "394.24Sp",
+                  "788.48Sp",
+                  "1.58Oc",
+                  "3.15Oc",
+                  "6.31Oc",
+                  "12.62Oc",
+                  "25.23Oc",
+                  "50.46Oc",
+                  "100.93Oc",
+                  "201.85Oc",
+                  "403.70Oc",
+                  "807.40Oc",
+                  "1.61No",
+                  "3.23No",
+                  "6.46No",
+                  "12.92No",
+                  "25.84No",
+                  "51.67No",
+                  "103.35No",
+                  "206.70No",
+                  "413.39No",
+                  "826.78No",
+                  "1.65De",
+                  "3.31De",
+                  "6.61De",
+                  "13.23De",
+                  "26.46De",
+                  "52.91De",
+                  "105.83De",
+                  "211.66De",
+                  "423.31De",
+                  "846.63De",
+                  "1.69UDe",
+                  "3.39UDe",
+                  "6.77UDe",
+                  "13.55UDe",
+                  "27.09UDe",
+                  "54.18UDe",
+                  "108.37UDe",
+                  "216.74UDe",
+                  "433.47UDe",
+                  "866.95UDe",
+                  "1.73DDe",
+                  "3.47DDe",
+                  "6.94DDe",
+                  "13.87DDe",
+                  "27.74DDe",
+                  "55.48DDe",
+                  "110.97DDe",
+                  "221.94DDe",
+                  "443.88DDe"
+            ]
+      }
+};
+
+    const PACK_TO_SACRIFICE_RUNE = {};
+    Object.values(SACRIFICE_RUNE_DATABASE).forEach(entry => {
+      PACK_TO_SACRIFICE_RUNE[entry.pack] = entry.name;
+    });
+
+    function formatFullSacrificeTime(seconds) {
+      if (!isFinite(seconds) || seconds < 0) return '∞ (Forever)';
+      if (seconds === 0) return '0s';
+      if (seconds < 0.5) return `Instant (${stripDecimalZeros(seconds.toFixed(3))}s)`;
+
+      const YEAR_SEC = 365 * 86400;
+      const MONTH_SEC = 30 * 86400;
+      if (seconds >= YEAR_SEC * 100) {
+        return `${formatGameNumber(seconds / YEAR_SEC, 2)} years`;
+      }
+
+      const years = Math.floor(seconds / YEAR_SEC);
+      let rem = seconds % YEAR_SEC;
+      const months = Math.floor(rem / MONTH_SEC);
+      rem %= MONTH_SEC;
+      const days = Math.floor(rem / 86400);
+      rem %= 86400;
+      const hours = Math.floor(rem / 3600);
+      rem %= 3600;
+      const minutes = Math.floor(rem / 60);
+      const secs = rem % 60;
+
+      const parts = [];
+      if (years > 0) parts.push(`${years}y`);
+      if (months > 0) parts.push(`${months}mo`);
+      if (days > 0) parts.push(`${days}d`);
+      if (hours > 0) parts.push(`${hours}h`);
+      if (minutes > 0) parts.push(`${minutes}m`);
+      if (secs > 0 && years === 0 && months === 0 && days === 0) {
+        parts.push(`${secs < 10 ? stripDecimalZeros(secs.toFixed(1)) : Math.floor(secs)}s`);
+      }
+      return parts.slice(0, 3).join(' ') || '< 1s';
+    }
+
     // =========================================================================
     // 3. STATE
     // =========================================================================
@@ -1471,6 +3460,10 @@
       autoOpenTimer: null,
       isAutoOpening: false,
       forceLuckOne: false,
+      sacrificeRune: 'Chronos Core',
+      sacrificeCurrentLvl: 1,
+      sacrificeWantedLvl: 100,
+      sacrificeIncludeCurrent: false,
       rpsProfiles: {
         'Normal RPS': { bulk: '1', luck: '1', speed: '0.05' },
         'Football RPS': { bulk: '1', luck: '1', speed: '0.05' },
@@ -1834,6 +3827,137 @@
       details.textContent = `1/${formatGameNumber(odds)} chance at ${formatGameNumber(rps)} RPS`;
     }
 
+    
+    function populateSacrificeRuneDropdown() {
+      const selectEl = document.getElementById('sacrificeRuneSelect');
+      if (!selectEl) return;
+      selectEl.innerHTML = '';
+      Object.keys(SACRIFICE_RUNE_DATABASE).forEach(runeKey => {
+        const entry = SACRIFICE_RUNE_DATABASE[runeKey];
+        const opt = document.createElement('option');
+        opt.value = runeKey;
+        opt.textContent = entry.name;
+        if (runeKey === state.sacrificeRune) opt.selected = true;
+        selectEl.appendChild(opt);
+      });
+    }
+
+    function updateRuneSacrificeCalculator() {
+      const entry = SACRIFICE_RUNE_DATABASE[state.sacrificeRune] || SACRIFICE_RUNE_DATABASE['Chronos Core'];
+      if (!entry) return;
+
+      // Sync current Player Stats inputs to state.rpsProfiles first
+      syncCurrentInputsToRpsProfile();
+
+      const maxAllowed = entry.maxLevel || 100;
+      const currInput = document.getElementById('sacrificeCurrentLvl');
+      const wantInput = document.getElementById('sacrificeWantedLvl');
+      const includeCurrCheckbox = document.getElementById('sacrificeIncludeCurrentCheckbox');
+
+      const currLabelEl = document.getElementById('sacrificeCurrLvlLabel');
+      const wantLabelEl = document.getElementById('sacrificeWantLvlLabel');
+      if (currLabelEl) currLabelEl.textContent = `Current Level (1–${maxAllowed})`;
+      if (wantLabelEl) wantLabelEl.textContent = `Wanted Level (1–${maxAllowed})`;
+
+      document.getElementById('sacrificeLevelCapBadge').textContent =
+        maxAllowed === 200 ? 'Lvl 1–200' : 'Lvl 1–100';
+
+      // Determine whether this sacrifice rune uses Prism RPS or Normal RPS
+      const sacRpsCategory = getRpsCategory(entry.pack);
+      const isPrismRune = sacRpsCategory === 'Prism RPS';
+
+      const prismWarningEl = document.getElementById('sacrificePrismWarning');
+      if (prismWarningEl) {
+        prismWarningEl.classList.toggle('hidden', !isPrismRune);
+      }
+
+      // Use Prism RPS from state.rpsProfiles['Prism RPS'] if it's a prism rune, otherwise active Player Stats RPS
+      const sacProfile = state.rpsProfiles[sacRpsCategory] || { bulk: '1', luck: '1', speed: '0.05' };
+      const bulk = Math.max(1, Math.floor(parseGameNumber(sacProfile.bulk, 1)));
+      const speed = Math.max(0.001, parseFloat(sacProfile.speed) || 0.05);
+      const rawLuck = Math.max(0.0001, parseGameNumber(sacProfile.luck, 1));
+      const luck = (sacRpsCategory === 'Normal RPS' && state.forceLuckOne) ? 1 : rawLuck;
+      const activeRps = (1.0 / speed) * bulk;
+
+      // Compute Rune Chance for this sacrifice rune
+      const dropInfo = computeRuneChance({ name: entry.dropName, odds: entry.odds, type: entry.type }, luck);
+      const runeChance = dropInfo.chance;
+
+      document.getElementById('sacrificeRuneHeaderLabel').textContent = entry.name;
+      document.getElementById('sacrificeRuneOddsBadge').textContent = `1/${formatGameNumber(runeChance)}`;
+
+      const includeCurrent = includeCurrCheckbox ? includeCurrCheckbox.checked : false;
+      state.sacrificeIncludeCurrent = includeCurrent;
+
+      const rawCurr = parseInt(currInput.value, 10);
+      const rawWant = parseInt(wantInput.value, 10);
+
+      const etaTitleEl = document.getElementById('sacrificeEtaTitle');
+      const etaResultEl = document.getElementById('sacrificeEtaResult');
+      const etaExactSubEl = document.getElementById('sacrificeEtaExactSub');
+      const etaDetailsEl = document.getElementById('sacrificeEtaDetails');
+
+      if (isNaN(rawCurr) || isNaN(rawWant)) {
+        etaTitleEl.textContent = '';
+        etaResultEl.textContent = 'Enter a valid level number';
+        etaExactSubEl.textContent = '';
+        etaDetailsEl.textContent = '';
+        return;
+      }
+
+      // Check if either level exceeds the rune's max possible level (200 for Chronos Core & Oblivion Sigil, 100 for all others)
+      if (rawCurr > maxAllowed || rawWant > maxAllowed) {
+        const overLvl = Math.max(rawCurr, rawWant);
+        const funnyMsg = `Hold on, let me open Roblox Studio and code Lvl ${overLvl} into the game first (Max is Lvl ${maxAllowed})`;
+        etaTitleEl.textContent = '';
+        etaResultEl.textContent = funnyMsg;
+        etaExactSubEl.textContent = '';
+        etaDetailsEl.textContent = '';
+        return;
+      }
+
+      // Check if wanted level is lower than current level (or < 1)
+      if (rawWant < rawCurr || rawCurr < 1 || rawWant < 1) {
+        const timeTravelMsg = 'Travel back in time to achieve that';
+        etaTitleEl.textContent = '';
+        etaResultEl.textContent = timeTravelMsg;
+        etaExactSubEl.textContent = '';
+        etaDetailsEl.textContent = '';
+        return;
+      }
+
+      const currentLvl = rawCurr;
+      const wantedLvl = rawWant;
+
+      if (!includeCurrent && wantedLvl === currentLvl) {
+        etaTitleEl.textContent = `Level ${currentLvl} → Level ${wantedLvl}`;
+        etaResultEl.textContent = '0s (Already Reached)';
+        etaExactSubEl.textContent = `You are already at Lvl ${currentLvl}. Check "Include current level" to see Lvl ${currentLvl}'s requirement.`;
+        etaDetailsEl.textContent = '';
+        return;
+      }
+
+      const startLvl = includeCurrent ? currentLvl : currentLvl + 1;
+      const endLvl = wantedLvl;
+
+      let cumulativeRunes = 0;
+      for (let lvl = startLvl; lvl <= endLvl; lvl++) {
+        const reqStr = entry.levels[lvl - 1] || '0';
+        cumulativeRunes += parseGameNumber(reqStr, 0);
+      }
+
+      const totalRollsNeeded = cumulativeRunes * runeChance;
+      const totalSeconds = activeRps > 0 ? totalRollsNeeded / activeRps : Infinity;
+      const primaryEtaText = totalSeconds < 0.5 ? 'Instant' : formatEta(totalSeconds);
+      const exactTimeText = formatFullSacrificeTime(totalSeconds);
+      const rangeDesc = `Sum Lvl ${startLvl} → Lvl ${endLvl}`;
+
+      etaTitleEl.textContent = `Average Time (Lvl ${currentLvl} → Lvl ${wantedLvl})`;
+      etaResultEl.textContent = primaryEtaText === 'Forever' ? `Forever (${exactTimeText})` : primaryEtaText;
+      etaExactSubEl.textContent = `Exact ETA: ${exactTimeText} • Needs ${formatGameNumber(cumulativeRunes)} ${entry.name} runes`;
+      etaDetailsEl.textContent = `${rangeDesc} • 1/${formatGameNumber(runeChance)} chance at ${formatGameNumber(activeRps)} ${sacRpsCategory}`;
+    }
+
     function renderAll() {
       const { luck, bulk, speed } = getPlayerStats();
       const packObj = RUNE_DATABASE[state.realm].packs[state.pack];
@@ -1951,6 +4075,7 @@
       const combinedListEl = document.getElementById('combinedRunesList');
       combinedListEl.innerHTML = orderedDrops.map(d => renderRuneRow(d, luck, runesPerSec)).join('');
       
+      updateRuneSacrificeCalculator();
       saveSettings(); // Automatically save settings on state change/render
     }
 
@@ -2009,6 +4134,7 @@
       loadSettings(); // Load cached data before initializing UI
       
       populateRealmAndPackDropdowns();
+      populateSacrificeRuneDropdown();
       
       // Ensure UI selection matches loaded state
       document.getElementById('realmSelect').value = state.realm;
@@ -2026,12 +4152,22 @@
         state.realm = e.target.value;
         populatePackDropdown();
         state.pack = document.getElementById('runePackSelect').value;
+        if (PACK_TO_SACRIFICE_RUNE[state.pack]) {
+          state.sacrificeRune = PACK_TO_SACRIFICE_RUNE[state.pack];
+          const sacSel = document.getElementById('sacrificeRuneSelect');
+          if (sacSel) sacSel.value = state.sacrificeRune;
+        }
         applyRpsProfileForCurrentPack();
         resetSession();
       });
 
       document.getElementById('runePackSelect').addEventListener('change', (e) => {
         state.pack = e.target.value;
+        if (PACK_TO_SACRIFICE_RUNE[state.pack]) {
+          state.sacrificeRune = PACK_TO_SACRIFICE_RUNE[state.pack];
+          const sacSel = document.getElementById('sacrificeRuneSelect');
+          if (sacSel) sacSel.value = state.sacrificeRune;
+        }
         applyRpsProfileForCurrentPack();
         resetSession();
       });
@@ -2069,6 +4205,17 @@
         state.etaMode = state.etaMode === 'math' ? 'luck' : 'math';
         renderAll();
       });
+
+      document.getElementById('sacrificeRuneSelect').addEventListener('change', (e) => {
+        state.sacrificeRune = e.target.value;
+        updateRuneSacrificeCalculator();
+      });
+
+      ['sacrificeCurrentLvl', 'sacrificeWantedLvl'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateRuneSacrificeCalculator);
+      });
+
+      document.getElementById('sacrificeIncludeCurrentCheckbox').addEventListener('change', updateRuneSacrificeCalculator);
 
       // =====================================================================
       // 8. PRISM MODE LOGIC & EVENT LISTENERS
