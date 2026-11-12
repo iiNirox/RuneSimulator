@@ -553,13 +553,7 @@
             </div>
           </div>
 
-          <!-- Include Current Level Checkbox -->
-          <div class="flex items-center justify-center bg-[#101114] rounded px-3 py-2 border border-[#282b33] text-center">
-            <label for="sacrificeIncludeCurrentCheckbox" class="flex items-center justify-center gap-2 cursor-pointer select-none">
-              <input id="sacrificeIncludeCurrentCheckbox" type="checkbox" class="w-3.5 h-3.5 rounded accent-amber-500 cursor-pointer" />
-              <span class="text-xs font-medium text-[#e6e8ec]">Include current level</span>
-            </label>
-          </div>
+          
 
           <!-- Main ETA Output Readout -->
           <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
@@ -2077,7 +2071,7 @@
             ]
       },
       "UltimateShard": {
-            "name": "UltimateShard",
+            "name": "UltimateShard (Prism Rune)",
             "dropName": "Ultimate Shard",
             "realm": "Realm 1",
             "pack": "Cosmic Prism",
@@ -3932,25 +3926,38 @@
       if (!includeCurrent && wantedLvl === currentLvl) {
         etaTitleEl.textContent = `Level ${currentLvl} → Level ${wantedLvl}`;
         etaResultEl.textContent = '0s (Already Reached)';
-        etaExactSubEl.textContent = `You are already at Lvl ${currentLvl}. Check "Include current level" to see Lvl ${currentLvl}'s requirement.`;
+        etaExactSubEl.textContent = `You are already at Lvl ${currentLvl}.`;
         etaDetailsEl.textContent = '';
         return;
       }
 
+      // Lvl 1 is unlocked automatically (0 runes).
+      // Each entry.levels[k - 1] in the .txt is the requirement to advance from Lvl k to Lvl (k + 1)
+      // (i.e., the requirement to reach Lvl L is entry.levels[L - 2] for L >= 2, and 0 for L === 1).
       const startLvl = includeCurrent ? currentLvl : currentLvl + 1;
       const endLvl = wantedLvl;
 
       let cumulativeRunes = 0;
       for (let lvl = startLvl; lvl <= endLvl; lvl++) {
-        const reqStr = entry.levels[lvl - 1] || '0';
+        if (lvl <= 1) continue; // Lvl 1 is unlocked automatically
+        const reqStr = entry.levels[lvl - 2] || '0';
         cumulativeRunes += parseGameNumber(reqStr, 0);
+      }
+
+      if (cumulativeRunes === 0) {
+        etaTitleEl.textContent = `Level ${currentLvl} → Level ${wantedLvl}`;
+        etaResultEl.textContent = '0s (Unlocked Automatically)';
+        etaExactSubEl.textContent = 'Level 1 is unlocked automatically (0 runes required).';
+        etaDetailsEl.textContent = '';
+        return;
       }
 
       const totalRollsNeeded = cumulativeRunes * runeChance;
       const totalSeconds = activeRps > 0 ? totalRollsNeeded / activeRps : Infinity;
       const primaryEtaText = totalSeconds < 0.5 ? 'Instant' : formatEta(totalSeconds);
       const exactTimeText = formatFullSacrificeTime(totalSeconds);
-      const rangeDesc = `Sum Lvl ${startLvl} → Lvl ${endLvl}`;
+      const fromDisplayLvl = includeCurrent ? Math.max(1, currentLvl - 1) : currentLvl;
+      const rangeDesc = `Lvl ${fromDisplayLvl} → Lvl ${endLvl}`;
 
       etaTitleEl.textContent = `Average Time (Lvl ${currentLvl} → Lvl ${wantedLvl})`;
       etaResultEl.textContent = primaryEtaText === 'Forever' ? `Forever (${exactTimeText})` : primaryEtaText;
