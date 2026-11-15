@@ -192,6 +192,53 @@ input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
 
+/* Bold & Glowy Prism Total Readout */
+.prism-glow {
+  font-weight: 700;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.55), 0 0 20px rgba(245, 158, 11, 0.35);
+}
+
+/* Expedition Tier Colors & Gradients */
+.expo-easy {
+  color: #4ade80;
+}
+
+.expo-medium {
+  color: #fb923c;
+}
+
+.expo-hard {
+  color: #f87171;
+}
+
+.expo-extreme {
+  color: #c084fc;
+}
+
+.expo-galaxy {
+  color: #7c6df2;
+}
+
+.expo-yinyang {
+  background: linear-gradient(90deg, #ffffff 0%, #e5e7eb 35%, #111827 70%, #d1d5db 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.35));
+}
+
+.expo-underwater {
+  color: #38bdf8;
+}
+
+.expo-godly {
+  background: linear-gradient(90deg, #ffffff 0%, #fef08a 45%, #facc15 80%, #eab308 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
