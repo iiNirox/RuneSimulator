@@ -423,8 +423,7 @@ const RUNE_DATABASE = {
           { name: "Showdown", odds: "200NoQg", type: "BASIC" },
           { name: "Powerful Chakra", odds: "7.5SxTg", type: "NOOBINIAL" },
           { name: "Powerful Aura", odds: "50SxTg", type: "NOOBINIAL" },
-          { name: "Powerful Duelist", odds: "350SxTg", type: "NOOBINIAL" },
-          { name: "Powerful Champion", odds: "2SpTg", type: "NOOBINIAL" }
+          { name: "Powerful Duelist", odds: "350SxTg", type: "NOOBINIAL" }
         ]
       }
     }
