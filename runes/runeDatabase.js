@@ -419,8 +419,12 @@ const RUNE_DATABASE = {
           { name: "Mobility", odds: "15Dqg", type: "BASIC" },
           { name: "Defence", odds: "22.5Qg", type: "BASIC" },
           { name: "Combat", odds: "35OcQg", type: "BASIC" },
+          { name: "Battle", odds: "2.75NoQg", type: "BASIC" },
+          { name: "Showdown", odds: "200NoQg", type: "BASIC" },
           { name: "Powerful Chakra", odds: "7.5SxTg", type: "NOOBINIAL" },
-          { name: "Powerful Aura", odds: "50SxTg", type: "NOOBINIAL" }
+          { name: "Powerful Aura", odds: "50SxTg", type: "NOOBINIAL" },
+          { name: "Powerful Duelist", odds: "350SxTg", type: "NOOBINIAL" },
+          { name: "Powerful Champion", odds: "2SpTg", type: "NOOBINIAL" }
         ]
       }
     }
