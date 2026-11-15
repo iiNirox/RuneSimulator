@@ -986,7 +986,7 @@
             "pack": "Shard",
             "odds": "600QdVt",
             "type": "NOOBINIAL",
-            "maxLevel": 100,
+            "maxLevel": 70,
             "levels": [
                   "24.934T",
                   "49.869T",
