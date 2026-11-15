@@ -559,7 +559,7 @@ function syncSacrificeMinLevelOnRuneChange(prevRuneKey, nextRuneKey) {
   const nextEntry = SACRIFICE_RUNE_DATABASE[nextRuneKey];
   if (!nextEntry) return;
   const prevMin = prevEntry && prevEntry.minLevel !== undefined ? prevEntry.minLevel : 1;
-  const nextMin = nextEntry.minLevel !== undefined ? nextEntry.minLevel : 1;
+  const nextMin = nextEntry && nextEntry.minLevel !== undefined ? nextEntry.minLevel : 1;
   const currInput = document.getElementById('sacrificeCurrentLvl');
   if (!currInput) return;
   const rawCurr = parseInt(currInput.value, 10);
@@ -1115,7 +1115,8 @@ window.addEventListener('DOMContentLoaded', () => {
         capsuleBulk: document.getElementById('capsuleBulkInput').value,
         reservePrism: document.getElementById('reservePrismInput').value,
         hasGamepass: hasGamepass,
-        calcTime: document.getElementById('prismCalcTimeInput').value
+        calcTime: document.getElementById('prismCalcTimeInput').value,
+        expeditionTime: document.getElementById('expeditionTimeInput') ? document.getElementById('expeditionTimeInput').value : '30m'
       }));
     } catch (e) {}
   }
@@ -1133,6 +1134,9 @@ window.addEventListener('DOMContentLoaded', () => {
       if (ps.hasGamepass !== undefined) document.getElementById('minionMasterCheckbox').checked = Boolean(ps.hasGamepass);
       if (ps.calcTime !== undefined) {
         document.getElementById('prismCalcTimeInput').value = String(ps.calcTime).trim();
+      }
+      if (ps.expeditionTime !== undefined && document.getElementById('expeditionTimeInput')) {
+        document.getElementById('expeditionTimeInput').value = String(ps.expeditionTime).trim();
       }
     }
     const savedMode = localStorage.getItem('noob_rune_sim_active_mode');
@@ -1169,12 +1173,14 @@ window.addEventListener('DOMContentLoaded', () => {
   // =====================================================================
   // 9. CHEST ROLLS LOGIC (T1 & T2 Combined Estimator)
   // =====================================================================
+  const PRISM_ICON_URL = 'https://i.imgur.com/E9u8GSG.png';
+
   const CHEST_ITEMS = [
     {
       id: 'prisms',
       name: 'Prisms',
       category: 'Currency',
-      icon: 'https://i.imgur.com/E9u8GSG.png',
+      icon: PRISM_ICON_URL,
       t1Chance: 20.95,
       t2Chance: 21.5,
       isDynamicPrism: true
@@ -1383,4 +1389,148 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   generateChestRollEstimate();
+
+  // =====================================================================
+  // 10. EXPEDITION PRISM ESTIMATION LOGIC (1 Roll / Minute)
+  // =====================================================================
+  const EXPEDITIONS = [
+    {
+      id: 'easy',
+      name: 'Easy',
+      styleClass: 'expo-easy',
+      chance: 97.5,
+      multiplier: 0.11
+    },
+    {
+      id: 'medium',
+      name: 'Medium',
+      styleClass: 'expo-medium',
+      chance: 98,
+      multiplier: 0.333
+    },
+    {
+      id: 'hard',
+      name: 'Hard',
+      styleClass: 'expo-hard',
+      chance: 96.5,
+      multiplier: 1
+    },
+    {
+      id: 'extreme',
+      name: 'Extreme',
+      styleClass: 'expo-extreme',
+      chance: 96.55,
+      multiplier: 1.247
+    },
+    {
+      id: 'galaxy',
+      name: 'Galaxy',
+      styleClass: 'expo-galaxy',
+      chance: 94.76,
+      multiplier: 1.495
+    },
+    {
+      id: 'yinyang',
+      name: 'Yin Yang',
+      styleClass: 'expo-yinyang',
+      chance: 89.35,
+      multiplier: 1.995
+    },
+    {
+      id: 'underwater',
+      name: 'Underwater',
+      styleClass: 'expo-underwater',
+      chance: 92.7,
+      multiplier: 2.247
+    },
+    {
+      id: 'godly',
+      name: 'Godly',
+      styleClass: 'expo-godly',
+      chance: 92.5,
+      multiplier: 2.495
+    }
+  ];
+
+  const expeditionTimeInputEl = document.getElementById('expeditionTimeInput');
+
+  if (expeditionTimeInputEl) {
+    function updateExpeditionEstimator() {
+      const currentGain = parsePrismNumberAllowZero(document.getElementById('prismPerCycleInput').value, 0);
+      const rawTimeStr = expeditionTimeInputEl.value;
+      const totalSeconds = parsePrismTimeInput(rawTimeStr);
+
+      // Expeditions roll once every 1 minute (60 seconds)
+      const totalRolls = Math.floor(totalSeconds / 60);
+
+      document.getElementById('parsedExpeditionTimeLabel').textContent = formatParsedTimeLabel(totalSeconds);
+      document.getElementById('expeditionRollsSummaryLabel').textContent =
+        `${formatGameNumber(totalRolls, 0)} ${totalRolls === 1 ? 'Roll' : 'Rolls'} (1 / min)`;
+
+      let totalExpectedPrism = 0;
+      let totalExpectedPerMin = 0;
+
+      const rowsHtml = EXPEDITIONS.map(exp => {
+        const prismPerHit = currentGain * exp.multiplier;
+        const expectedPerMin = prismPerHit * (exp.chance / 100);
+        const expectedPrism = totalRolls * expectedPerMin;
+
+        totalExpectedPerMin += expectedPerMin;
+        totalExpectedPrism += expectedPrism;
+
+        return `
+          <div class="grid grid-cols-2 items-center px-3 py-2 gap-3 hover:bg-[#1b1d24] transition text-center">
+            <div class="flex flex-col items-center justify-center min-w-0 text-center">
+              <div class="text-xs font-semibold ${exp.styleClass} truncate text-center">${exp.name}</div>
+              <div class="text-[10px] text-[#6b7280] font-mono text-center">${exp.chance}%</div>
+            </div>
+            <div class="text-center font-mono shrink-0 tabular-nums">
+              <div class="text-xs font-semibold text-amber-400 text-center">${formatGameNumber(expectedPrism, 2)}</div>
+              <div class="text-[10px] text-[#6b7280] text-center">${formatGameNumber(prismPerHit, 1)}/hit · ${formatGameNumber(totalRolls, 0)} rolls</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const selectedCardEl = document.getElementById('expeditionSelectedCard');
+      if (selectedCardEl) {
+        selectedCardEl.innerHTML = `
+          <div class="flex items-center justify-center gap-1.5 text-[11px] text-[#6b7280] text-center">
+            <img src="${PRISM_ICON_URL}" alt="Prisms" class="w-5 h-5 object-contain">
+            <span>Total Prisms</span>
+          </div>
+          <div class="text-lg font-mono font-bold prism-glow tabular-nums text-center">
+            ${formatGameNumber(totalExpectedPrism, 2)} Prism
+          </div>
+          <div class="text-xs text-[#9ca3af] font-mono text-center">
+            ${formatGameNumber(totalRolls, 0)} rolls over ${formatPrismDuration(totalSeconds)} (${formatGameNumber(totalExpectedPerMin, 2)} Prism / min)
+          </div>
+        `;
+      }
+
+      const listEl = document.getElementById('expeditionResultsList');
+      if (listEl) {
+        listEl.innerHTML = rowsHtml;
+      }
+    }
+
+    expeditionTimeInputEl.addEventListener('input', () => {
+      updateExpeditionEstimator();
+      updatePrismModeCalculators();
+    });
+
+    document.querySelectorAll('.expo-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        expeditionTimeInputEl.value = btn.getAttribute('data-expo-time') || '30m';
+        updateExpeditionEstimator();
+        updatePrismModeCalculators();
+      });
+    });
+
+    document.getElementById('prismPerCycleInput').addEventListener('input', () => {
+      updateExpeditionEstimator();
+    });
+
+    updateExpeditionEstimator();
+  }
 });
