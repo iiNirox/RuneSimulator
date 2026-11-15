@@ -538,65 +538,123 @@
         </section>
       </div>
 
-      <!-- RIGHT: Passive Prism Projection -->
-      <section class="lg:col-span-5 panel p-4 space-y-3.5">
-        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
-          <h2 class="text-sm font-semibold text-[#f3f4f6]">Passive Prism Income</h2>
-          <span class="text-[11px] font-mono text-[#9ca3af]">Supports combined formats e.g. 2d 4h 30m</span>
-        </div>
+      <!-- RIGHT: Passive Prism Projection & Expedition Prism Estimation -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <section class="panel p-4 space-y-3.5">
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Passive Prism Income</h2>
+            <span class="text-[11px] font-mono text-[#9ca3af]">Supports combined formats e.g. 2d 4h 30m</span>
+          </div>
 
-        <div class="field-card">
-          <label for="prismCalcTimeInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Time Duration</label>
-          <div class="input-shell max-w-md mx-auto">
-            <span class="input-wing input-wing-left">SPAN</span>
-            <input id="prismCalcTimeInput" type="text" value="1h" placeholder="30s, 10m, 2h, 2d 4h, 1w"
-              class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
-            <span id="parsedPrismTimeLabel" class="input-wing input-wing-right truncate">1hrs</span>
+          <div class="field-card">
+            <label for="prismCalcTimeInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Time Duration</label>
+            <div class="input-shell max-w-md mx-auto">
+              <span class="input-wing input-wing-left">SPAN</span>
+              <input id="prismCalcTimeInput" type="text" value="1h" placeholder="30s, 10m, 2h, 2d 4h, 1w"
+                class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              <span id="parsedPrismTimeLabel" class="input-wing input-wing-right truncate">1hrs</span>
+            </div>
           </div>
-        </div>
 
-        <div class="flex flex-wrap items-center justify-center bg-[#101114] rounded px-2.5 py-2 border border-[#282b33] gap-2 text-center">
-          <span class="text-xs text-[#9ca3af]">Presets:</span>
-          <div class="flex flex-wrap items-center justify-center gap-1.5">
-            <button type="button" data-prism-time="1m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
-              1m
-            </button>
-            <button type="button" data-prism-time="10m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
-              10m
-            </button>
-            <button type="button" data-prism-time="1h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
-              1h
-            </button>
-            <button type="button" data-prism-time="6h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
-              6h
-            </button>
-            <button type="button" data-prism-time="24h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
-              24h
-            </button>
+          <div class="flex flex-wrap items-center justify-center bg-[#101114] rounded px-2.5 py-2 border border-[#282b33] gap-2 text-center">
+            <span class="text-xs text-[#9ca3af]">Presets:</span>
+            <div class="flex flex-wrap items-center justify-center gap-1.5">
+              <button type="button" data-prism-time="1m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                1m
+              </button>
+              <button type="button" data-prism-time="10m" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                10m
+              </button>
+              <button type="button" data-prism-time="1h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                1h
+              </button>
+              <button type="button" data-prism-time="6h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                6h
+              </button>
+              <button type="button" data-prism-time="24h" class="prism-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                24h
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
-          <div class="text-[11px] text-[#6b7280] text-center">Prism Generated</div>
-          <div id="prismCalcGeneratedResult" class="text-lg font-mono font-semibold text-amber-400 tabular-nums text-center">
-            36K Prism
+          <div class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
+            <div class="text-[11px] text-[#6b7280] text-center">Prism Generated</div>
+            <div id="prismCalcGeneratedResult" class="text-lg font-mono font-bold prism-glow tabular-nums text-center">
+              36K Prism
+            </div>
+            <div id="prismCalcDetails" class="text-xs text-[#9ca3af] text-center">
+              3,600 cycles over 1h (10 Prism / 1s cycle)
+            </div>
           </div>
-          <div id="prismCalcDetails" class="text-xs text-[#9ca3af] text-center">
-            3,600 cycles over 1h (10 Prism / 1s cycle)
-          </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
-            <div class="text-[11px] text-[#6b7280] text-center">Total Cycles</div>
-            <div id="prismCalcCyclesStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">3.6K</div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Total Cycles</div>
+              <div id="prismCalcCyclesStat" class="text-xs font-mono font-semibold text-[#e6e8ec] mt-0.5 tabular-nums text-center">3.6K</div>
+            </div>
+            <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
+              <div class="text-[11px] text-[#6b7280] text-center">Total w/ Reserve</div>
+              <div id="prismCalcTotalWithReserveStat" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">37K</div>
+            </div>
           </div>
-          <div class="subpanel p-2.5 flex flex-col items-center justify-center text-center">
-            <div class="text-[11px] text-[#6b7280] text-center">Total w/ Reserve</div>
-            <div id="prismCalcTotalWithReserveStat" class="text-xs font-mono font-semibold text-amber-400 mt-0.5 tabular-nums text-center">37K</div>
+        </section>
+
+        <!-- Expedition Prism Estimation -->
+        <section id="expeditionPrismSection" class="panel p-4 space-y-3.5">
+          <div class="flex flex-col sm:flex-row items-center justify-between border-b border-[#282b33] pb-2.5 gap-1 text-center">
+            <h2 class="text-sm font-semibold text-[#f3f4f6]">Expedition Prism Estimation</h2>
+            <span id="expeditionRollsSummaryLabel" class="text-[11px] font-mono text-[#9ca3af]">30 Rolls (1 / min)</span>
           </div>
-        </div>
-      </section>
+
+          <div class="field-card">
+            <label for="expeditionTimeInput" class="block text-[11px] font-medium text-[#9ca3af] mb-1.5 text-center">Expedition Time</label>
+            <div class="input-shell max-w-md mx-auto">
+              <span class="input-wing input-wing-left">TIME</span>
+              <input id="expeditionTimeInput" type="text" value="30m" placeholder="30m, 1h, 2d 4h"
+                class="w-full field-input px-2 py-1.5 text-xs font-mono text-center" />
+              <span id="parsedExpeditionTimeLabel" class="input-wing input-wing-right truncate">30m</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center bg-[#101114] rounded px-2.5 py-2 border border-[#282b33] gap-2 text-center">
+            <span class="text-xs text-[#9ca3af]">Presets:</span>
+            <div class="flex flex-wrap items-center justify-center gap-1.5">
+              <button type="button" data-expo-time="1m" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                1m
+              </button>
+              <button type="button" data-expo-time="10m" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                10m
+              </button>
+              <button type="button" data-expo-time="30m" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                30m
+              </button>
+              <button type="button" data-expo-time="1h" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                1h
+              </button>
+              <button type="button" data-expo-time="6h" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                6h
+              </button>
+              <button type="button" data-expo-time="24h" class="expo-preset-btn px-2.5 py-1 rounded text-xs font-mono btn-secondary text-center">
+                24h
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Prisms Readout -->
+          <div id="expeditionSelectedCard" class="subpanel p-3.5 flex flex-col items-center justify-center gap-1 text-center">
+          </div>
+
+          <!-- All Expeditions Roll Table -->
+          <div class="border border-[#282b33] rounded overflow-hidden text-center">
+            <div class="bg-[#101114] px-3 py-1.5 border-b border-[#282b33] grid grid-cols-2 items-center text-[11px] text-[#9ca3af] text-center">
+              <span class="text-center">Expedition</span>
+              <span class="text-center">Expected Prism</span>
+            </div>
+            <div id="expeditionResultsList" class="divide-y divide-[#22252c] bg-[#14161a] text-center">
+            </div>
+          </div>
+        </section>
+      </div>
 
     </div>
   </main>
