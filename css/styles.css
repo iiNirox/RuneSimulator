@@ -1,0 +1,208 @@
+:root {
+  --bg-base: #121316;
+  --bg-surface: #181a1f;
+  --bg-elevated: #1f2229;
+  --bg-input: #101114;
+  --border-subtle: #282b33;
+  --text-main: #e6e8ec;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+  --accent: #e59934;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.subpanel {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Appealing framed input card that fills layout width while keeping the input itself compact & balanced */
+.field-card {
+  background: linear-gradient(180deg, #16181d 0%, #13151a 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 0.5rem 0.625rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-card:hover {
+  border-color: #343844;
+}
+
+.field-card:focus-within {
+  border-color: rgba(229, 153, 52, 0.65);
+  box-shadow: 0 0 0 1px rgba(229, 153, 52, 0.15);
+}
+
+.input-shell {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  background-color: var(--bg-input);
+  border: 1px solid #252830;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.12s ease;
+}
+
+.input-shell:hover {
+  border-color: #383c47;
+}
+
+.input-shell:focus-within {
+  border-color: var(--accent);
+}
+
+.input-wing {
+  width: 3.75rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #15171c;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  user-select: none;
+  padding: 0 0.25rem;
+  text-align: center;
+}
+
+.input-wing-left {
+  border-right: 1px solid #22252d;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input-wing-right {
+  border-left: 1px solid #22252d;
+  color: #fbbf24;
+  font-size: 11px;
+}
+
+.field-input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--text-main);
+  text-align: center;
+  text-align-last: center;
+  transition: border-color 0.12s ease;
+}
+
+select.field-input {
+  color: var(--text-main);
+  background-color: var(--bg-input);
+}
+
+select.field-input option {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.input-shell .field-input {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.field-input:hover {
+  border-color: #383c47;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Hide number input spin buttons so centered numbers stay truly centered */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.btn-primary {
+  background-color: #d97706;
+  color: #111215;
+  font-weight: 600;
+  border: 1px solid #f59e0b;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.12s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f59e0b;
+}
+
+.btn-secondary {
+  background-color: var(--bg-elevated);
+  color: var(--text-main);
+  border: 1px solid #323640;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #272b34;
+  border-color: #434857;
+}
+
+.noobinial-row {
+  background-color: rgba(217, 119, 6, 0.06);
+  border-left: 2px solid #f59e0b;
+}
+
+.noobinial-row:hover {
+  background-color: rgba(217, 119, 6, 0.11);
+}
+
+.noobinial-text {
+  color: #fbbf24;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #121316;
+}
+::-webkit-scrollbar-thumb {
+  background: #2e323b;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #434857;
+}
