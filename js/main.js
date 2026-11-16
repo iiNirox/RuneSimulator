@@ -864,32 +864,18 @@ window.addEventListener('DOMContentLoaded', () => {
   updateChanceCalculator();
 
 document.getElementById('realmSelect').addEventListener('change', (e) => {
-    syncCurrentInputsToRpsProfile(); // <--- Save current inputs first!
+    syncCurrentInputsToRpsProfile();
     state.realm = e.target.value;
     populatePackDropdown();
     state.pack = document.getElementById('runePackSelect').value;
-    if (PACK_TO_SACRIFICE_RUNE[state.pack]) {
-      const prevSac = state.sacrificeRune;
-      state.sacrificeRune = PACK_TO_SACRIFICE_RUNE[state.pack];
-      const sacSel = document.getElementById('sacrificeRuneSelect');
-      if (sacSel) sacSel.value = state.sacrificeRune;
-      syncSacrificeMinLevelOnRuneChange(prevSac, state.sacrificeRune);
-    }
-    applyRpsProfileForCurrentPack(); // <--- Load new category profile
+    applyRpsProfileForCurrentPack();
     resetSession();
   });
 
- document.getElementById('runePackSelect').addEventListener('change', (e) => {
-    syncCurrentInputsToRpsProfile(); // <--- Save current inputs first!
+  document.getElementById('runePackSelect').addEventListener('change', (e) => {
+    syncCurrentInputsToRpsProfile();
     state.pack = e.target.value;
-    if (PACK_TO_SACRIFICE_RUNE[state.pack]) {
-      const prevSac = state.sacrificeRune;
-      state.sacrificeRune = PACK_TO_SACRIFICE_RUNE[state.pack];
-      const sacSel = document.getElementById('sacrificeRuneSelect');
-      if (sacSel) sacSel.value = state.sacrificeRune;
-      syncSacrificeMinLevelOnRuneChange(prevSac, state.sacrificeRune);
-    }
-    applyRpsProfileForCurrentPack(); // <--- Load new category profile
+    applyRpsProfileForCurrentPack();
     resetSession();
   });
 
