@@ -1430,7 +1430,7 @@
             "pack": "Starlight",
             "odds": "3QnVt",
             "type": "NOOBINIAL",
-            "maxLevel": 100,
+            "maxLevel": 50,
             "levels": [
                   "33.723T",
                   "101.168T",
