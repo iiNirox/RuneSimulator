@@ -13,7 +13,11 @@
 body {
   background-color: var(--bg-base);
   color: var(--text-main);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -42,7 +46,9 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .field-card:hover {
@@ -80,7 +86,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #15171c;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 10px;
   color: var(--text-dim);
   user-select: none;
@@ -145,6 +151,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .btn-primary {
@@ -167,7 +174,9 @@ input[type="number"] {
   border: 1px solid #323640;
   border-radius: 4px;
   text-align: center;
-  transition: background-color 0.12s ease, border-color 0.12s ease;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
 }
 
 .btn-secondary:hover {
@@ -196,7 +205,9 @@ input[type="number"] {
 .prism-glow {
   font-weight: 700;
   color: #fbbf24;
-  text-shadow: 0 0 10px rgba(251, 191, 36, 0.55), 0 0 20px rgba(245, 158, 11, 0.35);
+  text-shadow:
+    0 0 10px rgba(251, 191, 36, 0.55),
+    0 0 20px rgba(245, 158, 11, 0.35);
 }
 
 /* Expedition Tier Colors & Gradients */
@@ -221,7 +232,13 @@ input[type="number"] {
 }
 
 .expo-yinyang {
-  background: linear-gradient(90deg, #ffffff 0%, #e5e7eb 35%, #111827 70%, #d1d5db 100%);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e5e7eb 35%,
+    #111827 70%,
+    #d1d5db 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -233,7 +250,13 @@ input[type="number"] {
 }
 
 .expo-godly {
-  background: linear-gradient(90deg, #ffffff 0%, #fef08a 45%, #facc15 80%, #eab308 100%);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #fef08a 45%,
+    #facc15 80%,
+    #eab308 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
