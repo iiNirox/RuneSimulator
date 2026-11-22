@@ -215,6 +215,7 @@ const state = {
     "Football RPS": { bulk: "1", luck: "1", speed: "0.05" },
     "Halloween RPS": { bulk: "1", luck: "1", speed: "0.05" },
     "Prism RPS": { bulk: "1", luck: "1", speed: "0.05" },
+    "Thanksgiving RPS": { bulk: "1", luck: "1", speed: "0.05" },
   },
   sim: {
     runesOpened: 0,
@@ -228,14 +229,20 @@ const state = {
 
 function getRpsCategory(packName) {
   if (packName === "Football") return "Football RPS";
+
   if (packName === "Spooky" || packName === "Pumpkin" || packName === "Witch")
     return "Halloween RPS";
+
+  if (packName === "Thanksgiving" || packName === "Turkey")
+    return "Thanksgiving RPS";
+
   if (
     packName === "Cosmic Prism" ||
     packName === "Sunstorm Prism" ||
     packName === "Aquatic Prism"
   )
     return "Prism RPS";
+
   return "Normal RPS";
 }
 

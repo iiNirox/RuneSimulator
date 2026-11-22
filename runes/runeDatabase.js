@@ -1,7 +1,7 @@
 const RUNE_DATABASE = {
   "Realm 1": {
     packs: {
-      "Basic": {
+      Basic: {
         drops: [
           { name: "Rookie", odds: "1.25", type: "BASIC" },
           { name: "Learner", odds: "6.67", type: "BASIC" },
@@ -15,10 +15,10 @@ const RUNE_DATABASE = {
           { name: "Shadow", odds: "2.5Sx", type: "BASIC" },
           { name: "Phantom", odds: "2.5Oc", type: "NOOBINIAL" },
           { name: "Atomic", odds: "300QdDe", type: "NOOBINIAL" },
-          { name: "Chronos Core", odds: "3.5QnDe", type: "NOOBINIAL" }
-        ]
+          { name: "Chronos Core", odds: "3.5QnDe", type: "NOOBINIAL" },
+        ],
       },
-      "Super": {
+      Super: {
         drops: [
           { name: "Initiate", odds: "1.11", type: "BASIC" },
           { name: "Adept", odds: "13.3", type: "BASIC" },
@@ -32,10 +32,10 @@ const RUNE_DATABASE = {
           { name: "Eclipse", odds: "250Sx", type: "NOOBINIAL" },
           { name: "Void", odds: "2.5No", type: "NOOBINIAL" },
           { name: "Primordial", odds: "5UDe", type: "NOOBINIAL" },
-          { name: "Oblivion Sigil", odds: "300QnDe", type: "NOOBINIAL" }
-        ]
+          { name: "Oblivion Sigil", odds: "300QnDe", type: "NOOBINIAL" },
+        ],
       },
-      "Advanced": {
+      Advanced: {
         drops: [
           { name: "Little", odds: "1.01", type: "BASIC" },
           { name: "Lesser", odds: "100K", type: "BASIC" },
@@ -50,8 +50,8 @@ const RUNE_DATABASE = {
           { name: "Abyss", odds: "25Sp", type: "NOOBINIAL" },
           { name: "Enigma", odds: "2.5De", type: "NOOBINIAL" },
           { name: "Seraphim's Tear", odds: "100TDe", type: "NOOBINIAL" },
-          { name: "Aetherion", odds: "12.5SxDe", type: "NOOBINIAL" }
-        ]
+          { name: "Aetherion", odds: "12.5SxDe", type: "NOOBINIAL" },
+        ],
       },
       "Cosmic Prism": {
         drops: [
@@ -64,10 +64,10 @@ const RUNE_DATABASE = {
           { name: "Prism God", odds: "1K", type: "BASIC" },
           { name: "Void Glass", odds: "1M", type: "BASIC" },
           { name: "Godshard", odds: "100M", type: "NOOBINIAL" },
-          { name: "Ultimate Shard", odds: "250B", type: "NOOBINIAL" }
-        ]
+          { name: "Ultimate Shard", odds: "250B", type: "NOOBINIAL" },
+        ],
       },
-      "Hacker": {
+      Hacker: {
         drops: [
           { name: "Script", odds: "1.01", type: "BASIC" },
           { name: "Protocol", odds: "100Qd", type: "BASIC" },
@@ -83,8 +83,8 @@ const RUNE_DATABASE = {
           { name: "Firewall", odds: "20TVt", type: "NOOBINIAL" },
           { name: "Connor Hacked It", odds: "75SxVt", type: "NOOBINIAL" },
           { name: "Anti-Cheat", odds: "2OcVt", type: "NOOBINIAL" },
-          { name: "Unstoppable Virus", odds: "1Dvt", type: "NOOBINIAL" }
-        ]
+          { name: "Unstoppable Virus", odds: "1Dvt", type: "NOOBINIAL" },
+        ],
       },
       "Pro Hacker": {
         drops: [
@@ -100,10 +100,10 @@ const RUNE_DATABASE = {
           { name: "Brute Force", odds: "5QnTg", type: "NOOBINIAL" },
           { name: "DDOS Attack", odds: "20QnTg", type: "NOOBINIAL" },
           { name: "SQL Injection", odds: "100QnTg", type: "NOOBINIAL" },
-          { name: "Unstoppable Hacker", odds: "500QnTg", type: "NOOBINIAL" }
-        ]
+          { name: "Unstoppable Hacker", odds: "500QnTg", type: "NOOBINIAL" },
+        ],
       },
-      "Awakened": {
+      Awakened: {
         drops: [
           { name: "Potential", odds: "1.01", type: "BASIC" },
           { name: "Limitless", odds: "1QdVt", type: "BASIC" },
@@ -117,14 +117,14 @@ const RUNE_DATABASE = {
           { name: "Unconquerable", odds: "500Spqg", type: "BASIC" },
           { name: "Unforgettable", odds: "500Qg", type: "BASIC" },
           { name: "Otherworldly", odds: "1UTg", type: "NOOBINIAL" },
-          { name: "Cosmic Origin", odds: "10QdTg", type: "NOOBINIAL" }
-        ]
-      }
-    }
+          { name: "Cosmic Origin", odds: "10QdTg", type: "NOOBINIAL" },
+        ],
+      },
+    },
   },
   "Realm 2": {
     packs: {
-      "Snowy": {
+      Snowy: {
         drops: [
           { name: "Snow", odds: "1.01", type: "BASIC" },
           { name: "Frost", odds: "1Qn", type: "BASIC" },
@@ -137,10 +137,10 @@ const RUNE_DATABASE = {
           { name: "Permafrost", odds: "190Vt", type: "BASIC" },
           { name: "Whiteout", odds: "500SxDe", type: "NOOBINIAL" },
           { name: "Icebound", odds: "500SpDe", type: "NOOBINIAL" },
-          { name: "Everfrost", odds: "150OcDe", type: "NOOBINIAL" }
-        ]
+          { name: "Everfrost", odds: "150OcDe", type: "NOOBINIAL" },
+        ],
       },
-      "Deepcore": {
+      Deepcore: {
         drops: [
           { name: "Dust", odds: "1.01", type: "BASIC" },
           { name: "Pebble", odds: "10Sx", type: "BASIC" },
@@ -153,10 +153,10 @@ const RUNE_DATABASE = {
           { name: "Golemheart", odds: "100UDe", type: "BASIC" },
           { name: "Stone Titan", odds: "10No", type: "NOOBINIAL" },
           { name: "Cave Guardian", odds: "7.5De", type: "NOOBINIAL" },
-          { name: "Deep Spirit", odds: "250De", type: "NOOBINIAL" }
-        ]
+          { name: "Deep Spirit", odds: "250De", type: "NOOBINIAL" },
+        ],
       },
-      "Shard": {
+      Shard: {
         drops: [
           { name: "Air Shard", odds: "1.01", type: "BASIC" },
           { name: "Water Shard", odds: "1.5QdVt", type: "BASIC" },
@@ -169,14 +169,14 @@ const RUNE_DATABASE = {
           { name: "Shadow Shard", odds: "4QnTg", type: "BASIC" },
           { name: "Galactic Shard", odds: "2.5QdVt", type: "NOOBINIAL" },
           { name: "Elemental Shard", odds: "40QdVt", type: "NOOBINIAL" },
-          { name: "Dragon Shard", odds: "600QdVt", type: "NOOBINIAL" }
-        ]
-      }
-    }
+          { name: "Dragon Shard", odds: "600QdVt", type: "NOOBINIAL" },
+        ],
+      },
+    },
   },
   "Realm 3": {
     packs: {
-      "Dunes": {
+      Dunes: {
         drops: [
           { name: "Marrow", odds: "1.01", type: "BASIC" },
           { name: "Femur", odds: "333K", type: "BASIC" },
@@ -188,10 +188,10 @@ const RUNE_DATABASE = {
           { name: "Eternal Sand", odds: "5.08Oc", type: "BASIC" },
           { name: "Sphinx", odds: "30DDe", type: "NOOBINIAL" },
           { name: "Anubis", odds: "75NoDe", type: "NOOBINIAL" },
-          { name: "Ancient Fragment", odds: "35Vt", type: "NOOBINIAL" }
-        ]
+          { name: "Ancient Fragment", odds: "35Vt", type: "NOOBINIAL" },
+        ],
       },
-      "Sunfire": {
+      Sunfire: {
         drops: [
           { name: "Ashen", odds: "1.01", type: "BASIC" },
           { name: "Parched", odds: "43.5M", type: "BASIC" },
@@ -204,8 +204,8 @@ const RUNE_DATABASE = {
           { name: "Immortal Sun", odds: "3.94SpDe", type: "BASIC" },
           { name: "Pharaoh", odds: "200NoDe", type: "NOOBINIAL" },
           { name: "Horus", odds: "1.5Vt", type: "NOOBINIAL" },
-          { name: "Secrets of Egypt", odds: "300Vt", type: "NOOBINIAL" }
-        ]
+          { name: "Secrets of Egypt", odds: "300Vt", type: "NOOBINIAL" },
+        ],
       },
       "Sunstorm Prism": {
         drops: [
@@ -218,8 +218,8 @@ const RUNE_DATABASE = {
           { name: "Starforge", odds: "20Qd", type: "BASIC" },
           { name: "Celestia", odds: "1.5Qn", type: "BASIC" },
           { name: "Eternis", odds: "75T", type: "NOOBINIAL" },
-          { name: "Omnira", odds: "1.25Qd", type: "NOOBINIAL" }
-        ]
+          { name: "Omnira", odds: "1.25Qd", type: "NOOBINIAL" },
+        ],
       },
       "Mini Noobinial": {
         drops: [
@@ -229,15 +229,19 @@ const RUNE_DATABASE = {
           { name: "Huge Noob", odds: "350QnDe", type: "NOOBINIAL" },
           { name: "Giant Noob", odds: "75QdVt", type: "NOOBINIAL" },
           { name: "Colossal Noob", odds: "400NoVt", type: "NOOBINIAL" },
-          { name: "Biggest Noob of all time", odds: "2.5Tg", type: "NOOBINIAL" },
-          { name: "The Ultimate Noob", odds: "1QdTg", type: "NOOBINIAL" }
-        ]
-      }
-    }
+          {
+            name: "Biggest Noob of all time",
+            odds: "2.5Tg",
+            type: "NOOBINIAL",
+          },
+          { name: "The Ultimate Noob", odds: "1QdTg", type: "NOOBINIAL" },
+        ],
+      },
+    },
   },
   "Realm 4": {
     packs: {
-      "Starlight": {
+      Starlight: {
         drops: [
           { name: "Moonlight", odds: "1.01", type: "BASIC" },
           { name: "Sunlight", odds: "500De", type: "BASIC" },
@@ -250,10 +254,10 @@ const RUNE_DATABASE = {
           { name: "Nebula", odds: "2DTg", type: "BASIC" },
           { name: "Supernova", odds: "125DVt", type: "NOOBINIAL" },
           { name: "Galactic Chaos", odds: "1.25TVt", type: "NOOBINIAL" },
-          { name: "Chaotic Destruction", odds: "3QnVt", type: "NOOBINIAL" }
-        ]
+          { name: "Chaotic Destruction", odds: "3QnVt", type: "NOOBINIAL" },
+        ],
       },
-      "Cosma": {
+      Cosma: {
         drops: [
           { name: "Asteroid", odds: "1.01", type: "BASIC" },
           { name: "Comet", odds: "150UDe", type: "BASIC" },
@@ -265,10 +269,10 @@ const RUNE_DATABASE = {
           { name: "Black Hole", odds: "10TTg", type: "BASIC" },
           { name: "Magnetar", odds: "3.75TVt", type: "NOOBINIAL" },
           { name: "Event Horizon", odds: "25TVt", type: "NOOBINIAL" },
-          { name: "Elemental Creation", odds: "35QnVt", type: "NOOBINIAL" }
-        ]
+          { name: "Elemental Creation", odds: "35QnVt", type: "NOOBINIAL" },
+        ],
       },
-      "Light": {
+      Light: {
         drops: [
           { name: "White", odds: "1.01", type: "BASIC" },
           { name: "Divine Light", odds: "15NoDe", type: "BASIC" },
@@ -279,10 +283,10 @@ const RUNE_DATABASE = {
           { name: "Angelic Goodness", odds: "200OcTg", type: "BASIC" },
           { name: "Absolute Divinity", odds: "12.5SxVt", type: "NOOBINIAL" },
           { name: "Light Genesis", odds: "92.5SxVt", type: "NOOBINIAL" },
-          { name: "Ultimate Light", odds: "200SpVt", type: "NOOBINIAL" }
-        ]
+          { name: "Ultimate Light", odds: "200SpVt", type: "NOOBINIAL" },
+        ],
       },
-      "Dark": {
+      Dark: {
         drops: [
           { name: "Black", odds: "1.01", type: "BASIC" },
           { name: "Infinite Darkness", odds: "1Vt", type: "BASIC" },
@@ -293,14 +297,14 @@ const RUNE_DATABASE = {
           { name: "Demonic Evil", odds: "200OcTg", type: "BASIC" },
           { name: "Absolute Darkness", odds: "250SxVt", type: "NOOBINIAL" },
           { name: "Dark Genesis", odds: "5SpVt", type: "NOOBINIAL" },
-          { name: "Ultimate Darkness", odds: "1.25OcVt", type: "NOOBINIAL" }
-        ]
-      }
-    }
+          { name: "Ultimate Darkness", odds: "1.25OcVt", type: "NOOBINIAL" },
+        ],
+      },
+    },
   },
   "Realm 5": {
     packs: {
-      "Underwater": {
+      Underwater: {
         drops: [
           { name: "Water", odds: "1.01", type: "BASIC" },
           { name: "Bubbles", odds: "10B", type: "BASIC" },
@@ -313,10 +317,10 @@ const RUNE_DATABASE = {
           { name: "Deep Sea", odds: "10UVt", type: "BASIC" },
           { name: "Tidal Wave", odds: "3.33OcVt", type: "NOOBINIAL" },
           { name: "Tsunami", odds: "3.33NoVt", type: "NOOBINIAL" },
-          { name: "Infinite Flood", odds: "200NoVt", type: "NOOBINIAL" }
-        ]
+          { name: "Infinite Flood", odds: "200NoVt", type: "NOOBINIAL" },
+        ],
       },
-      "Atlantis": {
+      Atlantis: {
         drops: [
           { name: "Underwater", odds: "1.01", type: "BASIC" },
           { name: "Ancient City", odds: "10Qd", type: "BASIC" },
@@ -329,8 +333,8 @@ const RUNE_DATABASE = {
           { name: "Natural Disaster", odds: "10SxVt", type: "BASIC" },
           { name: "Secrets of Atlantis", odds: "222OcVt", type: "NOOBINIAL" },
           { name: "Poseidon", odds: "88NoVt", type: "NOOBINIAL" },
-          { name: "Lord of Atlantis", odds: "1.11Tg", type: "NOOBINIAL" }
-        ]
+          { name: "Lord of Atlantis", odds: "1.11Tg", type: "NOOBINIAL" },
+        ],
       },
       "Aquatic Prism": {
         drops: [
@@ -345,8 +349,8 @@ const RUNE_DATABASE = {
           { name: "Water Elemental", odds: "1.25TDe", type: "BASIC" },
           { name: "Whirlpool", odds: "2Sx", type: "NOOBINIAL" },
           { name: "Prismatic Water", odds: "10Sx", type: "NOOBINIAL" },
-          { name: "Prismatic Ocean", odds: "40Sx", type: "NOOBINIAL" }
-        ]
+          { name: "Prismatic Ocean", odds: "40Sx", type: "NOOBINIAL" },
+        ],
       },
       "Mini Non Noobinial": {
         drops: [
@@ -357,14 +361,14 @@ const RUNE_DATABASE = {
           { name: "Awakened Pro", odds: "50Ocqg", type: "BASIC" },
           { name: "One of the Best", odds: "200Qg", type: "BASIC" },
           { name: "The Best", odds: "4UQg", type: "BASIC" },
-          { name: "Infinite Skill", odds: "690SxQg", type: "BASIC" }
-        ]
-      }
-    }
+          { name: "Infinite Skill", odds: "690SxQg", type: "BASIC" },
+        ],
+      },
+    },
   },
   "Realm 6": {
     packs: {
-      "Ares": {
+      Ares: {
         drops: [
           { name: "Warrior", odds: "1.01", type: "BASIC" },
           { name: "Clash", odds: "1QdVt", type: "BASIC" },
@@ -377,10 +381,10 @@ const RUNE_DATABASE = {
           { name: "War Eternal", odds: "10DQg", type: "BASIC" },
           { name: "War Immortal", odds: "2.5DTg", type: "NOOBINIAL" },
           { name: "Wrath Eternal", odds: "15DTg", type: "NOOBINIAL" },
-          { name: "Wrath Immortal", odds: "10TTg", type: "NOOBINIAL" }
-        ]
+          { name: "Wrath Immortal", odds: "10TTg", type: "NOOBINIAL" },
+        ],
       },
-      "Apollo": {
+      Apollo: {
         drops: [
           { name: "Whisper", odds: "1.01", type: "BASIC" },
           { name: "Glow", odds: "20QdVt", type: "BASIC" },
@@ -393,10 +397,10 @@ const RUNE_DATABASE = {
           { name: "Solar Crown", odds: "1TQg", type: "BASIC" },
           { name: "Beyond The Stars", odds: "9.75DTg", type: "NOOBINIAL" },
           { name: "Beyond The Galaxy", odds: "35DTg", type: "NOOBINIAL" },
-          { name: "Beyond The Multiverse", odds: "35TTg", type: "NOOBINIAL" }
-        ]
+          { name: "Beyond The Multiverse", odds: "35TTg", type: "NOOBINIAL" },
+        ],
       },
-      "Zeus": {
+      Zeus: {
         drops: [
           { name: "Bolt", odds: "1.01", type: "BASIC" },
           { name: "Cloud", odds: "10SpVt", type: "BASIC" },
@@ -409,10 +413,10 @@ const RUNE_DATABASE = {
           { name: "Olympian", odds: "20QdQg", type: "BASIC" },
           { name: "Thunder Lord", odds: "3.5TTg", type: "NOOBINIAL" },
           { name: "Eternal Thunder", odds: "150TTg", type: "NOOBINIAL" },
-          { name: "Godlike Lightning", odds: "100QdTg", type: "NOOBINIAL" }
-        ]
+          { name: "Godlike Lightning", odds: "100QdTg", type: "NOOBINIAL" },
+        ],
       },
-      "Colloseum": {
+      Colloseum: {
         drops: [
           { name: "Strength", odds: "1.01", type: "BASIC" },
           { name: "Health", odds: "10QdTg", type: "BASIC" },
@@ -424,14 +428,14 @@ const RUNE_DATABASE = {
           { name: "Powerful Chakra", odds: "7.5SxTg", type: "NOOBINIAL" },
           { name: "Powerful Aura", odds: "50SxTg", type: "NOOBINIAL" },
           { name: "Powerful Duelist", odds: "350SxTg", type: "NOOBINIAL" },
-          { name: "Powerful Champion", odds: "2SpTg", type: "NOOBINIAL" }
-        ]
-      }
-    }
+          { name: "Powerful Champion", odds: "2SpTg", type: "NOOBINIAL" },
+        ],
+      },
+    },
   },
-  "Events": {
+  Events: {
     packs: {
-      "Football": {
+      Football: {
         drops: [
           { name: "Scuff", odds: "1.12", type: "BASIC" },
           { name: "Fade", odds: "10", type: "BASIC" },
@@ -444,10 +448,10 @@ const RUNE_DATABASE = {
           { name: "Header", odds: "100No", type: "BASIC" },
           { name: "Finale", odds: "1Sx", type: "NOOBINIAL" },
           { name: "Victory", odds: "100Sx", type: "NOOBINIAL" },
-          { name: "Iconic", odds: "2.5Sp", type: "NOOBINIAL" }
-        ]
+          { name: "Iconic", odds: "2.5Sp", type: "NOOBINIAL" },
+        ],
       },
-      "Spooky": {
+      Spooky: {
         drops: [
           { name: "Creepy", odds: "1.11", type: "BASIC" },
           { name: "Haunted", odds: "10", type: "BASIC" },
@@ -461,10 +465,10 @@ const RUNE_DATABASE = {
           { name: "Revenant", odds: "333Qd", type: "NOOBINIAL" },
           { name: "Lich", odds: "125Qn", type: "NOOBINIAL" },
           { name: "Necromancer", odds: "250Sx", type: "NOOBINIAL" },
-          { name: "Banshee", odds: "5UDe", type: "NOOBINIAL" }
-        ]
+          { name: "Banshee", odds: "5UDe", type: "NOOBINIAL" },
+        ],
       },
-      "Pumpkin": {
+      Pumpkin: {
         drops: [
           { name: "Nightfall", odds: "1.01", type: "BASIC" },
           { name: "Black Cat", odds: "250M", type: "BASIC" },
@@ -478,10 +482,10 @@ const RUNE_DATABASE = {
           { name: "Coffin", odds: "6.5Qn", type: "NOOBINIAL" },
           { name: "Witch Fire", odds: "5Sx", type: "NOOBINIAL" },
           { name: "Ghost Rider", odds: "25Sp", type: "NOOBINIAL" },
-          { name: "Headless Horsemen", odds: "200DDe", type: "NOOBINIAL" }
-        ]
+          { name: "Headless Horsemen", odds: "200DDe", type: "NOOBINIAL" },
+        ],
       },
-      "Witch": {
+      Witch: {
         drops: [
           { name: "Broomstick", odds: "1.01", type: "BASIC" },
           { name: "Cauldron", odds: "100T", type: "BASIC" },
@@ -494,11 +498,35 @@ const RUNE_DATABASE = {
           { name: "Covenmist", odds: "1.75TDe", type: "BASIC" },
           { name: "Hagshadow", odds: "75De", type: "NOOBINIAL" },
           { name: "Witchbane", odds: "750UDe", type: "NOOBINIAL" },
-          { name: "Eldritch", odds: "150TDe", type: "NOOBINIAL" }
-        ]
-      }
-    }
-  }
+          { name: "Eldritch", odds: "150TDe", type: "NOOBINIAL" },
+        ],
+      },
+      Thanksgiving: {
+        drops: [
+          { name: "Harvest", odds: "1.05", type: "BASIC" },
+          { name: "Cranberry", odds: "20", type: "BASIC" },
+          { name: "Cornucopia", odds: "500", type: "BASIC" },
+          { name: "Gravy", odds: "500K", type: "BASIC" },
+          { name: "Pilgrim", odds: "15M", type: "BASIC" },
+          { name: "Maple", odds: "850M", type: "BASIC" },
+          { name: "Harvest King", odds: "1Qn", type: "NOOBINIAL" },
+          { name: "Harvest Lord", odds: "200Qn", type: "NOOBINIAL" },
+        ],
+      },
+      Turkey: {
+        drops: [
+          { name: "Gobbler", odds: "1.01", type: "BASIC" },
+          { name: "Drumstick", odds: "100T", type: "BASIC" },
+          { name: "Wishbone", odds: "200Sx", type: "BASIC" },
+          { name: "Roasted", odds: "400No", type: "BASIC" },
+          { name: "Turkey", odds: "10UDe", type: "BASIC" },
+          { name: "Turkey Lord", odds: "2.5DDe", type: "BASIC" },
+          { name: "Eternal Feast", odds: "30DDe", type: "BASIC" },
+          { name: "Harvest Crown", odds: "240DDe", type: "BASIC" },
+          { name: "Thanksgiving", odds: "1.75TDe", type: "NOOBINIAL" },
+          { name: "Gratitude", odds: "75De", type: "NOOBINIAL" },
+        ],
+      },
+    },
+  },
 };
-
-
