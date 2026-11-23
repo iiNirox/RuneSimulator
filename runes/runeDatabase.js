@@ -518,7 +518,7 @@ const RUNE_DATABASE = {
           { name: "Gobbler", odds: "1.01", type: "BASIC" },
           { name: "Drumstick", odds: "300M", type: "BASIC" },
           { name: "Wishbone", odds: "5B", type: "BASIC" },
-          { name: "Roasted", odds: "60B", type: "BASIC" },
+          { name: "Roasted", odds: "600B", type: "BASIC" },
           { name: "Turkey", odds: "2T", type: "BASIC" },
           { name: "Turkey Lord", odds: "35T", type: "BASIC" },
           { name: "Eternal Feast", odds: "750T", type: "BASIC" },
