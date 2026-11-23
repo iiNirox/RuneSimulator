@@ -310,18 +310,22 @@ function loadSettings() {
       if (settings.forceLuckOne !== undefined)
         state.forceLuckOne = Boolean(settings.forceLuckOne);
       if (settings.rpsProfiles && typeof settings.rpsProfiles === "object") {
-        ["Normal RPS", "Football RPS", "Halloween RPS", "Prism RPS"].forEach(
-          (cat) => {
-            if (settings.rpsProfiles[cat]) {
-              const p = settings.rpsProfiles[cat];
-              state.rpsProfiles[cat] = {
-                bulk: p.bulk !== undefined ? String(p.bulk) : "1",
-                luck: p.luck !== undefined ? String(p.luck) : "1",
-                speed: p.speed !== undefined ? String(p.speed) : "0.05",
-              };
-            }
-          },
-        );
+        [
+          "Normal RPS",
+          "Football RPS",
+          "Halloween RPS",
+          "Prism RPS",
+          "Thanksgiving RPS",
+        ].forEach((cat) => {
+          if (settings.rpsProfiles[cat]) {
+            const p = settings.rpsProfiles[cat];
+            state.rpsProfiles[cat] = {
+              bulk: p.bulk !== undefined ? String(p.bulk) : "1",
+              luck: p.luck !== undefined ? String(p.luck) : "1",
+              speed: p.speed !== undefined ? String(p.speed) : "0.05",
+            };
+          }
+        });
       }
       applyRpsProfileForCurrentPack();
     }
